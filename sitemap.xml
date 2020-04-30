@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://coldwave96.github.io/2019/11/08/MaliciousURLs/</loc>
+    
+    <lastmod>2020-04-30T11:14:02.027Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/04/20/MaliciousURLs2/</loc>
+    
+    <lastmod>2020-04-30T11:14:02.027Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/07/WebshellDetection/</loc>
+    
+    <lastmod>2020-04-30T11:14:02.027Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://coldwave96.github.io/tags/index.html</loc>
     
     <lastmod>2020-04-30T10:46:36.915Z</lastmod>
@@ -19,13 +40,6 @@
     <loc>https://coldwave96.github.io/categories/index.html</loc>
     
     <lastmod>2020-04-30T10:46:05.036Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/07/WebshellDetection/</loc>
-    
-    <lastmod>2020-04-30T10:46:05.020Z</lastmod>
     
   </url>
   
@@ -89,20 +103,6 @@
     <loc>https://coldwave96.github.io/2019/11/13/MS10-070/</loc>
     
     <lastmod>2020-04-30T10:46:04.925Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/04/20/MaliciousURLs2/</loc>
-    
-    <lastmod>2020-04-30T10:46:04.920Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/08/MaliciousURLs/</loc>
-    
-    <lastmod>2020-04-30T10:46:04.905Z</lastmod>
     
   </url>
   
