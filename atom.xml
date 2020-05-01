@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-04-30T11:14:02.027Z</updated>
+  <updated>2020-05-01T04:14:19.314Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>将Hexo从Windows迁移到Mac上的踩坑教学</title>
+    <link href="https://coldwave96.github.io/2020/05/01/WintoMac/"/>
+    <id>https://coldwave96.github.io/2020/05/01/WintoMac/</id>
+    <published>2020-05-01T03:36:13.000Z</published>
+    <updated>2020-05-01T04:14:19.314Z</updated>
+    
+    <content type="html"><![CDATA[<p>&emsp;&emsp;我终于换MAC了！！！我终于换MAC了！！！我终于换MAC了！！！</p><p>&emsp;&emsp;重要的事情说3遍，其实我已经换MAC半年了，但是依然很兴奋，毕竟这台电脑的价格比我之前所有电脑加起来都贵==。刚换的时候就想把hexo转移到MAC，拖到现在才搬家的理由只有一个：懒！！！</p><p>&emsp;&emsp;话不多说，开始踩坑。</p><a id="more"></a><h2 id="安装git和node-js"><a href="#安装git和node-js" class="headerlink" title="安装git和node.js"></a>安装git和node.js</h2><p>&emsp;&emsp;<code>brew install git</code></p><p>&emsp;&emsp;<code>brew install node</code></p><p>&emsp;&emsp;至于brew，emm，baidu了解一下。</p><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>&emsp;&emsp;使用node.js来安装：</p><p>&emsp;&emsp;<code>npm install hexo-cli -g</code></p><p>&emsp;&emsp;这是第一个坑，一开始我用的是<code>npm install hexo g</code>命令安装的hexo，虽然可以成功安装hexo，可是用的时候会出现<code>hexo: COMMAND NOT FOUND</code>问题。</p><h2 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h2><p>&emsp;&emsp;新建一个hexo目录，比如<code>/Blog</code>这种，然后<code>hexo init</code></p><p>&emsp;&emsp;再用<code>hexo s</code>测试是否成功，打开<code>localhost:4000</code>查看本地hexo界面是否正常显示。</p><h2 id="生成SSH-Key"><a href="#生成SSH-Key" class="headerlink" title="生成SSH Key"></a>生成SSH Key</h2><p>&emsp;&emsp;先查看本地的SSH Key：<code>cd ~/.ssh</code></p><p>&emsp;&emsp;如果没有，生成一个SSH Key：<code>ssh-keygen -t rsa -C &quot;example@example.com&quot;</code>，最后那个是注册邮箱。</p><h2 id="将SSH-Key添加到Github"><a href="#将SSH-Key添加到Github" class="headerlink" title="将SSH Key添加到Github"></a>将SSH Key添加到Github</h2><p>&emsp;&emsp;进入.ssh文件夹：<code>cd ~/.ssh</code>，然后打开里面的<code>id_rsa.pub</code>文件，里面的内容就是SSH key，复制全部内容；</p><p>&emsp;&emsp;网页打开github的设置：Settings -&gt; SSH and GPG keys，点击绿色的按钮New SSH key，然后在输入框中输入刚才复制的内容；</p><p>&emsp;&emsp;保存后，github可能会向你的邮箱发送一个验证链接（如果有记得去邮箱验证，不然之后的hexo部署会一直不成功的）。</p><p>&emsp;&emsp;测试一下是否成功：<code>ssh git@github.com</code></p><p>&emsp;&emsp;看到下面的即成功：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi gjincai! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="string">Connection to github.com closed.</span></span><br></pre></td></tr></table></figure><h2 id="文件配置转移"><a href="#文件配置转移" class="headerlink" title="文件配置转移"></a>文件配置转移</h2><p>&emsp;&emsp;windows下的博客根目录hexo，复制该目录下的：<code>_config.yml</code>, <code>scaffolds</code>, <code>source</code>, <code>themes</code>；</p><p>&emsp;&emsp;直接覆盖替换mac下的博客根目录hexo相同的文件和文件夹。</p><h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>&emsp;&emsp;理论上这样就完成了，但是实际上还会有问题。</p><p>&emsp;&emsp;这是第二个坑，这时<code>hexo g &amp;&amp; hexo d</code>依然不成功，是因为缺少了模块，需要执行命令<code>npm install hexo-deployer-git --save</code></p><p>&emsp;&emsp;你以为这样就完成了么，不，下面是第三个坑。</p><p>&emsp;&emsp;hexo重新部署之后，博客界面显示<code>extends includes/layout.pug block content include includes/recent-posts.pug include includes/partial</code></p><p>&emsp;&emsp;解决方案：</p><ul><li><p>执行命令<code>npm install --save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap hexo-browsersync hexo-generator-archive</code></p></li><li><p>清除缓存<code>hexo clean</code></p></li><li><p>生成静态文件<code>hexo g</code></p></li></ul><p>&emsp;&emsp;这样就大功告成，再次<code>hexo d</code>部署就可以啦。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;emsp;&amp;emsp;我终于换MAC了！！！我终于换MAC了！！！我终于换MAC了！！！&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;重要的事情说3遍，其实我已经换MAC半年了，但是依然很兴奋，毕竟这台电脑的价格比我之前所有电脑加起来都贵==。刚换的时候就想把hexo转移到MAC，拖到现在才搬家的理由只有一个：懒！！！&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;话不多说，开始踩坑。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Miscellaneous" scheme="https://coldwave96.github.io/categories/Miscellaneous/"/>
+    
+    
+      <category term="Blogs" scheme="https://coldwave96.github.io/tags/Blogs/"/>
+    
+  </entry>
   
   <entry>
     <title>机器学习实现恶意URL检测Part2</title>
@@ -209,7 +234,7 @@
     <link href="https://coldwave96.github.io/2019/12/02/SideBlock/"/>
     <id>https://coldwave96.github.io/2019/12/02/SideBlock/</id>
     <published>2019-12-02T11:41:02.000Z</published>
-    <updated>2020-04-30T10:46:04.987Z</updated>
+    <updated>2020-05-01T03:45:00.008Z</updated>
     
     <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;旁路阻断是通过旁路监听通信数据，然后进行协议还原，根据内容进行阻断。这类技术的优点是不影响互联网访问的速度，并且对用户没有特殊的设置要求。通俗讲是并联在互联网的出口上，不会影响原来网络的稳定性，部署也很方便。</p><p>&emsp;&emsp;采用旁路的方式管理网络并阻断非法连接的方法可以分为三类：</p><ul><li><p>通过与网关产品联动，建立临时规则</p></li><li><p>进行基于ARP的阻断方式</p></li><li><p>发送TCP Reset包</p></li></ul><a id="more"></a><h2 id="与网关产品联动"><a href="#与网关产品联动" class="headerlink" title="与网关产品联动"></a>与网关产品联动</h2><p>&emsp;&emsp;通过与网关产品的联动方式主要是向防火墙发送临时规则，以及路由器或交换机发送临时ACL列表，阻断当前这个会话。</p><p>&emsp;&emsp;这种方式存在着这么几个方面的问题：</p><p>&emsp;&emsp;1、首先是联动协议问题。“联动”一直是网络安全界中的一个很时髦的概念，虽然已经有五六年的历史，但是到目前为止，还远远没有得到充分的发展。现在联动得实现是以现有得某个厂家为核心，其他厂家的产品在一些半公开的SDK的支持下实现与核心厂家的某个产品实现互联。这样导致现有和多产品有联动功能，但是没有联动得实际效果。</p><p>&emsp;&emsp;2、联动信息的滞后。即使产品与防火墙有着优良的联动相应方式，IDS产品在检测得过程中发现了非法得连接，生成一条临时规则发送到防火墙，防火墙应用这条规则阻断这个连接;在这一个过程中存在着三个延时，一、IDS发现非法连接，生成临时规则;二、规则传输给防火墙;三、防火墙应用规则。这三个演示得总时间最好情况下是小于两秒，而且这个过程当中IDS的检测是滞后IDS检测到非法连接时，这个连接已经建立了，如果这个连接时蠕虫，或木马，两秒的延时足够成功攻击了。</p><p>&emsp;&emsp;3、当遇到大规模的非法连接的时候，IDS会针对每一条会话向防火墙添加临时规则，这样势必造成防火墙临时规则增大，降低防火墙的效率，引起防火墙包转发延时，严重造成防火墙瘫痪，网络中断。</p><h2 id="基于ARP的阻断"><a href="#基于ARP的阻断" class="headerlink" title="基于ARP的阻断"></a>基于ARP的阻断</h2><p>&emsp;&emsp;基于arp的阻断共有三种方式：ARP 欺骗、ARP 投毒和 ARP 攻击。</p><p>&emsp;&emsp;先了解ARP的原理。ARP 用于将 IP 地址匹配到或解析至恰当的 MAC 地址，所有的网络设备都有一张 ARP 表，里面临时记忆着该设备已经匹配起来的所有的 IP 地址和 MAC 地址。ARP 表能够确保该设备不需要向已经与自己进行过通信的计算机重复 ARP 询问。当有人在未获得授权时就企图更改 MAC 和 IP 地址的 ARP 表格中的信息时，就发生了 ARP 攻击。通过这种方式我们可以伪造ARP应答包，使得非法连接主机的ARP表错误，无法连接到网关，从而阻断连接。</p><p>&emsp;&emsp;这种阻断方式从效果上讲是很强力，但是同时也造成了一个问题，其不但阻止了非法连接，而且也阻断了合法连接，这对于网络中的正常应用有着很大的影响。</p><h2 id="TCP-Reset"><a href="#TCP-Reset" class="headerlink" title="TCP Reset"></a>TCP Reset</h2><p>&emsp;&emsp;以IDS为例，IDS设备是一个典型的旁路监听并通过TCP Reset进行阻断的网络安全设备。IDS TCP Reset实现方法，当IDS发现一条非法的连接IDS将会向通信的两端各发送一个TCP RESET包，从而实现主动切断连接的目的，此时通信双方的堆栈将会把这个RESET包解释为另一端的回应，然后停止整个通信过程，释放缓冲区并撤销所有TCP状态信息。这个时候，攻击数据包可能还在目标主机操作系统TCP/IP堆栈缓冲区中，没有被提交给应用程序，由于缓冲区被清空了，所以攻击不会发生。</p><p>&emsp;&emsp;对于RESET包来说，IDS发出的RESET包的前提是知道整个会话当前的序列号和确认号，否则这个RESET包将会被忽略。我们假定一个会话得确认号必须为152如果你发送的RESET包的确认号为142，那么堆栈将会认为这是一个无效的数据包或者被破坏的数据包而将它忽略掉。</p><p>&emsp;&emsp;从另一方面讲所有的IDS在响应攻击时都有延迟时间，因为IDS从抓取数据包，监测攻击，产生RESET包，到最后发出RESET整个过程都要消耗一定的时间。很多的IDS使用libpcap库来抓包，大部分IDS构建在类BSD的系统上，BSD系统下是利用BPF(Berkeley Packet Filters)进行抓包，BPF默认将会开一个很大的缓冲区，在一个典型的网络中，IDS发出RESET包的过程大约会延迟半秒。在Linux和Solaris平台上，性能要稍微好一点，但是肯定也有延迟时间。</p><p>&emsp;&emsp;而且TCP Reset对于网络应用来说也有着很大的局限性，其只能针对通常得标准TCP连接发送阻断信息，对于UDP会话无能为力。再则目前得一些网络应用软件在会话连接保持上都很强得能力，TCP Reset包对于他们的效果基本可以忽略。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;综上所述，想要实现旁路阻断，与网关产品联动和TCP Reset包是两种比较靠谱的方法。但是同时两种方法都存在自己的问题，目前最常用的是TCP Reset包技术实现TCP旁路阻断，且文中提到的主要缺陷也是可以解决的。</p>]]></content>
     
@@ -229,7 +254,7 @@
     </summary>
     
     
-      <category term="theory" scheme="https://coldwave96.github.io/categories/theory/"/>
+      <category term="Theory" scheme="https://coldwave96.github.io/categories/Theory/"/>
     
     
       <category term="By-pass Block" scheme="https://coldwave96.github.io/tags/By-pass-Block/"/>
@@ -507,29 +532,6 @@
     
     
       <category term="AI" scheme="https://coldwave96.github.io/tags/AI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>古典密码对照</title>
-    <link href="https://coldwave96.github.io/2019/11/07/Codemap/"/>
-    <id>https://coldwave96.github.io/2019/11/07/Codemap/</id>
-    <published>2019-11-06T16:31:18.000Z</published>
-    <updated>2020-04-30T10:46:04.782Z</updated>
-    
-    <content type="html"><![CDATA[<p>&emsp;&emsp;最近在刷CTF密码学以及MISC的时候遇到一些古典的加密方式，下面是总结的一些古典加密方法对照表。</p><a id="more"></a><h2 id="QWE"><a href="#QWE" class="headerlink" title="QWE"></a>QWE</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center><h2 id="atbash（反字母）"><a href="#atbash（反字母）" class="headerlink" title="atbash（反字母）"></a>atbash（反字母）</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>z y x w v u t s r q p o n m l k j i h g f e d c b a</center><h2 id="PC键盘"><a href="#PC键盘" class="headerlink" title="PC键盘"></a>PC键盘</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>12 53 33 32 31 42 52 62 81 72 82 92 73 63 91 01 11 41 22 51 71 43 21 23 61 13</center><h2 id="5-5矩阵"><a href="#5-5矩阵" class="headerlink" title="5*5矩阵"></a>5*5矩阵</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>11 12 13 14 15 21 22 23 24 24 25 31 32 33 34 35 41 42 43 44 45 51 52 53 54 55</center>注：此类存在变式，不是唯一对照规则。<h2 id="摩斯"><a href="#摩斯" class="headerlink" title="摩斯"></a>摩斯</h2><center>A *- B -*** C -*-* D -** E * F **-* G --* H **** I ** J *--- K -*- L *-** M -- N -* O --- P *--* Q --*- R *-* S *** T - U **- V ***- W *-- X -**- Y -*-- Z --** 0 ----- 1 *---- 2 **--- 3 ***-- 4 ****- 5 ***** 6 -**** 7 --*** 8 ---** 9 ----*</center><h2 id="MNB"><a href="#MNB" class="headerlink" title="MNB"></a>MNB</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>m n b v c x z l k j h g f d s a p o i u y t r e w q</center>注：属QWE同类的对应。扩展：qaz--abc等竖向对应。<h2 id="三进制"><a href="#三进制" class="headerlink" title="三进制"></a>三进制</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>001 002 010 011 012 020 021 022 100 101 102 110 111 112 120 121 122 200 201 202 210 211 212 220 221 222</center><h2 id="键盘V字"><a href="#键盘V字" class="headerlink" title="键盘V字"></a>键盘V字</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>13 58 36 35 34 46 57 68 89 79 80 9- 70 69 90 0- 12 45 24 56 78 47 23 25 67 14</center><h2 id="三分密码"><a href="#三分密码" class="headerlink" title="三分密码"></a>三分密码</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>111 121 131 112 122 132 113 123 133 211 221 231 212 222 232 213 223 233 311 321 331 312 322 332 313 323</center>三分密码理解为把字母排成：（仿九宫格）<table><thead><tr><th align="center"></th><th align="center">1</th><th align="center">2</th><th align="center">3</th></tr></thead><tbody><tr><td align="center">1</td><td align="center">abc</td><td align="center">def</td><td align="center">ghi</td></tr><tr><td align="center">2</td><td align="center">jkl</td><td align="center">mon</td><td align="center">opq</td></tr><tr><td align="center">3</td><td align="center">stu</td><td align="center">vwx</td><td align="center">yz</td></tr></tbody></table><p>第一位行数，第三位列数，中间该格的第几个字母。</p><h2 id="ADFGVX"><a href="#ADFGVX" class="headerlink" title="ADFGVX"></a>ADFGVX</h2><h3 id="原始对应"><a href="#原始对应" class="headerlink" title="原始对应"></a>原始对应</h3><center>a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9</center><center>DV FF FG AG XD XV GV DX VG GA FD AV GX AX DG AD XX VV VD DD GD VF GG VA XF FX XG DA VX AF DF FV GF FA AA XA</center><h3 id="按顺序"><a href="#按顺序" class="headerlink" title="按顺序"></a>按顺序</h3><center>a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9</center><center>AA AD AF AG AV AX DA DD DF DG DV DX FA FD FF FG FV FX GA GD GF GG GV GX VA VD VF VG VV VX XA XD XF XG XV XX</center><p>为了帮助理解，下面放出一个字典表实例：</p><table><thead><tr><th align="center"></th><th align="center">A</th><th align="center">D</th><th align="center">F</th><th align="center">G</th><th align="center">X</th></tr></thead><tbody><tr><td align="center">A</td><td align="center">b</td><td align="center">t</td><td align="center">a</td><td align="center">l</td><td align="center">p</td></tr><tr><td align="center">D</td><td align="center">d</td><td align="center">h</td><td align="center">o</td><td align="center">z</td><td align="center">k</td></tr><tr><td align="center">F</td><td align="center">q</td><td align="center">f</td><td align="center">v</td><td align="center">s</td><td align="center">n</td></tr><tr><td align="center">G</td><td align="center">g</td><td align="center">j</td><td align="center">c</td><td align="center">u</td><td align="center">x</td></tr><tr><td align="center">X</td><td align="center">m</td><td align="center">r</td><td align="center">e</td><td align="center">w</td><td align="center">y</td></tr></tbody></table><h2 id="键盘移位"><a href="#键盘移位" class="headerlink" title="键盘移位"></a>键盘移位</h2><h3 id="右移"><a href="#右移" class="headerlink" title="右移"></a>右移</h3><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center><center>w e r t y u i o p a s d f g h j k l z x c v b n m q</center><h2 id="左移"><a href="#左移" class="headerlink" title="左移"></a>左移</h2><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center><center>m q w e r t y u i o p a s d f g h j k l z x c v b n</center><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center><center>§ № ☆ ★ ○ ● ◎ ◇ ◆ □ ■ △ ▲ ※ → ← ↑ ↓ 〓 ＃ ＆ ＠ ＼ ＾ ＿ ￣</center><h2 id="dvorak键盘"><a href="#dvorak键盘" class="headerlink" title="dvorak键盘"></a>dvorak键盘</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center><center>p y f g c r l a o e u i d h t n s q j k x s m w v z</center><h2 id="费娜姆密码（即密码管）"><a href="#费娜姆密码（即密码管）" class="headerlink" title="费娜姆密码（即密码管）"></a>费娜姆密码（即密码管）</h2><center>A 1000001 B 1000010 C 1000011 D 1000100 E 1000101 F 1000110 G 1000111 H 1001000 I 1001001 J 1001010 K 1001011 L 1001100 M 1001101 N 1001110 O 1001111 P 1010000 Q 1010001 R 1010010 S 1010011 T 1010100 U 1010101 V 1010110 W 1010111 X 1011000 Y 1011001 Z 1011010</center><h2 id="培根密码"><a href="#培根密码" class="headerlink" title="培根密码"></a>培根密码</h2><center>A aaaaa B aaaab C aaaba D aaabb E aabaa F aabab G aabba H aabbb I abaaa J abaab K ababa L ababb M abbaa N abbab O abbba P abbbb Q baaaa R baaab S baaba T baabb U babaa V babab W babba X babbb Y bbaaa Z bbaab</center><p>注1：培根密码有两种对应，这是较为常用的一种。<br>注2：替代成a=1,b=0或a=0,b=1，作为1和0的培根也是可以的。</p><h2 id="台湾拼音"><a href="#台湾拼音" class="headerlink" title="台湾拼音"></a>台湾拼音</h2><center>ㄅ->b ㄉ->d ㄓ->zh ㄚ->a ㄞ->ai ㄦ->er ㄆ->p ㄊ->t ㄍ->g ㄐ->j ㄔ->ch ㄗ->z 一->i ㄛ->o ㄟ->ei ㄣ->en ㄇ->m ㄋ->n ㄎ->k ㄑ->q ㄕ->sh ㄘ->c ㄨ->u ㄜ->e ㄠ->ao ㄤ->ang ㄈ->f ㄌ->l ㄏ->h ㄒ->x ㄖ->r ㄙ->s ㄩ->..(就是拼音输入法v) u ㄝ->e(和ㄜ->e不同的是,ㄜ用在ye,te,de声母后面,而ㄝ,只能跟在yue,tie之类韵母后面) ㄡ->ou ㄥ->eng ㄢ->an</center><h2 id="北约音标"><a href="#北约音标" class="headerlink" title="北约音标"></a>北约音标</h2><center>A Alpha B Bravo C Charlie D Delta E Echo F Foxtrot G Golf H Hotel I India J Juliet K Kilo L Lima M Mike N November O Oscar P Papa Q Quebec R Romeo S Sierra T Tango U Uniform V Victor W Whiskey X X-ray Y Yankee Z Zulu 0 Zero 1 Wun 2 Two 3 Three（或Tree） 4 Four 5 Five 6 Six 7 Seven 8 Eight 9 Niner</center><h2 id="标准电阻值"><a href="#标准电阻值" class="headerlink" title="标准电阻值"></a>标准电阻值</h2><center>黑 棕 红 橙 黄 绿 蓝 紫 灰 白</center><center>0 1 2 3 4 5 6 7 8 9</center><h2 id="中文电码（汉字代码）"><a href="#中文电码（汉字代码）" class="headerlink" title="中文电码（汉字代码）"></a>中文电码（汉字代码）</h2><p>&emsp;&emsp;这种方式可以叫做编码方式，具体对应规则网上有很多，需要时可自行百度。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;emsp;&amp;emsp;最近在刷CTF密码学以及MISC的时候遇到一些古典的加密方式，下面是总结的一些古典加密方法对照表。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Cryptography" scheme="https://coldwave96.github.io/categories/Cryptography/"/>
-    
-    
-      <category term="Encrypt" scheme="https://coldwave96.github.io/tags/Encrypt/"/>
     
   </entry>
   
