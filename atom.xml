@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-05-01T04:29:35.744Z</updated>
+  <updated>2020-05-01T04:32:41.320Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GDBcommand</title>
+    <link href="https://coldwave96.github.io/2020/05/01/GDBcommand/"/>
+    <id>https://coldwave96.github.io/2020/05/01/GDBcommand/</id>
+    <published>2020-05-01T04:30:35.000Z</published>
+    <updated>2020-05-01T04:32:41.320Z</updated>
+    
+    <content type="html"><![CDATA[<p>&emsp;&emsp;不断完善中！！！</p><a id="more"></a><h1 id="选择加载文件"><a href="#选择加载文件" class="headerlink" title="选择加载文件"></a>选择加载文件</h1><p>file [file_name]<br>exec-file [file_name]</p><h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><p>r(run)</p><h1 id="反编译main函数"><a href="#反编译main函数" class="headerlink" title="反编译main函数"></a>反编译main函数</h1><p>disas [function_name]<br>disassemble [function_name]</p><h1 id="设置断点"><a href="#设置断点" class="headerlink" title="设置断点"></a>设置断点</h1><p>b(break)<br>b [function_name] # 对函数下断点<br>b *addr # 对地址下断点<br>info b # 查看断点</p><p>registers code stack<br>寄存器取值  代码   栈</p><h1 id="查看寄存器情况"><a href="#查看寄存器情况" class="headerlink" title="查看寄存器情况"></a>查看寄存器情况</h1><p>info [register]</p><h1 id="单步调试"><a href="#单步调试" class="headerlink" title="单步调试"></a>单步调试</h1><p>n(next)</p><h1 id="步进（到某个函数）"><a href="#步进（到某个函数）" class="headerlink" title="步进（到某个函数）"></a>步进（到某个函数）</h1><p>si(step into)</p><h1 id="查看现在的堆栈情况"><a href="#查看现在的堆栈情况" class="headerlink" title="查看现在的堆栈情况"></a>查看现在的堆栈情况</h1><p>bt(backtrace)</p><h1 id="继续到下一个断点"><a href="#继续到下一个断点" class="headerlink" title="继续到下一个断点"></a>继续到下一个断点</h1><p>c(continue)</p><h1 id="打印地址值"><a href="#打印地址值" class="headerlink" title="打印地址值"></a>打印地址值</h1><p>x/wx adress # w代表word，在32位嵌入式系统中，一个字WORD占32bit，即4个字节<br>例如：<br>x/10wx 0xffffce90 # 10代表打印10个，w代表32位，可以换成b/h/g，分别对应1，2，8byte，x可以替换为u(unsigned int)/s(string)/d(10进制)/i(指令)</p><h1 id="设置地址的值"><a href="#设置地址的值" class="headerlink" title="设置地址的值"></a>设置地址的值</h1><p>set *addr = value # 设置地址的值</p><h1 id="列出源码"><a href="#列出源码" class="headerlink" title="列出源码"></a>列出源码</h1><p>list</p><h1 id="打印变量值"><a href="#打印变量值" class="headerlink" title="打印变量值"></a>打印变量值</h1><p>print val_name</p><h1 id="查看所有局部变量的值"><a href="#查看所有局部变量的值" class="headerlink" title="查看所有局部变量的值"></a>查看所有局部变量的值</h1><p>info local</p><h1 id="gdb-peda版本中特殊功能"><a href="#gdb-peda版本中特殊功能" class="headerlink" title="gdb-peda版本中特殊功能"></a>gdb-peda版本中特殊功能</h1><p>elfsymbol # 可以把程序中的函数及地址列出来（ROP中很有用）<br>vmmap # 查看进程中的权限<br>readelf # 查看section<br>find [string] # 在内存中查找字符串</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;emsp;&amp;emsp;不断完善中！！！&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Tools" scheme="https://coldwave96.github.io/categories/Tools/"/>
+    
+    
+      <category term="Assembler" scheme="https://coldwave96.github.io/tags/Assembler/"/>
+    
+  </entry>
   
   <entry>
     <title>AssembleCommand</title>
@@ -504,32 +527,6 @@
     
     
       <category term="Github" scheme="https://coldwave96.github.io/tags/Github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习实现恶意URL检测</title>
-    <link href="https://coldwave96.github.io/2019/11/08/MaliciousURLs/"/>
-    <id>https://coldwave96.github.io/2019/11/08/MaliciousURLs/</id>
-    <published>2019-11-08T06:17:02.000Z</published>
-    <updated>2020-04-30T11:14:02.027Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>&emsp;&emsp;作为正在开发的态势感知产品中重要的一部分，初步实现了<a href="https://github.com/Coldwave96/MaliciousURLs" target="_blank" rel="noopener">恶意URL的AI检测功能模块</a>。该模块将集成到大数据平台的检测引擎中去，将对平台推过来的每一条URL进行检测，检测结果实时反馈回平台。</p><p>&emsp;&emsp;通过机器学习检测Web请求包中的URL/URI判断是否为恶意URL，暂时不做细分，只做笼统的考量，后期可以通过训练集中添加细分的样本数据重新构建能够细分详细攻击类型的模型，比如分辨SQL注入攻击，XSS攻击，恶意域名等。</p><p>&emsp;&emsp;模型生成完毕之后，将供大平台直接调用模型对每一个待检测数据包进行判断，生成基础事件。</p><p>&emsp;&emsp;关于不同类型的攻击模型，生成模型的代码基本都一样，主要差别在于使用的样本即训练集不一样，本次训练使用的是恶意URL的样本集，里面包含了SQL注入、恶意域名等。所以要想生成高精度的攻击检测模型，关键在于使用好的专用训练集。</p><a id="more"></a><h2 id="处理数据"><a href="#处理数据" class="headerlink" title="处理数据"></a>处理数据</h2><p>&emsp;&emsp;通过探针抓取到的数据会被解析成应用层json格式数据，通过分类处理不同method剥离出URI/URL作为待处理数据（P.S.对于GET数据直接将URI/URL作为分析对象，对于POST请求将URI/URL后面拼接上body中的数据字段作为分析对象）。</p><p><img src="/img/MaliciousURLs/MaliciousURLs1.png" alt=""></p><h2 id="数据预处理及建模"><a href="#数据预处理及建模" class="headerlink" title="数据预处理及建模"></a>数据预处理及建模</h2><p>&emsp;&emsp;处理对象为分离后的URI/URL，如下图所示：</p><p><img src="/img/MaliciousURLs/MaliciousURLs2.png" alt=""></p><p>&emsp;&emsp;然后读取数据，并给黑白样本打上标签，切割文本，将文本数据转化为矩阵向量，通过TF-IDF方法提取特征，训练模型采取逻辑回归算法实现。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">       <span class="comment">#读取数据</span></span><br><span class="line">       good_query_list = self.get_query_list(<span class="string">'goodqueries.txt'</span>)</span><br><span class="line">       bad_query_list = self.get_query_list(<span class="string">'badqueries.txt'</span>)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#给黑、白数据分别打标签</span></span><br><span class="line">       good_y = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(good_query_list))]</span><br><span class="line">       bad_y = [<span class="number">1</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(bad_query_list))]</span><br><span class="line"></span><br><span class="line">       queries = good_query_list + bad_query_list</span><br><span class="line">       y = good_y + bad_y</span><br><span class="line"></span><br><span class="line">       <span class="comment">#将原始文本数据分割转化成向量</span></span><br><span class="line">       self.vectorizer = TfidfVectorizer(tokenizer=self.get_ngrams)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#把文本字符串转化成（[i,j],Tfidf值）矩阵X</span></span><br><span class="line">       X = self.vectorizer.fit_transform(queries)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#分割训练数据（建立模型）和测试数据（测试模型准确度）</span></span><br><span class="line">       X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">20</span>, random_state=<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#定义模型训练方法（逻辑回归）</span></span><br><span class="line">       self.lgs = PMMLPipeline([(<span class="string">'LogisticModer'</span>, LogisticRegression(solver=<span class="string">'liblinear'</span>))])</span><br><span class="line"></span><br><span class="line">       <span class="comment">#训练模型</span></span><br><span class="line">       self.lgs.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">       <span class="comment">#测试模型准确度</span></span><br><span class="line">       print(<span class="string">'模型准确度:&#123;&#125;'</span>.format(self.lgs.score(X_test, y_test)))</span><br><span class="line"></span><br><span class="line">       sklearn2pmml(self.lgs, <span class="string">'.\lgs.pmml'</span>, with_repr=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;分割字符串通过自己定义的<code>get_ngrams(self, query)</code>方法实现：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_ngrams</span><span class="params">(self, query)</span>:</span></span><br><span class="line">    tempQuery = str(query)</span><br><span class="line">    ngrams = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(tempQuery)<span class="number">-3</span>):</span><br><span class="line">        ngrams.append(tempQuery[i:i+<span class="number">3</span>])</span><br><span class="line">    <span class="keyword">return</span> ngrams</span><br></pre></td></tr></table></figure><h2 id="预测"><a href="#预测" class="headerlink" title="预测"></a>预测</h2><p>&emsp;&emsp;预测的数据格式为：</p><p><img src="/img/MaliciousURLs/MaliciousURLs3.png" alt=""></p><p>&emsp;&emsp;预测通过<code>predict(self, newQueries)</code>方法实现：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, newQueries)</span>:</span></span><br><span class="line">    newQueries = [urllib.parse.unquote(url) <span class="keyword">for</span> url <span class="keyword">in</span> newQueries]</span><br><span class="line">    X_predict = self.vectorizer.transform(newQueries)</span><br><span class="line">    res = self.lgs.predict(X_predict)</span><br><span class="line">    res_list = []</span><br><span class="line">    <span class="keyword">for</span> q,r <span class="keyword">in</span> zip(newQueries, res):</span><br><span class="line">        tmp = <span class="string">'正常请求'</span> <span class="keyword">if</span> r == <span class="number">0</span> <span class="keyword">else</span> <span class="string">'恶意请求'</span></span><br><span class="line">        q_entity = html.escape(q)</span><br><span class="line">        res_list.append(&#123;<span class="string">'url'</span>:q_entity, <span class="string">'res'</span>:tmp&#125;)</span><br><span class="line">    print(<span class="string">"预测的结果列表:&#123;&#125;"</span>.format(str(res_list)))</span><br><span class="line">    <span class="keyword">return</span> res_list</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;预测的结果保存为json格式方便推回给大数据平台处理：</p><p><img src="/img/MaliciousURLs/MaliciousURLs4.png" alt=""></p><h2 id="产品化工作"><a href="#产品化工作" class="headerlink" title="产品化工作"></a>产品化工作</h2><p>&emsp;&emsp;为了便于产品化的实现，设计了两种方法思路。刚开始尝试将整个数据的预处理，训练及建模过程写入一个类，然后将整个类序列化，保存为.pickle格式的文件，然后供大数据平台调用。后来为了增加数据处理的效率，仅仅将训练好的模型保存为.pmml格式的文件供大数据平台调用。</p><h2 id="可能的改进"><a href="#可能的改进" class="headerlink" title="可能的改进"></a>可能的改进</h2><ul><li><p>处理结果细化，将恶意请求再次具体细分为SQL注入，XSS攻击，恶意域名等。</p></li><li><p>在机器学习算法前提下，特征处理方法的改进，寻求优化TF-IDF方法方案。目前采用的是仅仅使用TF-IDF算法对数据进行预处理，后面可以考虑采用词袋+TF-IDF算法，或者结合TF-IDF算法将URL中不重要的部分进行泛化处理。</p></li><li><p>跳出机器学习算法，省去特征处理的过程，改用深度学习算法，构建神经网络（需要花费大量时间不断计算，调优）。</p></li><li><p>目前可以将同一个IP的一个时间段之内的URL请求同时进行预测，来判断该IP是否实施攻击，也可以只检测单条URL判断是否为恶意请求。未来可改进为不剥离请求包中IP标签，对一段时间内所有数据进行检测，分出有攻击行为的IP上报。</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;简述&quot;&gt;&lt;a href=&quot;#简述&quot; class=&quot;headerlink&quot; title=&quot;简述&quot;&gt;&lt;/a&gt;简述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;作为正在开发的态势感知产品中重要的一部分，初步实现了&lt;a href=&quot;https://github.com/Coldwave96/MaliciousURLs&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;恶意URL的AI检测功能模块&lt;/a&gt;。该模块将集成到大数据平台的检测引擎中去，将对平台推过来的每一条URL进行检测，检测结果实时反馈回平台。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;通过机器学习检测Web请求包中的URL/URI判断是否为恶意URL，暂时不做细分，只做笼统的考量，后期可以通过训练集中添加细分的样本数据重新构建能够细分详细攻击类型的模型，比如分辨SQL注入攻击，XSS攻击，恶意域名等。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;模型生成完毕之后，将供大平台直接调用模型对每一个待检测数据包进行判断，生成基础事件。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;关于不同类型的攻击模型，生成模型的代码基本都一样，主要差别在于使用的样本即训练集不一样，本次训练使用的是恶意URL的样本集，里面包含了SQL注入、恶意域名等。所以要想生成高精度的攻击检测模型，关键在于使用好的专用训练集。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Program" scheme="https://coldwave96.github.io/categories/Program/"/>
-    
-    
-      <category term="AI" scheme="https://coldwave96.github.io/tags/AI/"/>
     
   </entry>
   
