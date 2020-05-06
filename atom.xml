@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>ColdWaveのBlog</title>
+  <title>ColdsnapのBlog</title>
   
   <subtitle>凛冬将至</subtitle>
   <link href="/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>https://coldwave96.github.io/</id>
   
   <author>
-    <name>ColdWave</name>
+    <name>Coldsnap</name>
     
   </author>
   
