@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level2/</loc>
-    
-    <lastmod>2020-05-12T07:50:00.860Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://coldwave96.github.io/2020/05/01/XMAN-level0/</loc>
     
     <lastmod>2020-05-12T07:50:00.860Z</lastmod>
@@ -24,6 +17,13 @@
   
   <url>
     <loc>https://coldwave96.github.io/2020/05/11/XMAN-level2-x64/</loc>
+    
+    <lastmod>2020-05-12T07:50:00.860Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level2/</loc>
     
     <lastmod>2020-05-12T07:50:00.860Z</lastmod>
     
@@ -247,7 +247,7 @@
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2019/11/07/Codemap/</loc>
+    <loc>https://coldwave96.github.io/2019/11/06/Codemap/</loc>
     
     <lastmod>2020-04-30T10:46:04.782Z</lastmod>
     
