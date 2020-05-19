@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://coldwave96.github.io/2020/05/19/LazyBinding/</loc>
+    
+    <lastmod>2020-05-19T15:42:22.890Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/15/suid/</loc>
+    
+    <lastmod>2020-05-19T15:15:06.682Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://coldwave96.github.io/2020/05/19/ret2win/</loc>
     
     <lastmod>2020-05-19T03:47:33.800Z</lastmod>
@@ -159,13 +173,6 @@
     <loc>https://coldwave96.github.io/2019/12/02/TcpRst/</loc>
     
     <lastmod>2020-04-30T10:46:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/15/suid/</loc>
-    
-    <lastmod>2020-04-30T10:46:04.999Z</lastmod>
     
   </url>
   

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>ColdSnapのBlog</title>
+  <title>ColdSnap の Blog</title>
   
   <subtitle>凛冬将至</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-05-19T03:47:33.800Z</updated>
+  <updated>2020-05-19T15:42:22.890Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ret2libc &amp;&amp; Lazy Binding</title>
+    <link href="https://coldwave96.github.io/2020/05/19/LazyBinding/"/>
+    <id>https://coldwave96.github.io/2020/05/19/LazyBinding/</id>
+    <published>2020-05-19T13:13:03.000Z</published>
+    <updated>2020-05-19T15:42:22.890Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;本文主要记录了我对于ret2libc和延迟绑定技术原理的理解。</p><a id="more"></a><h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><p>&emsp;&emsp;ret2libc主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、execve()这种系统级函数(如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式)。</p><p>&emsp;&emsp;因为程序是动态链接生成的，所以在程序运行时会调用libc.so(程序被装载时，动态链接器会将程序所有所需的动态链接库加载至进程空间，libc.so就是其中最基本的一个)，libc.so是linux下C语言库中的运行库glibc的动态链接版，并且libc.so中包含了大量的可以利用的函数，包括system()、execve()等系统级函数，我们可以通过找到这些函数在内存中的地址覆盖掉返回地址来获得当前进程的控制权。</p><p>&emsp;&emsp;通常情况下，我们会选择执行system(“/bin/sh”)来打开 shell，这样需要解决两个问题：</p><ul><li><p>找到system()函数的地址</p></li><li><p>在内存中找到’/bin/sh’字符串的地址</p></li></ul><p>&emsp;&emsp;ret2libc方法可以实现DEP保护和ASLR即地址空间布局随机化这两种保护措施的绕过。</p><h2 id="GOT表-Global-offset-Table"><a href="#GOT表-Global-offset-Table" class="headerlink" title="GOT表(Global offset Table)"></a>GOT表(Global offset Table)</h2><p>&emsp;&emsp;GOT表可以解决模块间数据访问的问题：</p><p>&emsp;&emsp;假设变量b被定义在其他模块中，其地址需要在程序装载时才能够确定。利用到前面的代码地址无关的思想，把地址相关的部分放入数据段中，然而这里的变量b的地址与其自身所在的模块装载的地址有关。那么这个问题就要通过GOT表来解决。</p><p>&emsp;&emsp;ELF中在数据段里面建立了一个指向这些变量的指针数组，也就是我们所说的GOT表(Global offset Table，全局偏移表)，它的功能就是当代码需要引用全局变量时，可以通过GOT表间接引用。</p><h2 id="延迟绑定-Lazy-Binding-amp-amp-PLT表-Procedure-Linkage-Table"><a href="#延迟绑定-Lazy-Binding-amp-amp-PLT表-Procedure-Linkage-Table" class="headerlink" title="延迟绑定(Lazy Binding) &amp;&amp; PLT表(Procedure Linkage Table)"></a>延迟绑定(Lazy Binding) &amp;&amp; PLT表(Procedure Linkage Table)</h2><p>&emsp;&emsp;因为动态链接的程序是在运行时需要对全局和静态数据访问进行GOT定位，然后间接寻址。同样，对于模块间的调用也需要GOT定位，再才间接跳转，这么做势必会影响到程序的运行速度。</p><p>&emsp;&emsp;而且程序在运行时很大一部分函数都可能用不到，于是ELF采用了当函数第一次使用时才进行绑定的思想，也就是我们所说的延迟绑定。</p><p>&emsp;&emsp;ELF实现延迟绑定是通过PLT，原先GOT中存放着全局变量和函数调用，现在把他拆成另个部分.got和.got.plt，用.got存放着全局变量引用，用.got.plt存放着函数引用。</p><p>&emsp;&emsp;所以延迟绑定技术解决的是模块间函数调用的问题，调用时是函数名@plt的形式。</p><p>&emsp;&emsp;延迟绑定的实现步骤为：</p><p>&emsp;&emsp;建立一个got.plt表，这个表里存放的是全局函数的实际地址。</p><p>&emsp;&emsp;但是最开始的时候，里面存放的是一个跳转而不是实际地址。因为加载动态链接库的时候，实际上用不到所有的函数，所以为了节省程序运行时间，在实际调用某个函数的时候才会去找该函数的实际地址。</p><p>&emsp;&emsp;当程序需要调用到其他模块中的函数时例如test() ，就去访问保存在.got.plt中的test@plt。</p><p>&emsp;&emsp;这里有两种情况，第一种就是第一次使用这个函数，这个地方就存放着test@plt第二条指令的地址，其实相当于什么都不做。第二种情况就是，当第二次调用test@plt函数时，就会通过第一条指令跳转到真正的函数地址。</p><p>&emsp;&emsp;整个过程就是所说的通过plt来实现延迟绑定。</p><p>&emsp;&emsp;下面再详细的解释一下：</p><p>&emsp;&emsp;对每一个全局函数，链接器生成一个与之相对应的影子函数，就是test@plt。</p><p>&emsp;&emsp;所有对test函数的调用都会换成对test@plt的调用，实际上这个test@plt的样子为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test@plt:</span><br><span class="line">jmp *(test@got.plt)</span><br><span class="line">push index</span><br><span class="line">jmp _init()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;其中第一条指令直接从got.plt中去拿真实的函数地址，如果已经之前已经发生过调用，got.plt就已经保存了真实的地址，如果是第一次调用，则got.plt中放的是test@plt中的第二条指令，这就使得当执行第一次调用时，test@plt中的第一条指令其实什么事也没做，直接继续往下执行，第二条指令的作用是把当前要调用的函数在got.plt中的编号作为参数传给_init()，而_init()这个函数则用于把test进行重定位，然后把结果写入到got.plt相应的地方，最后直接跳过去该函数。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;最后总结一下：</p><p>&emsp;&emsp;程序调用外部函数的整个过程就是，第一次访问test@plt函数时，动态链接器就会去动态共享模块中查找test函数的真实地址然后将真实地址保存到test@got中(.got.plt)；第二次访问test@plt时，就直接跳转到test@got中去。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;本文主要记录了我对于ret2libc和延迟绑定技术原理的理解。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Theory" scheme="https://coldwave96.github.io/categories/Theory/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+  </entry>
   
   <entry>
     <title>ROP Emporium の ret2win</title>
@@ -462,30 +485,6 @@
     
     
       <category term="CTF" scheme="https://coldwave96.github.io/tags/CTF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python实现TCP旁路阻断</title>
-    <link href="https://coldwave96.github.io/2019/12/02/TcpRst/"/>
-    <id>https://coldwave96.github.io/2019/12/02/TcpRst/</id>
-    <published>2019-12-02T08:54:32.000Z</published>
-    <updated>2020-04-30T10:46:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h2><p>&emsp;&emsp;TCP旁路阻断技术通过监听通信信道，抓包还原TCP协议，然后通过给通信两方发送TCP Reset包实现旁路阻断TCP连接。</p><p>&emsp;&emsp;Python中可通过Raw Socket进行以太网嗅探和发送Reset包。</p><a id="more"></a><h2 id="2-Raw-Socket"><a href="#2-Raw-Socket" class="headerlink" title="2 Raw Socket"></a>2 Raw Socket</h2><p>&emsp;&emsp;Raw Socket提供一种方法来绕过整个网络堆栈遍历和直接将以太网帧数据送到一个应用程序。</p><p>&emsp;&emsp;有很多种方法来创建raw sockets，例如AF_INET，PF_INET，AF_PACKET，PF_PACKET等。相互之前的区别在于AF_INET和PF_INET只能到网络7层模型的网络层，而AF_PACKET和PF_PACKET可以到MAC层，即数据链路层。</p><h3 id="2-1-传输层"><a href="#2-1-传输层" class="headerlink" title="2.1    传输层"></a>2.1    传输层</h3><p>&emsp;&emsp;最简单的传输层socket就是最常用的socket，而非raw socket。建立方式为：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(AF_INET,SOCK_STREAM/SOCK_DGRAM, protocol)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;收发数据用于TCP和UDP协议，发送和接收的数据都不包含UDP头或TCP头，使用ip地址+端口号作为地址。</p><h3 id="2-2-网络层"><a href="#2-2-网络层" class="headerlink" title="2.2    网络层"></a>2.2    网络层</h3><p>&emsp;&emsp;建立方式为：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(AF_INET,SOCK_STREAM/SOCK_DGRAM, protocol)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;第一个参数：PF_INET/AF_INET。二者的的区别为指定address family时一般设置为AF_INET，即使用IP；指定protocal family时一般设置PF_INET。在头文件中有如下定义：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define AF_INET 0</span><br><span class="line">#define PF_INET AF_INET</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;所以AF_INET与PF_INET完全一样；</p><p>&emsp;&emsp;第二个参数说明建立的是一个raw socket；</p><p>&emsp;&emsp;第三个参数分为3种情况：</p><ul><li><p>a.参数protocol用来指明所要接收的协议号，如果是象IPPROTO_TCP(6)这种非0，非255号的协议，则内核碰到ip头中protocol域和创建socket所使用参数protocol相同的IP包，就会交给这个rawsocket来处理。</p></li><li><p>b.如果protocol是IPPROTO_RAW(255)，这个socket只能用来发送IP包，而不能接收任何数据.发送的数据需要自己填充IP包头，并且自己计算校验和。</p></li><li><p>c.如果protocol是IPPROTO_IP(0)，在linux和sco unix上是不允许建立的。</p></li></ul><p>&emsp;&emsp;网络层raw socket的特点为该套接字可以接收协议类型为(icmp，igmp等)发往本机的ip数据包；不能收到非发往本地ip的数据包(ip软过滤会丢弃这些不是发往本机ip的数据包)；不能收到从本机发送出去的数据包；发送时需要自己组织tcp，udp，icmp等传输层协议头部，可以setsockopt来自己包装ip头部；接收的UDP和TCP协议号的数据不会传给任何原始套接字接口，UDP和TCP协议的数据需要通过MAC层原始套接字来获得。</p><h3 id="2-3-数据链路层"><a href="#2-3-数据链路层" class="headerlink" title="2.3    数据链路层"></a>2.3    数据链路层</h3><p>&emsp;&emsp;建立方式为：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_IP/ETH_P_ARP/ETH_P_ALL))</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;发送和接收数据使用MAC地址，可以在MAC层发送和接收任意的数据，如果有上层协议需要自行添加协议头。</p><p>&emsp;&emsp;第三个参数protocol协议类型一共有四个：</p><ul><li><p>ETH_P_IP 0x800 只接收发往本机mac的ip类型的数据帧；</p></li><li><p>ETH_P_ARP 0x806 只接受发往本机mac的arp类型的数据帧；</p></li><li><p>ETH_P_ARP 0x8035 只接受发往本机mac的rarp类型的数据帧；</p></li><li><p>ETH_P_ALL 0x3 接收发往本机mac的所有类型ip，arp，rarp的数据帧, 接收从本机发出的所有类型的数据帧.(混杂模式打开的情况下,会接收到非发往本地mac的数据帧)。</p></li></ul><p>&emsp;&emsp;需要注意的是这一种socket使用的收发地址都是通过指定网卡实现，接受和发送的数据都是数据帧，格式如下：</p><hr><pre><code>|eth header|             data          |</code></pre><hr><p>&emsp;&emsp;即： </p><hr><pre><code>|MACdesAddr(6)|MACsrcAddr(6)|protocal(2)|        data      |</code></pre><hr><p>&emsp;&emsp;综述MAC层socket可以接收发往本地mac的数据帧；可以接收从本机发送出去的数据帧(第3个参数需要设置为ETH_P_ALL)；可以接收非发往本地mac的数据帧(网卡需要设置为promisc混杂模式)。</p><h2 id="3-具体实现"><a href="#3-具体实现" class="headerlink" title="3 具体实现"></a>3 具体实现</h2><h3 id="3-1-原理"><a href="#3-1-原理" class="headerlink" title="3.1    原理"></a>3.1    原理</h3><p>&emsp;&emsp;把任意的TCP连接给Reset掉是比较容易的，因为TCP在收到数据包时，对发送者仅仅做以下简单的校验：五元组校验；校验和检测；序列号校验。如此松散的校验机制很容易就可以pass。</p><p>&emsp;&emsp;包构造的原理图如下图所示：</p><p><img src="/img/TcpRst/TcpRst1.png" alt=""></p><h3 id="3-2-实现"><a href="#3-2-实现" class="headerlink" title="3.2    实现"></a>3.2    实现</h3><p>&emsp;&emsp;首先创建raw socket连接：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">listen</span><span class="params">()</span>:</span></span><br><span class="line">    listen_socket = socket.socket(</span><br><span class="line">        socket.AF_PACKET,</span><br><span class="line">        socket.SOCK_RAW,</span><br><span class="line">        socket.ntohs(<span class="number">0x0003</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;然后监听网卡，接收数据，解析数据帧，寻找tcp协议的数据帧，放弃掉原本的RST包以及FIN包，然后判断ip地址是否在黑名单中:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> sender <span class="keyword">in</span> addresses:</span><br><span class="line">    <span class="keyword">if</span> sender <span class="keyword">not</span> <span class="keyword">in</span> stats[<span class="string">"seen"</span>]:</span><br><span class="line">        stats[<span class="string">"seen"</span>].append(sender)</span><br><span class="line"><span class="keyword">elif</span> receiver <span class="keyword">in</span> addresses:</span><br><span class="line">    <span class="keyword">if</span> receiver <span class="keyword">not</span> <span class="keyword">in</span> stats[<span class="string">"seen"</span>]:</span><br><span class="line">        stats[<span class="string">"seen"</span>].append(receiver)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;如果检测到禁止的tcp连接，就会给连接双方均发送TCP Reset包断开连接，实现tcp旁路阻断的功能。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;1-背景&quot;&gt;&lt;a href=&quot;#1-背景&quot; class=&quot;headerlink&quot; title=&quot;1 背景&quot;&gt;&lt;/a&gt;1 背景&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;TCP旁路阻断技术通过监听通信信道，抓包还原TCP协议，然后通过给通信两方发送TCP Reset包实现旁路阻断TCP连接。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;Python中可通过Raw Socket进行以太网嗅探和发送Reset包。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Program" scheme="https://coldwave96.github.io/categories/Program/"/>
-    
-    
-      <category term="By-pass Block" scheme="https://coldwave96.github.io/tags/By-pass-Block/"/>
     
   </entry>
   
