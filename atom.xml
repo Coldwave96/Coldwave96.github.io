@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-05-25T08:25:40.451Z</updated>
+  <updated>2020-05-26T09:16:16.661Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vulnhub - Raven 2 の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/05/26/Raven-2/"/>
+    <id>https://coldwave96.github.io/2020/05/26/Raven-2/</id>
+    <published>2020-05-26T07:05:08.000Z</published>
+    <updated>2020-05-26T09:16:16.661Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;<a href="https://www.vulnhub.com/" target="_blank" rel="noopener">Vulnhub</a>之Raven系列靶机第二台<a href="(https://www.vulnhub.com/entry/raven-2,269/)">Raven 2</a>的Write-up。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;寻找靶机地址：</p><p><img src="/img/Raven-2/Raven-2-1.png" alt=""></p><p>&emsp;&emsp;扫描开放的端口和服务：</p><p><img src="/img/Raven-2/Raven-2-2.png" alt=""></p><p>&emsp;&emsp;可以看到端口和服务与Raven 1一致。</p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;尝试了之前Raven 1的手段，发现均失败，那只能另辟蹊径。</p><p>&emsp;&emsp;首先进行了目录爆破，然后去一个一个的访问界面寻找信息，果然找到一个有趣的文件夹：</p><p><img src="/img/Raven-2/Raven-2-3.png" alt=""></p><p>&emsp;&emsp;在PATH文件里不仅找到了网站的实际地址，还找到了第一个flag：</p><p><img src="/img/Raven-2/Raven-2-4.png" alt=""></p><p>&emsp;&emsp;看来这个文件夹里有重要的线索，仔细看了下，其他文件都指向PHPMailer。这时突然想起在Raven 1靶机里发现的那封奇怪的邮件和奇怪的code片段，基本确定Raven 2靶机的突破口就在这里了。</p><p>&emsp;&emsp;打开SECURITY.MD文件：</p><p><img src="/img/Raven-2/Raven-2-5.png" alt=""></p><p>&emsp;&emsp;这是连利用哪个漏洞都告诉我们了，结合在VERSION中找到的版本号：</p><p><img src="/img/Raven-2/Raven-2-6.png" alt=""></p><p>&emsp;&emsp;所以就锁定了<a href="https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-10033" target="_blank" rel="noopener">CVE-2016-10033</a>，还是最危险的远程代码执行漏洞。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;关于这个漏洞的具体信息可以看这篇红日安全团队的文章<a href="https://www.freebuf.com/column/155911.html" target="_blank" rel="noopener">Web安全-CVE-2016-10033漏洞</a>。</p><p>&emsp;&emsp;找一下利用的EXP：</p><p><img src="/img/Raven-2/Raven-2-7.png" alt=""></p><p>&emsp;&emsp;在Raven 1靶机提权的时候我们用的就是Python实现的，所以这里也选择Python版本的EXP。</p><p>&emsp;&emsp;我们看一下这个EXP，然后针对本次环境需要修改的参数：target即目标地址，反弹回本机的地址以及Webshell上传的地址（P.S.backdoor的文件名一定要修改，否则无法攻击成功）</p><p><img src="/img/Raven-2/Raven-2-8.png" alt=""></p><p>&emsp;&emsp;改好之后运行脚本，然后监听本机4444端口，访问Webshell触发shell反弹：</p><p><img src="/img/Raven-2/Raven-2-9.png" alt=""></p><p>&emsp;&emsp;得到反弹的shell之后利用Python转换成交互式shell，看下文件夹，发现shell.php确实是成功上传了，但是没有找到backdoor.php，具体原因也不太清楚。</p><p><img src="/img/Raven-2/Raven-2-10.png" alt=""></p><p>&emsp;&emsp;然后找一下有没有flag：<code>find / -name &quot;flag*”</code></p><p><img src="/img/Raven-2/Raven-2-11.png" alt=""></p><p>&emsp;&emsp;找到flag2.txt：</p><p><img src="/img/Raven-2/Raven-2-12.png" alt=""></p><p>&emsp;&emsp;然后是flag3.png文件：</p><p><img src="/img/Raven-2/Raven-2-13.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;根据Raven 1的经验，最后一个flag需要拿到root权限。提权的方法和Raven 1补充的MySQL udf提权一样。</p><p>&emsp;&emsp;拿到shell之后查看wordpress配置文件得到数据库账号和密码，登录数据库通过udf提权即可获取root权限。</p><p>&emsp;&emsp;这一步与Raven 1靶机有两点不同：</p><ul><li><p>一是没法直接通过scp命令将文件传入靶机，需要靶机通过wget命令下载攻击机的文件</p></li><li><p>二是数据库里用户的账户密码不再能够通过ssh登录了，所以Raven 1中通过steven账户sudo命令提权这条路走不通了</p></li></ul><p>&emsp;&emsp;具体操作见Raven 1即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之Raven系列靶机第二台&lt;a href=&quot;(https://www.vulnhub.com/entry/raven-2,269/)&quot;&gt;Raven 2&lt;/a&gt;的Write-up。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>Vulnhub - Raven 1 の Write-Up</title>
@@ -459,30 +482,6 @@
     
     
       <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hack The Box - Postman の Write-Up</title>
-    <link href="https://coldwave96.github.io/2020/01/02/Postman/"/>
-    <id>https://coldwave96.github.io/2020/01/02/Postman/</id>
-    <published>2020-01-02T12:35:10.000Z</published>
-    <updated>2020-04-30T10:46:04.953Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;元旦这两天闲来无事玩了下<a href="https://www.hackthebox.eu/home/machines/profile/215" target="_blank" rel="noopener">Postman</a>这台靶机，这是一台有很多坑的机器，不过总体难度不高。</p><p><img src="/img/Postman/Postman1.png" alt=""></p><a id="more"></a><h2 id="扫描"><a href="#扫描" class="headerlink" title="扫描"></a>扫描</h2><p>&emsp;&emsp;第一步还是常规的Nmap扫描：</p><p><img src="/img/Postman/Postman2.png" alt=""></p><p>&emsp;&emsp;可以看到靶机开放了22，80和10000三个端口。22端口的ssh服务和80端口的web服务平淡无奇，简单看了下就略过了。</p><p>&emsp;&emsp;10000端口webmin服务吸引了我全部的注意，经过搜索发现webmin 1.910存在远程命令执行漏洞，CVE编号为CVE-2019-15107。但是经过多次尝试发现该漏洞无法利用，可能是被修补了，所以只能重新寻找突破口。</p><h2 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h2><p>&emsp;&emsp;没办法，只能全端口重新扫描一下，看看有没有什么遗漏：</p><p><img src="/img/Postman/Postman3.png" alt=""></p><p>&emsp;&emsp;果然6379端口隐藏了一个redis 4.0.9服务。找一下这个服务有没有什么可以利用的地方：</p><p><img src="/img/Postman/Postman4.png" alt=""></p><p>&emsp;&emsp;果然redis 4.x/5.x版本也存在远程命令执行漏洞，但是这个脚本并不能使用。在不懈搜寻之下，找到了一些有用的东西：<a href="https://github.com/Avinash-acid/Redis-Server-Exploit" target="_blank" rel="noopener">https://github.com/Avinash-acid/Redis-Server-Exploit</a>。</p><p>&emsp;&emsp;这是<a href="https://xz.aliyun.com/t/4051" target="_blank" rel="noopener">redis未授权访问的漏洞</a>，通过该漏洞可以向靶机里写入ssh秘钥，然后通过ssh连接到靶机。</p><p><img src="/img/Postman/Postman5.png" alt=""></p><p>&emsp;&emsp;这样我们便通过ssh以redis这个低权限账号登录。登录之后找了许多文件夹：</p><p><img src="/img/Postman/Postman6.png" alt=""></p><p>&emsp;&emsp;在.bash_history文件中发现了Matt用户以及id_rsa.bak文件，找一下这个文件在哪里：</p><p><img src="/img/Postman/Postman7.png" alt=""></p><p>&emsp;&emsp;猜测这是Matt用户的ssh登录凭证，同样使用john爆破密码，具体操作参考<a href="https://coldwave96.github.io/2019/12/17/Traverxec/">Traverxec</a>，最终可以得到密码。</p><p>&emsp;&emsp;不过这次无法通过ssh密钥登陆，可能是靶机做了限制。然后我直接尝试了下用这个密码su Matt账户就成功切换到了Matt账户，然后在根目录下就可以获得user.txt。</p><h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>&emsp;&emsp;使用<a href="https://github.com/rebootuser/LinEnum" target="_blank" rel="noopener">LinEnum脚本</a>提权，即可在root根目录下找到root.txt。</p><p>&emsp;&emsp;其实root权限还有其他方法，还记得10000端口的webmin服务么，Matt用户以及刚才破解出来的密码配MSF中的webmin漏洞利用模块即可获取root用户权限的shell，然后在根目录下即可找到root.txt。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;元旦这两天闲来无事玩了下&lt;a href=&quot;https://www.hackthebox.eu/home/machines/profile/215&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Postman&lt;/a&gt;这台靶机，这是一台有很多坑的机器，不过总体难度不高。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/Postman/Postman1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-    
-      <category term="Hack The Box" scheme="https://coldwave96.github.io/tags/Hack-The-Box/"/>
     
   </entry>
   
