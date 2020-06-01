@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="一些概念"><meta name="keywords" content="PWN"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>一些概念 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存区域"><span class="toc-number">2.</span> <span class="toc-text">内存区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bss段和data段"><span class="toc-number">3.</span> <span class="toc-text">bss段和data段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to my world ~ ~</div><div class="follow-button"><a href="https://github.com/Coldwave96" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">41</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">16</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">7</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" href="http://bodhidharmalu.github.io" target="_blank" rel="noopener">Tigerlu</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/about">About</a></span></div><div id="post-info"><div id="post-title">一些概念</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-01</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theory/">Theory</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;在刷ROP题的时候涉及到将字符串写入内存的问题，学习过程中需要更加细致的了解一些概念，简单的记录一下自己的理解。</p>
+<a id="more"></a>
+
+<h2 id="内存区域"><a href="#内存区域" class="headerlink" title="内存区域"></a>内存区域</h2><p>&emsp;&emsp;简单的了解一下内存中的一些区域：</p>
+<ul>
+<li><p>栈（stack）：由编译器自动分配及释放，存放着函数的参数值、局部变量的值等。</p>
+</li>
+<li><p>堆（heap）：一般是由程序员通过相应的函数分配和释放，若程序员不释放，程序结束可能由OS回收。</p>
+</li>
+<li><p>全局区（静态区，static）：全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域（.data段，data segment），未初始化的全局变量和未初始化的静态变量在相邻的另一块区域（.bss段，bss segment）。程序结束后由系统释放。</p>
+</li>
+<li><p>文字常量区：存放文字等不可修改的常量，由系统分配和释放。</p>
+</li>
+<li><p>程序代码区：存放程序编译连接后生成的二进制机器码指令。</p>
+</li>
+</ul>
+<p>&emsp;&emsp;下面是一个例子了解这些区域：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;string.h&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">static int a&#x3D;1; &#x2F;&#x2F;全局初始化区 </span><br><span class="line">int b&#x3D;2; &#x2F;&#x2F;全局初始化区 </span><br><span class="line">char *p; &#x2F;&#x2F;全局未初始化区 </span><br><span class="line">char *p2; &#x2F;&#x2F;全局未初始化区 </span><br><span class="line">int *p3; &#x2F;&#x2F;全局未初始化区 </span><br><span class="line">int *p4; &#x2F;&#x2F;全局未初始化区 </span><br><span class="line">char *p5&#x3D;&#123;&quot;555555555&quot;&#125;; &#x2F;&#x2F;全局初始化区 </span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    static int c&#x3D;3;</span><br><span class="line">    int d&#x3D;4; &#x2F;&#x2F;内存栈</span><br><span class="line">    int e&#x3D;7; &#x2F;&#x2F;内存栈</span><br><span class="line">    </span><br><span class="line">    char *p6&#x3D;&#123;&quot;555555555&quot;&#125;;</span><br><span class="line">    p&#x3D;(char*)malloc(sizeof(char)*10); &#x2F;&#x2F;内存堆</span><br><span class="line">    p2&#x3D;(char*)malloc(sizeof(char)*10); &#x2F;&#x2F;内存堆</span><br><span class="line">    p3&#x3D;(int*)malloc(sizeof(int)); &#x2F;&#x2F;内存堆</span><br><span class="line">    p4&#x3D;(int*)malloc(sizeof(int)*10); &#x2F;&#x2F;内存堆</span><br><span class="line">    for(int i&#x3D;0;i&lt;&#x3D;9;i++)p4[i]&#x3D;0x1;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    *p3&#x3D;0x123;</span><br><span class="line">    strcpy(p,&quot;123456789&quot;); &#x2F;&#x2F;文字常量区</span><br><span class="line">    strcpy(p2,&quot;987654321&quot;);</span><br><span class="line">    strcpy(p2,&quot;123456789&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;关于这些内存区域的一些说明：</p>
+<ul>
+<li><p>全局初始化区与全局（静态）初始化区是在同一段内存连续分配的，按内存地址增长方向分配</p>
+</li>
+<li><p>全局初始化区与全局未初始化区不在同一段内存区</p>
+</li>
+<li><p>栈空间也是同一段内存连续分配的，按内存地址减小方向分配</p>
+</li>
+<li><p>堆空间也是同一段内存连续分配的，按内存地址增大方向分配</p>
+</li>
+<li><p>文字常量区在自己特有的内存段内，且有机制控制字符常量不被修改（当字符串相同的时候，系统有时还会将两个指针指向同一处）</p>
+</li>
+<li><p>在文字常量区的字符串不可以被修改，而在内存堆空间的字符串可以被修改</p>
+</li>
+</ul>
+<h2 id="bss段和data段"><a href="#bss段和data段" class="headerlink" title="bss段和data段"></a>bss段和data段</h2><p>&emsp;&emsp;bss段（Block Started by Symbol segment）通常是指用来存放程序中未初始化的全局变量的一块内存区域，一般在初始化时bss 段部分将会清零（bss段属于静态内存分配，即程序一开始就将其清零了）。比如，在C程序编译完成之后，已初始化的全局变量保存在.data 段中，未初始化的全局变量保存在.bss段中。</p>
+<p>&emsp;&emsp;text（二进制机器代码段）和data段都在可执行文件中（在嵌入式系统里一般是固化在镜像文件中），由系统从可执行文件中加载；而bss段不在可执行文件中（不占用exe的空间，只标记空间大小），由系统初始化。</p>
+<p>&emsp;&emsp;看一下这样两个程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#程序1 </span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">int arr[1024*1024]&#x3D;&#123;0&#125;;</span><br><span class="line">&#x2F;&#x2F;int arr[1024*1024];</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello!&quot;);	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#程序2</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">int arr[1024*1024]&#x3D;&#123;1&#125;;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;hello!&quot;);	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;当我们编译完这两个程序之后查看编译好的文件大小会发现程序2比程序1要大。原因在于程序1的变量位于.bss段，而程序2的变量位于.data段。</p>
+<p>&emsp;&emsp;全局的未初始化变量存在于.bss段中，具体体现为一个占位符；全局的已初始化变量存于.data段中；而函数内的自动变量都在栈上分配空间。</p>
+<p>&emsp;&emsp;.bss是不占用.exe文件空间的，其内容由操作系统初始化（清零）；而.data却需要占用，其内容由程序初始化，因此造成了上述情况。</p>
+<p>&emsp;&emsp;还有一些点需要注意：</p>
+<ul>
+<li><p>.bss段（未手动初始化的数据）并不给该段的数据分配空间，只是记录数据所需空间的大小</p>
+</li>
+<li><p>.data（已手动初始化的数据）段则为数据分配空间，数据保存在目标文件中</p>
+</li>
+<li><p>.data段包含经过初始化的全局变量以及它们的值</p>
+</li>
+<li><p>.bss段的大小从可执行文件中得到，然后链接器得到这个大小的内存块，紧跟在数据段后面。当这个内存区进入程序的地址空间后全部清零。包含DATA和BSS段的整个区段此时通常称为数据区</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;下面的图可以很好的理解和总结这些概念之间的关系：</p>
+<p><img src="/img/concepts.jpg" alt=""></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/06/01/concepts/">https://coldwave96.github.io/2020/06/01/concepts/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/05/29/callme/"><span>ROP Emporium の callme</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
+var verify = 'false' == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2020 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
