@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-06-02T06:04:01.241Z</updated>
+  <updated>2020-06-03T08:36:11.068Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vulnhub - Lord Of The Root の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/06/03/LordOfTheRoot/"/>
+    <id>https://coldwave96.github.io/2020/06/03/LordOfTheRoot/</id>
+    <published>2020-06-03T06:18:10.000Z</published>
+    <updated>2020-06-03T08:36:11.068Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;<a href="https://www.vulnhub.com/" target="_blank" rel="noopener">Vulnhub</a>之<a href="https://www.vulnhub.com/entry/lord-of-the-root-101,129/" target="_blank" rel="noopener">Lord Of The Root</a>的Write-up。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;寻找靶机地址：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot1.png" alt=""></p><p>&emsp;&emsp;扫描开放的端口和服务：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot2.png" alt=""></p><p>&emsp;&emsp;扫描结果提示OSScan results may be unreliable because we could not find at least 1 open and 1 closed port，可能是靶机做了针对操作系统检测的防范。</p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;扫描结果只有一个22端口，只能先尝试登录：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot3.png" alt=""></p><p>&emsp;&emsp;ssh登录提示上面的界面，猜测是端口敲门，这点在<a href="https://coldwave96.github.io/2020/05/06/DC-9/#Step-4">DC-9靶机</a>中也有涉及到。</p><p>&emsp;&emsp;所以我们通过<code>knock 172.16.83.138 1 2 3</code>命令实现端口敲门，然后再次扫描靶机开放的端口：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot4.png" alt=""></p><p>&emsp;&emsp;果然多了一个1337端口，访问之后发现就是一张简单的图片：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot5.png" alt=""></p><p>&emsp;&emsp;尝试下爆破网站目录，发现/images目录下有3张照片，robots.txt文件中有一段奇怪的字符串：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot6.png" alt=""></p><p>&emsp;&emsp;这是base64加密的字符串，揭秘后得到：Lzk3ODM0NTIxMC9pbmRleC5waHA= Closer!</p><p>&emsp;&emsp;但是前半部分依然是base64加密的字符串，再次解密得到：/978345210/index.php</p><p>&emsp;&emsp;访问这个界面看到一个登录框：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot7.png" alt=""></p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;通过sqlmap的注入发现这里存在注入漏洞：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot8.png" alt=""></p><p>&emsp;&emsp;在Webapp数据库里发现Users表：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot9.png" alt=""></p><p>&emsp;&emsp;User表里找到5个用户的账户和密码:</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot10.png" alt=""></p><p>&emsp;&emsp;用这5个账户密码登录之前的界面，全部跳转到同一个profile.php界面，而这个界面不用输入任何账户名和密码直接点击登录就可以跳转，所以这5个账户名和密码不是用在这里的。</p><p>&emsp;&emsp;将这5个账户名和密码用于爆破22端口ssh服务：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot11.png" alt=""></p><p>&emsp;&emsp;用找到的账户ssh登录成功：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot12.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;下一步就是提权了。使用sudo -l命令提示该用户没有sudo权限，这样SUID提权方法就无法使用了：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot13.png" alt=""></p><p>&emsp;&emsp;找了下资料，大佬给了2个工具网站：</p><ul><li><p><a href="http://pentestmonkey.net/tools/audit/unix-privesc-check" target="_blank" rel="noopener">unix-privesc-check</a></p></li><li><p><a href="https://www.securitysift.com/download/linuxprivchecker.py" target="_blank" rel="noopener">linuxprivchecker</a></p></li></ul><p>&emsp;&emsp;这两个脚本将细致的检测许多可导致提权的配置问题，我们选一个尝试一下。将脚本下载到靶机上，然后运行：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot14.png" alt=""></p><p>&emsp;&emsp;脚本最后反馈了一个很眼熟的信息：</p><p><img src="/img/LordOfTheRoot/LordOfTheRoot15.png" alt=""></p><p>&emsp;&emsp;这不是MySQL的udf提权么，之前在<a href="https://coldwave96.github.io/2020/05/25/Raven-1/#P-S">Raven1</a>中详细谈论过，步骤基本一致，有兴趣的可自行动手尝试。</p><p>&emsp;&emsp;关于MySQL数据库root账户的密码我们可以通过sqlmap在mysql数据库的user表中找到。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之&lt;a href=&quot;https://www.vulnhub.com/entry/lord-of-the-root-101,129/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Lord Of The Root&lt;/a&gt;的Write-up。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>ROP Emporium の write4</title>
@@ -457,31 +480,6 @@
     
     
       <category term="Assembler" scheme="https://coldwave96.github.io/tags/Assembler/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>将Hexo从Windows迁移到Mac上的踩坑教学</title>
-    <link href="https://coldwave96.github.io/2020/05/01/WintoMac/"/>
-    <id>https://coldwave96.github.io/2020/05/01/WintoMac/</id>
-    <published>2020-05-01T01:36:13.000Z</published>
-    <updated>2020-05-01T04:21:00.964Z</updated>
-    
-    <content type="html"><![CDATA[<p>&emsp;&emsp;我终于换MAC了！！！我终于换MAC了！！！我终于换MAC了！！！</p><p>&emsp;&emsp;重要的事情说3遍，其实我已经换MAC半年了，但是依然很兴奋，毕竟这台电脑的价格比我之前所有电脑加起来都贵==。刚换的时候就想把hexo转移到MAC，拖到现在才搬家的理由只有一个：懒！！！</p><p>&emsp;&emsp;话不多说，开始踩坑。</p><a id="more"></a><h2 id="安装git和node-js"><a href="#安装git和node-js" class="headerlink" title="安装git和node.js"></a>安装git和node.js</h2><p>&emsp;&emsp;<code>brew install git</code></p><p>&emsp;&emsp;<code>brew install node</code></p><p>&emsp;&emsp;至于brew，emm，baidu了解一下。</p><h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>&emsp;&emsp;使用node.js来安装：</p><p>&emsp;&emsp;<code>npm install hexo-cli -g</code></p><p>&emsp;&emsp;这是第一个坑，一开始我用的是<code>npm install hexo g</code>命令安装的hexo，虽然可以成功安装hexo，可是用的时候会出现<code>hexo: COMMAND NOT FOUND</code>问题。</p><h2 id="初始化hexo"><a href="#初始化hexo" class="headerlink" title="初始化hexo"></a>初始化hexo</h2><p>&emsp;&emsp;新建一个hexo目录，比如<code>/Blog</code>这种，然后<code>hexo init</code></p><p>&emsp;&emsp;再用<code>hexo s</code>测试是否成功，打开<code>localhost:4000</code>查看本地hexo界面是否正常显示。</p><h2 id="生成SSH-Key"><a href="#生成SSH-Key" class="headerlink" title="生成SSH Key"></a>生成SSH Key</h2><p>&emsp;&emsp;先查看本地的SSH Key：<code>cd ~/.ssh</code></p><p>&emsp;&emsp;如果没有，生成一个SSH Key：<code>ssh-keygen -t rsa -C &quot;example@example.com&quot;</code>，最后那个是注册邮箱。</p><h2 id="将SSH-Key添加到Github"><a href="#将SSH-Key添加到Github" class="headerlink" title="将SSH Key添加到Github"></a>将SSH Key添加到Github</h2><p>&emsp;&emsp;进入.ssh文件夹：<code>cd ~/.ssh</code>，然后打开里面的<code>id_rsa.pub</code>文件，里面的内容就是SSH key，复制全部内容；</p><p>&emsp;&emsp;网页打开github的设置：Settings -&gt; SSH and GPG keys，点击绿色的按钮New SSH key，然后在输入框中输入刚才复制的内容；</p><p>&emsp;&emsp;保存后，github可能会向你的邮箱发送一个验证链接（如果有记得去邮箱验证，不然之后的hexo部署会一直不成功的）。</p><p>&emsp;&emsp;测试一下是否成功：<code>ssh git@github.com</code></p><p>&emsp;&emsp;看到下面的即成功：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PTY allocation request failed on channel 0</span><br><span class="line">Hi gjincai! You<span class="string">'ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="string">Connection to github.com closed.</span></span><br></pre></td></tr></table></figure><h2 id="文件配置转移"><a href="#文件配置转移" class="headerlink" title="文件配置转移"></a>文件配置转移</h2><p>&emsp;&emsp;windows下的博客根目录hexo，复制该目录下的：<code>_config.yml</code>, <code>scaffolds</code>, <code>source</code>, <code>themes</code>；</p><p>&emsp;&emsp;直接覆盖替换mac下的博客根目录hexo相同的文件和文件夹。</p><h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>&emsp;&emsp;理论上这样就完成了，但是实际上还会有问题。</p><p>&emsp;&emsp;这是第二个坑，这时<code>hexo g &amp;&amp; hexo d</code>依然不成功，是因为缺少了模块，需要执行命令<code>npm install hexo-deployer-git --save</code></p><p>&emsp;&emsp;你以为这样就完成了么，不，下面是第三个坑。</p><p>&emsp;&emsp;hexo重新部署之后，博客界面显示<code>extends includes/layout.pug block content include includes/recent-posts.pug include includes/partial</code></p><p>&emsp;&emsp;解决方案：</p><ul><li><p>执行命令<code>npm install --save hexo-renderer-jade hexo-generator-feed hexo-generator-sitemap hexo-browsersync hexo-generator-archive</code></p></li><li><p>清除缓存<code>hexo clean</code></p></li><li><p>生成静态文件<code>hexo g</code></p></li></ul><p>&emsp;&emsp;这样就大功告成，再次<code>hexo d</code>部署就可以啦。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;emsp;&amp;emsp;我终于换MAC了！！！我终于换MAC了！！！我终于换MAC了！！！&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;重要的事情说3遍，其实我已经换MAC半年了，但是依然很兴奋，毕竟这台电脑的价格比我之前所有电脑加起来都贵==。刚换的时候就想把hexo转移到MAC，拖到现在才搬家的理由只有一个：懒！！！&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;话不多说，开始踩坑。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Miscellaneous" scheme="https://coldwave96.github.io/categories/Miscellaneous/"/>
-    
-    
-      <category term="Blogs" scheme="https://coldwave96.github.io/tags/Blogs/"/>
     
   </entry>
   
