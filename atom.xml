@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-06-05T03:48:57.969Z</updated>
+  <updated>2020-06-08T06:08:19.262Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vulnhub - DerpNStink の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/06/08/DerpNStink/"/>
+    <id>https://coldwave96.github.io/2020/06/08/DerpNStink/</id>
+    <published>2020-06-08T01:48:02.000Z</published>
+    <updated>2020-06-08T06:08:19.262Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;<a href="https://www.vulnhub.com/" target="_blank" rel="noopener">Vulnhub</a>之<a href="https://www.vulnhub.com/entry/derpnstink-1,221/" target="_blank" rel="noopener">DerpNStink</a>的Write-up。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;寻找靶机地址：</p><p><img src="/img/DerpNStink/DerpNStink1.png" alt=""></p><p>&emsp;&emsp;扫描开放的端口和服务：</p><p><img src="/img/DerpNStink/DerpNStink2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;21端口开放了vsftpd服务，之前这个服务是存在远程命令执行漏洞的，不过想要利用这个漏洞需要获得一个账号。</p><p>&emsp;&emsp;除此之外还有22端口的ssh服务和80端口的http服务，先从http服务开始：</p><p><img src="/img/DerpNStink/DerpNStink3.png" alt=""></p><p>&emsp;&emsp;主页比较可爱，查看源码在最下面找到flag1:</p><p><img src="/img/DerpNStink/DerpNStink4.png" alt=""></p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;扫描网站目录发现一个比较奇特的地址：</p><p><img src="/img/DerpNStink/DerpNStink5.png" alt=""></p><p>&emsp;&emsp;访问一下发现下面的界面信息：</p><p><img src="/img/DerpNStink/DerpNStink6.png" alt=""></p><p><img src="/img/DerpNStink/DerpNStink7.png" alt=""></p><p>&emsp;&emsp;根据提示在hosts文件里添加本地dns：<code>172.16.83.139 derpnstink.local</code>。然后再次进行目录爆破：</p><p><img src="/img/DerpNStink/DerpNStink8.png" alt=""></p><p>&emsp;&emsp;找到数据库界面的地址。还找到一个新的界面，如提示所说的WordPress搭建的Blog。</p><p><img src="/img/DerpNStink/DerpNStink9.png" alt=""></p><p><img src="/img/DerpNStink/DerpNStink10.png" alt=""></p><p>&emsp;&emsp;通过wpscan扫描发现了该站点使用了plugin：</p><p><img src="/img/DerpNStink/DerpNStink11.png" alt=""></p><p>&emsp;&emsp;以及该站点的用户：</p><p><img src="/img/DerpNStink/DerpNStink12.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;一般wordpress靶机装了插件的，基本都会有插件漏洞，找了一下：</p><p><img src="/img/DerpNStink/DerpNStink13.png" alt=""></p><p>&emsp;&emsp;果然，版本也完美匹配，应该就是这个漏洞了，去找一下利用工具：</p><p><img src="/img/DerpNStink/DerpNStink14.png" alt=""></p><p>&emsp;&emsp;可是看下利用模块，需要一个wordpress的账户和密码：</p><p><img src="/img/DerpNStink/DerpNStink15.png" alt=""></p><p>&emsp;&emsp;只能结合枚举出来的两个用户尝试爆破了：</p><p><img src="/img/DerpNStink/DerpNStink16.png" alt=""></p><p>&emsp;&emsp;居然admin/admin……行吧。万事俱备，MSF走起：</p><p><img src="/img/DerpNStink/DerpNStink17.png" alt=""></p><p>&emsp;&emsp;成功获得shell，尝试了下直接找flag文件没有找到，那只能看一些敏感文件获取更多的信息，在wp-config.php文件里找到数据库登录名和密码：</p><p><img src="/img/DerpNStink/DerpNStink18.png" alt=""></p><p>&emsp;&emsp;结合之前目录爆破找到的phpmyadmin地址登录到数据库中，找到flag2：</p><p><img src="/img/DerpNStink/DerpNStink19.png" alt=""></p><h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h2><p>&emsp;&emsp;同时在user表中获得两个账户的密码：</p><p><img src="/img/DerpNStink/DerpNStink20.png" alt=""></p><p>&emsp;&emsp;尝试破解密码：</p><p><img src="/img/DerpNStink/DerpNStink21.png" alt=""></p><p>&emsp;&emsp;root破解出来当然就是admin，unclestinky密码破解出来是wedgie57：</p><p><img src="/img/DerpNStink/DerpNStink22.png" alt=""></p><p>&emsp;&emsp;尝试了ssh发现不行，突然想起来还有个ftp服务，那么getshell？好像我们已经拿过shell了，也许是个高权限的shell？呵，发现3.0.4版本没有远程命令执行漏洞……尴尬，还以为自己早就未卜先知了==</p><p>&emsp;&emsp;那就正常登录看看有什么，用unclestinky账户登录一直失败，想起来webnotes/info.txt界面又个账户名叫stinky，异想天开的用这个试了一下，然后就进去了==</p><p>&emsp;&emsp;在里面找到一段对话：</p><p><img src="/img/DerpNStink/DerpNStink23.png" alt=""></p><p>&emsp;&emsp;然后进了无数个ssh文件夹之后找到一个key.txt：</p><p><img src="/img/DerpNStink/DerpNStink24.png" alt=""></p><p>&emsp;&emsp;ssh的登录凭证，总算找到了一点东西了。用这个凭证登录ssh：</p><p><img src="/img/DerpNStink/DerpNStink25.png" alt=""></p><p>&emsp;&emsp;好吧，<code>chmod 600 key.txt</code>去掉其他用户的read权限后再次登陆：</p><p><img src="/img/DerpNStink/DerpNStink26.png" alt=""></p><p>&emsp;&emsp;终于进来了，找下有什么东西，首先是flag3:</p><p><img src="/img/DerpNStink/DerpNStink27.png" alt=""></p><p>&emsp;&emsp;还有一个pcap文件：</p><p><img src="/img/DerpNStink/DerpNStink28.png" alt=""></p><h2 id="Step-6"><a href="#Step-6" class="headerlink" title="Step 6"></a>Step 6</h2><p>&emsp;&emsp;下载到本地看下是什么：</p><p><img src="/img/DerpNStink/DerpNStink29.png" alt=""></p><p>&emsp;&emsp;用wireshark打开发现是一段时间内的数据包，根据pcap包的名字结合之前在ftp里找到的那段对话，不难发现这段数据包中可能包含mrderp修改的账号和密码信息。</p><p>&emsp;&emsp;在pcap文件中寻找一番，终于发现了用户名和密码：</p><p><img src="/img/DerpNStink/DerpNStink30.png" alt=""></p><p>&emsp;&emsp;经过尝试发现该用户名和密码可以登录ssh服务：</p><p><img src="/img/DerpNStink/DerpNStink31.png" alt=""></p><p>&emsp;&emsp;通过<code>sudo -l</code>命令查看有什么可以利用的提权方式：</p><p><img src="/img/DerpNStink/DerpNStink32.png" alt=""></p><p>&emsp;&emsp;得知mrderp用户可以通过sudo命令在/home/mrderp/binaries/文件下执行derpy*的命令。所以我们创建binaries文件夹：</p><p><img src="/img/DerpNStink/DerpNStink33.png" alt=""></p><p>&emsp;&emsp;再创建derpy.sh文件，向里面写入：</p><p><img src="/img/DerpNStink/DerpNStink34.png" alt=""></p><p>&emsp;&emsp;最后赋予该文件执行权限后通过sudo执行即可获取root权限：</p><p><img src="/img/DerpNStink/DerpNStink35.png" alt=""></p><p>&emsp;&emsp;最终找到flag.txt文件：</p><p><img src="/img/DerpNStink/DerpNStink36.png" alt=""></p><p>&emsp;&emsp;至此，该靶机4个flag已经全部找到。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之&lt;a href=&quot;https://www.vulnhub.com/entry/derpnstink-1,221/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;DerpNStink&lt;/a&gt;的Write-up。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="Vulnhub" scheme="https://coldwave96.github.io/tags/Vulnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>ROP Emporium の badchars</title>
@@ -457,29 +480,6 @@
     
     
       <category term="JarvisOJ" scheme="https://coldwave96.github.io/tags/JarvisOJ/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>常用GDB指令</title>
-    <link href="https://coldwave96.github.io/2020/05/01/GDBcommand/"/>
-    <id>https://coldwave96.github.io/2020/05/01/GDBcommand/</id>
-    <published>2020-05-01T02:30:35.000Z</published>
-    <updated>2020-05-01T04:51:18.937Z</updated>
-    
-    <content type="html"><![CDATA[<p>&emsp;&emsp;不断完善中！！！</p><a id="more"></a><h1 id="选择加载文件"><a href="#选择加载文件" class="headerlink" title="选择加载文件"></a>选择加载文件</h1><p>file [file_name]<br>exec-file [file_name]</p><h1 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h1><p>r(run)</p><h1 id="反编译main函数"><a href="#反编译main函数" class="headerlink" title="反编译main函数"></a>反编译main函数</h1><p>disas [function_name]<br>disassemble [function_name]</p><h1 id="设置断点"><a href="#设置断点" class="headerlink" title="设置断点"></a>设置断点</h1><p>b(break)<br>b [function_name] # 对函数下断点<br>b *addr # 对地址下断点<br>info b # 查看断点</p><p>registers code stack<br>寄存器取值  代码   栈</p><h1 id="查看寄存器情况"><a href="#查看寄存器情况" class="headerlink" title="查看寄存器情况"></a>查看寄存器情况</h1><p>info [register]</p><h1 id="单步调试"><a href="#单步调试" class="headerlink" title="单步调试"></a>单步调试</h1><p>n(next)</p><h1 id="步进（到某个函数）"><a href="#步进（到某个函数）" class="headerlink" title="步进（到某个函数）"></a>步进（到某个函数）</h1><p>si(step into)</p><h1 id="查看现在的堆栈情况"><a href="#查看现在的堆栈情况" class="headerlink" title="查看现在的堆栈情况"></a>查看现在的堆栈情况</h1><p>bt(backtrace)</p><h1 id="继续到下一个断点"><a href="#继续到下一个断点" class="headerlink" title="继续到下一个断点"></a>继续到下一个断点</h1><p>c(continue)</p><h1 id="打印地址值"><a href="#打印地址值" class="headerlink" title="打印地址值"></a>打印地址值</h1><p>x/wx adress # w代表word，在32位嵌入式系统中，一个字WORD占32bit，即4个字节<br>例如：<br>x/10wx 0xffffce90 # 10代表打印10个，w代表32位，可以换成b/h/g，分别对应1，2，8byte，x可以替换为u(unsigned int)/s(string)/d(10进制)/i(指令)</p><h1 id="设置地址的值"><a href="#设置地址的值" class="headerlink" title="设置地址的值"></a>设置地址的值</h1><p>set *addr = value # 设置地址的值</p><h1 id="列出源码"><a href="#列出源码" class="headerlink" title="列出源码"></a>列出源码</h1><p>list</p><h1 id="打印变量值"><a href="#打印变量值" class="headerlink" title="打印变量值"></a>打印变量值</h1><p>print val_name</p><h1 id="查看所有局部变量的值"><a href="#查看所有局部变量的值" class="headerlink" title="查看所有局部变量的值"></a>查看所有局部变量的值</h1><p>info local</p><h1 id="gdb-peda版本中特殊功能"><a href="#gdb-peda版本中特殊功能" class="headerlink" title="gdb-peda版本中特殊功能"></a>gdb-peda版本中特殊功能</h1><p>elfsymbol # 可以把程序中的函数及地址列出来（ROP中很有用）<br>vmmap # 查看进程中的权限<br>readelf # 查看section<br>find [string] # 在内存中查找字符串</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&amp;emsp;&amp;emsp;不断完善中！！！&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Tools" scheme="https://coldwave96.github.io/categories/Tools/"/>
-    
-    
-      <category term="Assembler" scheme="https://coldwave96.github.io/tags/Assembler/"/>
     
   </entry>
   
