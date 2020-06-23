@@ -2,16 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://coldwave96.github.io/2020/06/23/XMAN-level5/</loc>
+    <loc>https://coldwave96.github.io/2020/06/01/concepts/</loc>
     
-    <lastmod>2020-06-23T09:24:05.892Z</lastmod>
+    <lastmod>2020-06-23T10:54:08.216Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/19/LazyBinding/</loc>
+    
+    <lastmod>2020-06-23T10:54:06.268Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/19/libc/</loc>
+    
+    <lastmod>2020-06-23T10:54:04.420Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/22/mmap/</loc>
     
-    <lastmod>2020-06-22T09:19:56.114Z</lastmod>
+    <lastmod>2020-06-23T10:54:02.558Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/12/02/SideBlock/</loc>
+    
+    <lastmod>2020-06-23T10:54:00.523Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/15/Useful-Gadgets/</loc>
+    
+    <lastmod>2020-06-23T10:53:58.100Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/23/XMAN-level5/</loc>
+    
+    <lastmod>2020-06-23T09:24:05.892Z</lastmod>
     
   </url>
   
@@ -23,23 +58,9 @@
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2020/06/19/libc/</loc>
-    
-    <lastmod>2020-06-19T08:04:30.674Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://coldwave96.github.io/2020/06/15/ret2csu/</loc>
     
     <lastmod>2020-06-15T09:12:35.976Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/15/Useful-Gadgets/</loc>
-    
-    <lastmod>2020-06-15T08:21:07.814Z</lastmod>
     
   </url>
   
@@ -93,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2020/06/01/concepts/</loc>
-    
-    <lastmod>2020-06-01T07:24:32.103Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://coldwave96.github.io/2020/05/27/split/</loc>
     
     <lastmod>2020-05-27T06:12:53.929Z</lastmod>
@@ -124,13 +138,6 @@
     <loc>https://coldwave96.github.io/2020/05/20/XMAN-level3/</loc>
     
     <lastmod>2020-05-20T09:11:15.464Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/19/LazyBinding/</loc>
-    
-    <lastmod>2020-05-19T15:42:22.890Z</lastmod>
     
   </url>
   
@@ -243,13 +250,6 @@
     <loc>https://coldwave96.github.io/2020/05/01/WintoMac/</loc>
     
     <lastmod>2020-05-01T04:21:00.964Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/12/02/SideBlock/</loc>
-    
-    <lastmod>2020-05-01T03:45:00.008Z</lastmod>
     
   </url>
   
