@@ -34,11 +34,18 @@
 </li>
 </ul>
 <p>&emsp;&emsp;如果通过mprotect函数实现：</p>
-<p>&emsp;&emsp;通过内存地址泄露获取libc加载基址</p>
-<p>&emsp;&emsp;加上offset获得mprotect函数在内存中真实地址</p>
-<p>&emsp;&emsp;调用mprotect函数修改bss段的权限为rwx即7</p>
-<p>&emsp;&emsp;将shellcode写入bss段</p>
-<p>&emsp;&emsp;控制程序跳转到bss段执行shellcode</p>
+<ul>
+<li><p>通过内存地址泄露获取libc加载基址</p>
+</li>
+<li><p>加上offset获得mprotect函数在内存中真实地址</p>
+</li>
+<li><p>调用mprotect函数修改bss段的权限为rwx即7</p>
+</li>
+<li><p>将shellcode写入bss段</p>
+</li>
+<li><p>控制程序跳转到bss段执行shellcode</p>
+</li>
+</ul>
 <h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><p>&emsp;&emsp;这里简单点选择mprotect函数实现，因为mmap函数需要设置6个参数，而mprotect函数以及过程中会用到的read/write函数都只需要设置3个参数。</p>
 <p>&emsp;&emsp;由于是64位程序，所以需要通过寄存器传参。在程序中找了一下，发现只有万能Gadgets可以用。关于万能Gadgets，可以看一下我之前的<a href="https://coldwave96.github.io/2020/06/15/Useful-Gadgets/">ret2csu - 万能Gadgets</a>。</p>
 <p>&emsp;&emsp;下面直接给出EXP脚本：</p>
