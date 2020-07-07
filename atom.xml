@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-07-02T08:23:20.484Z</updated>
+  <updated>2020-07-07T09:02:39.155Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HeapOverflow</title>
+    <link href="https://coldwave96.github.io/2020/07/07/HeapOverflow/"/>
+    <id>https://coldwave96.github.io/2020/07/07/HeapOverflow/</id>
+    <published>2020-07-07T06:49:57.000Z</published>
+    <updated>2020-07-07T09:02:39.155Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;总结一些堆溢出漏洞利用姿势。</p><h2 id="姿势1：Off-By-One"><a href="#姿势1：Off-By-One" class="headerlink" title="姿势1：Off By One"></a>姿势1：Off By One</h2><p>&emsp;&emsp;Off By One指程序向缓冲区中写入时，写入的字节数超过程序申请的字节数并且只越界一个字节。</p><p>&emsp;&emsp;出现这种漏洞主要有两个原因：</p><ul><li><p>边界验证不严，例如使用循环语句向堆块中写入数据时，循环次数设置错误导致多写入了一个字节；</p></li><li><p>字符串操作不合适，例如strlen函数计算字符串长度时是不考虑结束符’\x00’的，而strcpy复制字符串的时候会拷贝结束符’\x00’，函数使用不当会导致向堆中多写入一个字。</p></li></ul><h2 id="姿势2：Unsorted-Bin-Attack"><a href="#姿势2：Unsorted-Bin-Attack" class="headerlink" title="姿势2：Unsorted Bin Attack"></a>姿势2：Unsorted Bin Attack</h2><p>&emsp;&emsp;Unsorted Bin Attack攻击实现的前提是控制Unsorted Bin Chunk的bk指针，利用该漏洞可以实现修改任意地址值为一个较大的数值。</p><p>&emsp;&emsp;Unsorted Bin Attack攻击可以实现修改任意地址的值，但是所修改成的值却不受我们控制，唯一可以确定的是这个值比较大。</p><p>&emsp;&emsp;通过这个漏洞我们可以实现：</p><ul><li><p>修改循环次数使得程序可以执行多次循环；</p></li><li><p>修改heap中的global_max_fast使得更大的chunk被视为fast bin，然后实现Fastbin Attack。</p></li></ul><h2 id="姿势3：Use-After-Free"><a href="#姿势3：Use-After-Free" class="headerlink" title="姿势3：Use After Free"></a>姿势3：Use After Free</h2><p>&emsp;&emsp;Use After Free字面意思是当一个内存块被释放之后被再次使用，实际情况有：</p><ul><li><p>内存块被释放后，其对应的指针被设置为 NULL ， 然后再次使用，自然程序会崩溃。</p></li><li><p>内存块被释放后，其对应的指针没有被设置为 NULL ，然后在它下一次被使用之前，没有代码对这块内存块进行修改，那么程序很有可能可以正常运转。</p></li><li><p>内存块被释放后，其对应的指针没有被设置为NULL，但是在它下一次使用之前，有代码对这块内存进行了修改，那么当程序再次使用这块内存时，就很有可能会出现奇怪的问题。</p></li></ul><p>&emsp;&emsp;Use After Free漏洞一般指后两种情况，被释放后没有被设置为NULL的内存指针一般被称为dangling pointer。</p><h2 id="姿势4：Chunk-Extend-and-Overlapping"><a href="#姿势4：Chunk-Extend-and-Overlapping" class="headerlink" title="姿势4：Chunk Extend and Overlapping"></a>姿势4：Chunk Extend and Overlapping</h2><p>&emsp;&emsp;通过Chunk Extend实现Chunk Overlapping。实现Chunk Extend需要程序中存在基于堆的漏洞，利用之后可以实现控制chunk header中的数据。</p><h2 id="姿势5：Fastbin-Attack"><a href="#姿势5：Fastbin-Attack" class="headerlink" title="姿势5：Fastbin Attack"></a>姿势5：Fastbin Attack</h2><p>&emsp;&emsp;Fastbin Attack是指基于fastbin机制的一类漏洞利用方法，这类漏洞的利用前提是：</p><ul><li><p>存在堆溢出、Use After Free等能控制chunk内容的漏洞；</p></li><li><p>漏洞发生于fastbin类型的chunk中。</p></li></ul><p>&emsp;&emsp;细分可以分为：</p><ul><li><p>Fastbin Double Free</p></li><li><p>House of Spirit</p></li><li><p>Alloc to Stack</p></li><li><p>Arbitrary Alloc</p></li></ul><p>&emsp;&emsp;前两种主要漏洞侧重于利用free函数释放真的chunk或伪造的chunk，然后再次申请chunk进行攻击，后两种侧重于故意修改fd指针，直接利用malloc申请指定位置chunk进行攻击。</p><h3 id="Fastbin-Double-Free"><a href="#Fastbin-Double-Free" class="headerlink" title="Fastbin Double Free"></a>Fastbin Double Free</h3><p>&emsp;&emsp;Fastbin Double Free指fastbin中的chunk多次释放。根据fastbin的LIFO策略，多次分配的都是同一个堆块。这样相当于多个指针指向同一个堆块，结合该堆块的数据可以实现类型混淆的效果。</p><p>&emsp;&emsp;Fastbin Double Free漏洞利用原理：</p><ul><li><p>fastbin的堆块被释放后next_chunk的pre_inuse位不会清空；</p></li><li><p>fastbin在free时仅验证main_arena直接指向的堆块，也即链表头部的堆块，而没有验证堆表后面的堆块。</p></li></ul><p>&emsp;&emsp;当释放chunk1后，再释放chunk2，这时main_arena指向chunk2，所以可以再次释放chunk1。此时chunk1的fd仍旧指向chunk2且不会被清空，如果我们可以控制chunk1的数据，便可以写入fd指针实现指定任意地址分配fastbin堆块，这样就相当于实现了在任意地址写入任意值的效果。</p><h3 id="House-of-Spirit"><a href="#House-of-Spirit" class="headerlink" title="House of Spirit"></a>House of Spirit</h3><p>&emsp;&emsp;House of Spirit是在目标位置处伪造fastbin chunk并将其释放，从而实现在指定地址处分配chunk。但是需要能够控制指定地址的内容，并在指定地址布局好fake chunk的结构且fake chunk需要满足堆的检验机制。</p><h3 id="Alloc-to-Stack"><a href="#Alloc-to-Stack" class="headerlink" title="Alloc to Stack"></a>Alloc to Stack</h3><p>&emsp;&emsp;Alloc to Stack技术是劫持fastbin链表中chunk的fd指针，将该指针指向想要分配的栈上，从而实现控制栈中的关键数据，档案栈上需要存在有满足条件的size值。</p><h3 id="Arbitrary-Alloc"><a href="#Arbitrary-Alloc" class="headerlink" title="Arbitrary Alloc"></a>Arbitrary Alloc</h3><p>&emsp;&emsp;Arbitrary Alloc技术和Alloc to Stack技术其实一样，只不过Arbitrary Alloc不再局限于栈中，只要任意的目标地址存在满足条件的size域即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;总结一些堆溢出漏洞利用姿势。&lt;/p&gt;
+&lt;h2 id=&quot;姿势1：Off-By-One&quot;&gt;&lt;a href=&quot;#姿势1：O
+      
+    
+    </summary>
+    
+    
+      <category term="Theories" scheme="https://coldwave96.github.io/categories/Theories/"/>
+    
+      <category term="Assembler" scheme="https://coldwave96.github.io/categories/Theories/Assembler/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+      <category term="Heap" scheme="https://coldwave96.github.io/tags/Heap/"/>
+    
+  </entry>
   
   <entry>
     <title>关于堆的bin结构的理解</title>
@@ -533,33 +564,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之Raven系列靶机第二台&lt;a href=&quot;(https://www.vulnhub.com/entry/raven-2,269/)&quot;&gt;Raven 2&lt;/a&gt;的Write-up。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-      <category term="Vulnhub" scheme="https://coldwave96.github.io/categories/WriteUPs/Vulnhub/"/>
-    
-    
-      <category term="Web" scheme="https://coldwave96.github.io/tags/Web/"/>
-    
-      <category term="Raven Series" scheme="https://coldwave96.github.io/tags/Raven-Series/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Vulnhub - Raven 1 の Write-Up</title>
-    <link href="https://coldwave96.github.io/2020/05/25/Raven-1/"/>
-    <id>https://coldwave96.github.io/2020/05/25/Raven-1/</id>
-    <published>2020-05-25T06:02:08.000Z</published>
-    <updated>2020-06-23T12:05:26.845Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;<a href="https://www.vulnhub.com/" target="_blank" rel="noopener">Vulnhub</a>之Raven系列靶机第一台<a href="https://www.vulnhub.com/entry/raven-1,256/" target="_blank" rel="noopener">Raven 1</a>的Write-up。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;寻找靶机地址：</p><p><img src="/img/Raven-1/Raven-1-1.png" alt=""></p><p>&emsp;&emsp;扫描开放的端口和服务：</p><p><img src="/img/Raven-1/Raven-1-2.png" alt=""></p><p>&emsp;&emsp;首先看下80端口的服务，打开后是Raven Security公司的网站，浏览下网站，在SERVICE界面的源码中找到flag1：</p><p><img src="/img/Raven-1/Raven-1-3.png" alt=""></p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;在BLOG界面，发现是一个wordpress搭建的站点，后台数据库为MySQL：</p><p><img src="/img/Raven-1/Raven-1-4.png" alt=""></p><p>&emsp;&emsp;根据经验这里肯定是有问题的，用wpscan扫一下看看能发现什么：</p><p><img src="/img/Raven-1/Raven-1-5.png" alt=""></p><p>&emsp;&emsp;然而并没有得到什么有用的信息，不甘心，再尝试爆破一下用户信息：</p><p><img src="/img/Raven-1/Raven-1-6.png" alt=""></p><p>&emsp;&emsp;找到两个用户steven和michael，尝试爆破这两个账户的密码无果。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;在wordpress这里尝试了很久也没有任何收获，只能转向22端口。</p><p>&emsp;&emsp;尝试下steven和michael两个用户爆破22端口：</p><p><img src="/img/Raven-1/Raven-1-7.png" alt=""></p><p>&emsp;&emsp;找到一个，接下来ssh登录一下，找找有什么信息。</p><p><img src="/img/Raven-1/Raven-1-8.png" alt=""></p><p>&emsp;&emsp;登录后提示我们有新的邮件，去找一下这个邮件在哪里：</p><p><img src="/img/Raven-1/Raven-1-9.png" alt=""></p><p>&emsp;&emsp;然后看一下michael这封邮件内容，有一个比较有趣的片段：</p><p><img src="/img/Raven-1/Raven-1-10.png" alt=""></p><p>&emsp;&emsp;但是并不明白这有什么用。同时在/var/www目录下找到flag2.txt文件：</p><p><img src="/img/Raven-1/Raven-1-11.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;在查看wordpress网站的配置文件时，找到数据库的账户和密码，之前Wappalyzer也说明网站后台是MySQL数据库：</p><p><img src="/img/Raven-1/Raven-1-12.png" alt=""></p><p>&emsp;&emsp;连接MySQL数据库：</p><p><img src="/img/Raven-1/Raven-1-13.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-14.png" alt=""></p><p>&emsp;&emsp;wp_users表里应该是用户的账户密码，看一下有什么：</p><p><img src="/img/Raven-1/Raven-1-15.png" alt=""></p><p>&emsp;&emsp;果然是Steven和Michael两个用户，Michael用户的密码查不出来，Steven账户密码解密结果：</p><p><img src="/img/Raven-1/Raven-1-16.png" alt=""></p><p>&emsp;&emsp;再依次看一下其他的表，在wp_posts表里发现flag3和flag4：</p><p><img src="/img/Raven-1/Raven-1-17.png" alt=""></p><h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h2><p>&emsp;&emsp;到这所有的flag我们都已经拿到了，但是还希望可以获得root权限。</p><p>&emsp;&emsp;虽然在数据库里获得的是wordpress后台账户的密码，但还是尝试一下ssh是否有用：</p><p><img src="/img/Raven-1/Raven-1-18.png" alt=""></p><p>&emsp;&emsp;幸运地登录了steven账户，看一下sudo有什么权限：</p><p><img src="/img/Raven-1/Raven-1-19.png" alt=""></p><p>&emsp;&emsp;那么就可以通过python提权了，具体可看之前DC系列靶机的writeups中python建立交互式终端：</p><p><img src="/img/Raven-1/Raven-1-20.png" alt=""></p><p>&emsp;&emsp;提权成功，获取root权限后拿到一切（原来flag4应该这样拿==）：</p><p><img src="/img/Raven-1/Raven-1-21.png" alt=""></p><h2 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h2><p>&emsp;&emsp;靶机介绍里也说了这台靶机提权的方法有至少两种，后来看其他Writeup发现还可以通过MySQL的udf提权实现。关于udf提权在<a href="https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/#RE">JarvisOJ Web RE？题</a>里有涉及到。</p><p>&emsp;&emsp;这台靶机udf提权首先找一下payload：</p><p><img src="/img/Raven-1/Raven-1-22.png" alt=""></p><p>&emsp;&emsp;然后在本地编译好1518.c文件：</p><p><img src="/img/Raven-1/Raven-1-23.png" alt=""></p><p>&emsp;&emsp;将编译好的1518.so文件上传到靶机上：</p><p><img src="/img/Raven-1/Raven-1-24.png" alt=""></p><p>&emsp;&emsp;然后回到michael账户连接数据库开始提权：</p><p><img src="/img/Raven-1/Raven-1-25.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-26.png" alt=""></p><p><img src="/img/Raven-1/Raven-1-27.png" alt=""></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://www.vulnhub.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Vulnhub&lt;/a&gt;之Raven系列靶机第一台&lt;a href=&quot;https://www.vulnhub.com/entry/raven-1,256/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Raven 1&lt;/a&gt;的Write-up。&lt;/p&gt;
     
     </summary>
     
