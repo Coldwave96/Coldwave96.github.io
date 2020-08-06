@@ -35,7 +35,7 @@
 <p>&emsp;&emsp; 扯远了，这道题里我们想的肯定的直接覆盖为flag的地址，首先来了解一下这个程序里栈的布局：</p>
 <p><img src="/img/Smashes/Smashes6.png" alt=""></p>
 <p>&emsp;&emsp;所以这里有种简单的方法，只要我们能够输入足够长的字符串覆盖掉argv[0]，就可以在触发Canary保护的同时输出flag。</p>
-<p>&emsp;&emsp;最后一个问题，flag地址在哪里。在hopper中我们分明看到了两个flag地址loc_40084e和loc_400860（在IDA中居然只有一个，以往hopper的伪代码可读性令人头大，这次居然意料之外的有效），loc_40084e中指向byte [rbx+aPctfheresTheFl]，而loc_400860就指向aPctfheresTheFl：</p>
+<p>&emsp;&emsp;最后一个问题，flag地址在哪里。在hopper中我们分明看到了两个flag地址loc_40084e和loc_400860（在IDA中居然只有一个，以往hopper的伪代码可读性令人头大，这次居然意料之外的压制了IDA），loc_40084e中指向byte [rbx+aPctfheresTheFl]，而loc_400860就指向aPctfheresTheFl：</p>
 <p><img src="/img/Smashes/Smashes7.png" alt=""></p>
 <p>&emsp;&emsp;但是我们用0x600d20这个地址无法获得flag，这里会被覆盖，所以需要利用byte [rbx+aPctfheresTheFl]位置的flag地址。把程序断在loc_400860函数，然后在程序中寻找‘PCTF’的字样：</p>
 <p><img src="/img/Smashes/Smashes8.png" alt=""></p>
