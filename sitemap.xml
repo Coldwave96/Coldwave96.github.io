@@ -4,449 +4,810 @@
   <url>
     <loc>https://coldwave96.github.io/2020/08/06/Smashes/</loc>
     
-    <lastmod>2020-08-06T06:09:21.898Z</lastmod>
+    <lastmod>2020-08-06</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/08/04/ImageMagick/</loc>
     
-    <lastmod>2020-08-04T10:13:39.496Z</lastmod>
+    <lastmod>2020-08-04</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/07/29/XMAN-level6/</loc>
     
-    <lastmod>2020-08-04T02:03:03.242Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/19/ret2win/</loc>
-    
-    <lastmod>2020-07-20T14:17:26.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/12/17/Traverxec/</loc>
-    
-    <lastmod>2020-07-20T14:16:49.337Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/01/02/Postman/</loc>
-    
-    <lastmod>2020-07-20T14:16:47.947Z</lastmod>
+    <lastmod>2020-07-29</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/07/09/Hacknote/</loc>
     
-    <lastmod>2020-07-09T06:47:42.890Z</lastmod>
+    <lastmod>2020-07-09</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/07/07/HeapOverflow/</loc>
     
-    <lastmod>2020-07-08T07:38:40.743Z</lastmod>
+    <lastmod>2020-07-07</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/07/02/Heap-bin/</loc>
     
-    <lastmod>2020-07-02T08:23:20.484Z</lastmod>
+    <lastmod>2020-07-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/07/01/Unlink/</loc>
     
-    <lastmod>2020-07-01T09:26:17.891Z</lastmod>
+    <lastmod>2020-07-01</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/30/Heap/</loc>
     
-    <lastmod>2020-06-30T07:47:36.545Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/19/LazyBinding/</loc>
-    
-    <lastmod>2020-06-30T07:19:01.450Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/05/badchars/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/29/callme/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/10/fluff/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/11/pivot/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/15/ret2csu/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.059Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level0/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/07/XMAN-level1/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/11/XMAN-level2-x64/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level2/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/20/XMAN-level3/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/22/XMAN-level4/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
+    <lastmod>2020-06-30</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/23/XMAN-level5/</loc>
     
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/27/split/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/02/write4/</loc>
-    
-    <lastmod>2020-06-30T07:14:51.058Z</lastmod>
+    <lastmod>2020-06-23</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/22/mmap/</loc>
     
-    <lastmod>2020-06-23T12:10:21.108Z</lastmod>
+    <lastmod>2020-06-22</lastmod>
     
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2019/11/11/EncryptTools/</loc>
+    <loc>https://coldwave96.github.io/2020/06/22/XMAN-level4/</loc>
     
-    <lastmod>2020-06-23T12:05:26.847Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/AssembleCommand/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/06/Codemap/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/06/CreateBlogs/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/14/DC-1/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/19/DC-2/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/20/DC-4/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/06/DC-9/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/08/DerpNStink/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/Diary1/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/03/11/JarvisOJ-WEB-1/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/03/LordOfTheRoot/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/26/Raven-2/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/06/01/concepts/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/11/GithubTools/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.846Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/12/02/NestCTF3/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.845Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/25/Raven-1/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.845Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/01/GDBcommand/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/01/13/GoldenEye/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/01/14/Lampiao/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/13/MS10-070/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/13/MS15-034/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/08/MaliciousURLs/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/04/20/MaliciousURLs2/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
+    <lastmod>2020-06-22</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/19/libc/</loc>
     
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
+    <lastmod>2020-06-19</lastmod>
     
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2019/11/06/scan/</loc>
+    <loc>https://coldwave96.github.io/2020/06/15/ret2csu/</loc>
     
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/11/15/suid/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2020/05/08/DSCP-Survival-Guide/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.844Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/12/02/SideBlock/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.843Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://coldwave96.github.io/2019/12/02/TcpRst/</loc>
-    
-    <lastmod>2020-06-23T12:05:26.843Z</lastmod>
+    <lastmod>2020-06-15</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/06/15/Useful-Gadgets/</loc>
     
-    <lastmod>2020-06-23T12:05:26.843Z</lastmod>
+    <lastmod>2020-06-15</lastmod>
     
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/2019/11/07/WebshellDetection/</loc>
+    <loc>https://coldwave96.github.io/2020/06/11/pivot/</loc>
     
-    <lastmod>2020-06-23T12:05:26.843Z</lastmod>
+    <lastmod>2020-06-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/10/fluff/</loc>
+    
+    <lastmod>2020-06-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/08/DerpNStink/</loc>
+    
+    <lastmod>2020-06-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/05/badchars/</loc>
+    
+    <lastmod>2020-06-05</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/03/LordOfTheRoot/</loc>
+    
+    <lastmod>2020-06-03</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/02/write4/</loc>
+    
+    <lastmod>2020-06-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/06/01/concepts/</loc>
+    
+    <lastmod>2020-06-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/29/callme/</loc>
+    
+    <lastmod>2020-05-29</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/27/split/</loc>
+    
+    <lastmod>2020-05-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/26/Raven-2/</loc>
+    
+    <lastmod>2020-05-26</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/25/Raven-1/</loc>
+    
+    <lastmod>2020-05-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/20/XMAN-level3/</loc>
+    
+    <lastmod>2020-05-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/19/LazyBinding/</loc>
+    
+    <lastmod>2020-05-19</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/19/ret2win/</loc>
+    
+    <lastmod>2020-05-19</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/11/XMAN-level2-x64/</loc>
+    
+    <lastmod>2020-05-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/08/DSCP-Survival-Guide/</loc>
+    
+    <lastmod>2020-05-08</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/07/XMAN-level1/</loc>
+    
+    <lastmod>2020-05-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/06/DC-9/</loc>
+    
+    <lastmod>2020-05-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level2/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/XMAN-level0/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/Diary1/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/GDBcommand/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/05/01/AssembleCommand/</loc>
+    
+    <lastmod>2020-05-01</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/2020/05/01/WintoMac/</loc>
     
-    <lastmod>2020-06-23T12:05:26.843Z</lastmod>
+    <lastmod>2020-05-01</lastmod>
     
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/tags/index.html</loc>
+    <loc>https://coldwave96.github.io/2020/04/20/MaliciousURLs2/</loc>
     
-    <lastmod>2020-04-30T10:46:36.915Z</lastmod>
+    <lastmod>2020-04-20</lastmod>
     
   </url>
   
   <url>
-    <loc>https://coldwave96.github.io/about/index.html</loc>
+    <loc>https://coldwave96.github.io/2020/03/11/JarvisOJ-WEB-1/</loc>
     
-    <lastmod>2020-04-30T10:46:05.036Z</lastmod>
+    <lastmod>2020-03-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/01/14/Lampiao/</loc>
+    
+    <lastmod>2020-01-14</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/01/13/GoldenEye/</loc>
+    
+    <lastmod>2020-01-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2020/01/02/Postman/</loc>
+    
+    <lastmod>2020-01-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/12/17/Traverxec/</loc>
+    
+    <lastmod>2019-12-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/12/02/NestCTF3/</loc>
+    
+    <lastmod>2019-12-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/12/02/TcpRst/</loc>
+    
+    <lastmod>2019-12-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/12/02/SideBlock/</loc>
+    
+    <lastmod>2019-12-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/20/DC-4/</loc>
+    
+    <lastmod>2019-11-20</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/19/DC-2/</loc>
+    
+    <lastmod>2019-11-19</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/15/suid/</loc>
+    
+    <lastmod>2019-11-15</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/14/DC-1/</loc>
+    
+    <lastmod>2019-11-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/13/MS10-070/</loc>
+    
+    <lastmod>2019-11-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/13/MS15-034/</loc>
+    
+    <lastmod>2019-11-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/11/EncryptTools/</loc>
+    
+    <lastmod>2019-11-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/11/GithubTools/</loc>
+    
+    <lastmod>2019-11-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/08/MaliciousURLs/</loc>
+    
+    <lastmod>2019-11-08</lastmod>
     
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/index.html</loc>
     
-    <lastmod>2020-04-30T10:46:05.036Z</lastmod>
+    <lastmod>2019-11-07</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/07/WebshellDetection/</loc>
+    
+    <lastmod>2019-11-07</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/06/Codemap/</loc>
+    
+    <lastmod>2019-11-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/06/scan/</loc>
+    
+    <lastmod>2019-11-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/index.html</loc>
+    
+    <lastmod>2019-11-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/2019/11/06/CreateBlogs/</loc>
+    
+    <lastmod>2019-11-06</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/about/index.html</loc>
+    
+    <lastmod>2019-11-05</lastmod>
+    
+  </url>
+  
+
+  <url>
+    <loc>https://coldwave96.github.io/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/PWN/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Reverse/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Updating/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Encrypt/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Blogs/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Hexo/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Web/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/DC-Series/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Diary/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Japan/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Commands/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Heap/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/RCE/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/ROP/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Stack/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Padding-Oracle/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Machine-Learning/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Malicious-URL/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/NEST/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Raven-Series/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/By-pass-Block/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Webshell/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/XMAN/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Scan/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Strategy/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/tags/Github/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Miscellaneous/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/Assembler/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/Cryptography/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Miscellaneous/Trips/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Miscellaneous/Sites/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/Vulnhub/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/pwnable-tw/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Theories/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Vulnerabilities/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/JarvisOJ/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Program/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/CTF/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/Hack-The-Box/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Theories/Assembler/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/ROP-Emporium/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Vulnerabilities/WEB/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/WriteUPs/ROP-Emprium/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/Penetration-Test/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Program/Python/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Theories/Products/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/Miscellaneous/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://coldwave96.github.io/categories/Tools/OCSP/</loc>
+    <lastmod>2020-08-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   
 </urlset>
