@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://coldwave96.github.io/Library/index.html</loc>
+    
+    <lastmod>2020-08-26</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://coldwave96.github.io/2020/08/24/PocLibrary/</loc>
     
     <lastmod>2020-08-24</lastmod>
@@ -473,7 +480,7 @@
 
   <url>
     <loc>https://coldwave96.github.io/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -481,182 +488,182 @@
   
   <url>
     <loc>https://coldwave96.github.io/tags/PWN/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Reverse/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Updating/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Encrypt/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Stack/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Blogs/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Hexo/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Web/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/DC-Series/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Diary/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Japan/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Commands/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Heap/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/RCE/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/ROP/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Padding-Oracle/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Machine-Learning/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Malicious-URL/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/NEST/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Raven-Series/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/By-pass-Block/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Webshell/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/XMAN/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Scan/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Strategy/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/tags/Github/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -665,182 +672,182 @@
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Miscellaneous/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Assembler/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Cryptography/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/Vulnhub/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/JarvisOJ/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Miscellaneous/Trips/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Miscellaneous/Sites/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/pwnable-tw/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Theories/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Vulnerabilities/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Program/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/CTF/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/Hack-The-Box/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Theories/Assembler/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/ROP-Emporium/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Vulnerabilities/WEB/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/WriteUPs/ROP-Emprium/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Penetration-Test/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Program/Python/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Theories/Products/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Miscellaneous/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/OCSP/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Program/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://coldwave96.github.io/categories/Tools/Program/Python/</loc>
-    <lastmod>2020-08-24</lastmod>
+    <lastmod>2020-08-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
