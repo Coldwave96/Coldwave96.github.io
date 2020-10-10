@@ -703,6 +703,13 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://coldwave96.github.io/tags/SQL-Injection/</loc>
+    <lastmod>2020-10-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
