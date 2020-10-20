@@ -56,7 +56,7 @@
 <p>&emsp;&emsp;linux中使用free函数释放堆空间的时候，不大于max_fast的chunk被释放后首先会被放入fastbin中，大于max_fast的chunk或者fastbin中的空闲chunk合并后会被放入unsorted bin中。</p>
 <p>&emsp;&emsp;当fastbin为空的时候，unsorted bin中chunk的fd和bk指向自身的main_arena，而main_arena的地址存放在libc中的malloc_trim函数中也即相对于lic基址的offset，这样我们就可以计算出libc的基址。</p>
 <p>&emsp;&emsp;在32位程序中main_arena 的位置与 __malloc_hook 相差0x18，同时加入到unsorted bin中的small chunk的fd和bk通常指向 &lt;main_arena+48&gt; 的位置。在64位程序中，main_arena 的位置与 __malloc_hook 相差0x10，同时加入到unsorted bin中的small chunk的fd和bk通常指向 &lt;main_arena+88&gt; 的位置。</p>
-<p>&emsp;&emsp;所以32位程序中：offset = libc.symbols[‘__malloc_hook’] + 0x18 + 88，64位程序同理。</p>
+<p>&emsp;&emsp;所以32位程序中：offset = libc.symbols[‘__malloc_hook’] + 0x18，64位程序同理。</p>
 <p>&emsp;&emsp;或者直接到libc文件中找main_arena的地址，如下图所示：</p>
 <p><img src="/img/XMAN-level6/XMAN11.png" alt=""></p>
 <p>&emsp;&emsp;至于为什么这个是main_arena的地址，可以对比malloc.c源代码看一下：</p>
