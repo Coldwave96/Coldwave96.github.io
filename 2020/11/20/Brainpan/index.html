@@ -27,9 +27,9 @@
 <p><img src="/img/Brainpan1/Brainpan6.png" alt=""></p>
 <h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;通过IDA逆向之后发现这是9999端口运行的程序：</p>
 <p><img src="/img/Brainpan1/Brainpan7.png" alt=""></p>
-<p>&emsp;&emsp;在程序中发现一个get_reply函数：</p>
+<p>&emsp;&emsp;在程序中发现一个<code>get_reply</code>函数：</p>
 <p><img src="/img/Brainpan1/Brainpan8.png" alt=""></p>
-<p>&emsp;&emsp;在函数中可以看到调用strcpy，而在主函数中&amp;Dest长度可以到1000字节，get_reply函数中Source只有0x208字节即520字节。所以这里存在栈溢出漏洞，当填充了520(Source_data)+4(EBP)总共524字节的数据之后就可以控制函数的返回地址。</p>
+<p>&emsp;&emsp;在函数中可以看到调用strcpy，而在主函数中&amp;Dest长度可以到1000字节，get_reply函数中Source只有0x208字节即520字节。所以这里存在栈溢出漏洞，当填充了<code>520(Source_data)+4(EBP)</code>总共524字节的数据之后就可以控制函数的返回地址。</p>
 <p>&emsp;&emsp;由于程序中没有可以直接getshell的函数，所以需要我们将shellcode写入的buf中，通过jmp esp命令控制程序跳转到buf执行命令。</p>
 <p>&emsp;&emsp;在程序中找到311712F3的地址有jmp esp指令，再通过msfvenom生成payload：</p>
 <p><img src="/img/Brainpan1/Brainpan9.png" alt=""></p>
@@ -38,9 +38,9 @@
 
 <p>&emsp;&emsp;运行脚本之后就可以获取反弹shell：</p>
 <p><img src="/img/Brainpan1/Brainpan10.png" alt=""></p>
-<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;根据之前靶机题权最简单的方式，直接查看sudo权限，提示我们可以以root权限运行/home/anansi/bin/anansi_util：</p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;根据之前靶机题权最简单的方式，直接查看sudo权限，提示我们可以以root权限运行<code>/home/anansi/bin/anansi_util</code>：</p>
 <p><img src="/img/Brainpan1/Brainpan11.png" alt=""></p>
-<p>&emsp;&emsp;sudo执行之后根据命令提示可以直接接命令，所以当街上/bin/bash命令之后就可以获得root权限的shell。</p>
+<p>&emsp;&emsp;sudo执行之后根据命令提示可以直接接命令，所以当接上<code>/bin/bash</code>命令之后就可以获得root权限的shell。</p>
 </div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/11/20/Brainpan/">https://coldwave96.github.io/2020/11/20/Brainpan/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Reverse/">Reverse</a><a class="post-meta__tags" href="/tags/Web/">Web</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2020/10/22/PwnLab-init/"><span>Vulnhub - PwnLab：init の Write-Up</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
 var verify = 'false' == 'true';
 var record_ip = '' == 'true';
