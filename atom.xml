@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://coldwave96.github.io/"/>
-  <updated>2021-02-04T03:28:26.000Z</updated>
+  <updated>2021-06-08T01:03:22.000Z</updated>
   <id>https://coldwave96.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开源组件实现 Software Defined Perimeter</title>
+    <link href="https://coldwave96.github.io/2021/06/08/SoftwareDefinedPerimeter/"/>
+    <id>https://coldwave96.github.io/2021/06/08/SoftwareDefinedPerimeter/</id>
+    <published>2021-06-08T01:03:22.000Z</published>
+    <updated>2021-06-08T01:03:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>&emsp;&emsp;零信任安全是当下一个比较火热的话题，很多厂家都在尝试将其落地，整合到企业安全框架之中，实现产品化。零信任安全其中一种比较可行的实现方案是通过SDP(Software Defined Perimeter)，本文尝试通过现有的开源组件实现SDP。</p><a id="more"></a><h2 id="参考模型"><a href="#参考模型" class="headerlink" title="参考模型"></a>参考模型</h2><p>&emsp;&emsp;本次尝试主要参考以下模型：</p><ul><li><p><a href="https://www.beyondcorp.com">Google’s BeyondCorp</a></p></li><li><p><a href="https://cloudsecurityalliance.org/group/software-defined-perimeter/#_overview">Cloud Security Alliance model of Software Defined Perimeter</a></p></li></ul><h2 id="工具列表"><a href="#工具列表" class="headerlink" title="工具列表"></a>工具列表</h2><p><a href="http://www.cipherdyne.org/">fwknop</a> - Used to allow the SDP server to remain completely hidden from unauthorized use.  With this tool, the gateway server can be configured with 0 inbound port access.  The net result is that the gateway server is more hardened against port scanning, DDoS attacks, etc.  This component will be optional as the client component is not readily available on all major platforms (ie. iPhone).  This project is definitely worth a look for anyone looking to contribute to a really awesome open source project!</p><p><a href="http://www.squid-cache.org/">Squid</a> - Used to provide authorization to upstream resources.  Squid is being used because of it’s ability to use external authentication helpers and assign access based on group memberships from either a common database, or LDAP server.  Squid also gives us the granularity to apply rules based on destination host, URI, port or a combination.</p><h2 id="测试拓扑"><a href="#测试拓扑" class="headerlink" title="测试拓扑"></a>测试拓扑</h2><p><img src="/img/SDP/SDP1.png" alt="测试拓扑图"></p><h2 id="方案简述"><a href="#方案简述" class="headerlink" title="方案简述"></a>方案简述</h2><p>&emsp;&emsp;网络边界部署边界服务器，在边界服务器上安装Squid反向代理内网Web服务。同时在边界服务器上安装并开启fwknop-server，在客户端上安装fwknop-client，通过配置实现单包认证访问。</p><h2 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h2><h3 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h3><p>&emsp;&emsp;网络拓扑比较简单，就不赘述搭建过程，进入正题。在内网Web服务器上搭建HTTP网站，关于如何在Winserver 2008 R2上搭建网站也很简单就直接跳过。现在我们搭建好的网站是这样的：</p><p><img src="/img/SDP/SDP2.png" alt=""></p><h3 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h3><p>&emsp;&emsp;在边界服务器上安装Squid，由于本次边界服务器是Ubuntu系统，所以输入<code>sudo apt isntall squid</code>即可。然后通过<code>sudo vim /etc/squid/squid.conf</code>命令修改squid的配置文件。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#http_port 3128</span><br><span class="line">http_port 10.0.0.11:80 accel vhost vport</span><br><span class="line">cache_peer 192.168.88.10 parent 80 0 no-query no_digest originserver</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;修改完成后通过<code>sudo systemctl restart squid</code>命令重启squid，这时候访问<code>http://10.0.0.11</code>就可以看到Step 1中搭建的网站。至此，HTTP反向代理就完成了。</p><h3 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h3><p>&emsp;&emsp;本次测试选用的客户端是Ubuntu，直接通过<code>sudo apt install fwknop-client</code>即可安装fwknop的客户端，本次测试安装的是2.6.9版本。如果是Windows端则要去<a href="http://www.cipherdyne.org/">fwknop官网</a>去下载源代码自行编译。</p><p>&emsp;&emsp;安装好fwknop-client之后执行<code>sudo fwknop -A tcp/80 -a 10.0.0.14 -D 10.0.0.11 --key-gen --use-hmac --save-rc-stanza</code>生成单包认证的Key。命令执行完之后会生成一个<code>.fwknoprc</code>文件，同时会告知文件位置。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-A tcp&#x2F;80           请求服务端打开的端口及其协议；</span><br><span class="line">-a 10.0.0.14        客户端的IP地址；</span><br><span class="line">-D 10.0.0.11        服务端的IP地址；</span><br><span class="line">-key-gen            生成一个加密密钥；</span><br><span class="line">--use-hmac          采用hmac加密认证方式；</span><br><span class="line">--save-rc-stanza    保存以上参数的执行结果。</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;通过<code>sudo grep KEY /home/User/.fwknoprc</code>命令即可获取Key。</p><p><img src="/img/SDP/SDP3.png" alt=""></p><h3 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h3><p>&emsp;&emsp;在边界服务器上通过<code>sudo apt install fwknop-server</code>安装fwknop服务端。然后输入<code>sudo vim /etc/fwknop/access.conf</code>修改服务端参数，将Step 3中客户端的Key加入配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SOURCE                 ANY</span><br><span class="line">REQUIRE_SOURCE_ADDRESS Y</span><br><span class="line">OPEN_PORTS             tcp&#x2F;80</span><br><span class="line">KEY_BASE64             rvyA5SgenTMOagiBJJER4otC+6hdbOxXSZKW8ZN7Bsk&#x3D;</span><br><span class="line">HMAC_KEY_BASE64        MtCbW46&#x2F;8PCOLk7BImbLhtwSuXbPmCIyecZvmuY5Nx8NQ1PLrrqgEEumgq7YjhDXS6cpwHX&#x2F;wbZ6ZckoX6dI4A&#x3D;&#x3D;</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;然后还需要修改<code>/etc/feknop/fwknopd.conf</code>文件，将监听的网卡修改为机器外网网卡：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Define the ethernet interface on which we will sniff packets.</span><br><span class="line"># Default if not set is eth0.  The &#39;-i &lt;intf&gt;&#39; command line option overrides</span><br><span class="line"># the PCAP_INTF setting.</span><br><span class="line">#</span><br><span class="line">PCAP_INTF                   ens33;</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;最后通过iptables实现对80端口的隐藏：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -I INPUT 1 -i ens33  -p tcp --dport 80 -j DROP</span><br><span class="line">sudo iptables -I INPUT 1 -i ens33 -p tcp --dport 80 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT</span><br></pre></td></tr></table></figure><p>&emsp;&emsp;运行<code>sudo fwknopd reload</code>命令重启fwknopd服务，可通过<code>sudo fwknopd -S</code>命令查看服务状态，通过<code>sudo fwknopd --fw-list-all</code>命令查看iptables规则。</p><p>&emsp;&emsp;这样边界服务器的设置就完成了。</p><h3 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h3><p>&emsp;&emsp;此时所有地址都无法访问边界服务器的HTTP服务，nmap扫描的结果如下：</p><p><img src="/img/SDP/SDP4.png" alt=""></p><p>&emsp;&emsp;而当我们在client上执行<code>sudo fwknop -n 10.0.0.11</code>命令发送单包认证后，会发现此时80端口已经对client开放（如果不做任何操作30s后会自动关闭，更多配置在服务端的fwknop配置文件中）：</p><p><img src="/img/SDP/SDP5.png" alt=""></p><p>&emsp;&emsp;这个时候client就可以访问到搭建在内网的HTTP服务了。</p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>&emsp;&emsp;结合下面的代理工具我们可以实现一些自动化以及非Web服务的单包认证机制。</p><p><a href="https://openvpn.net/index.php/open-source.html">OpenVPN</a> - Used to ensure a completely encrypted communication channel between personal devices (laptop, cell phone, etc) and the gateway server.  OpenVPN includes support on every major platform and is simple to adjust the configuration to the user’s needs.  In our model, we are not using OpenVPN in the traditional sense of a VPN as the gateway server will not be configured to forward traffic directly to an upstream device.  OpenVPN also supports additional authentication plugins allowing things like two-factor authentication to become possible. OpenVPN also provides the awesome PKI tool easy-rsa. easy-rsa gives us the ability to provision and manage certificates for all of our components.</p><p><a href="https://github.com/darkk/redsocks">Redsocks Proxy</a> - This tool will be used to forward non-web traffic through our Squid proxy.</p><p>&emsp;&emsp;以及更多的fwknop指导在<a href="http://www.cipherdyne.org/fwknop/docs/fwknop-tutorial.html">这里</a>。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;emsp;&amp;emsp;零信任安全是当下一个比较火热的话题，很多厂家都在尝试将其落地，整合到企业安全框架之中，实现产品化。零信任安全其中一种比较可行的实现方案是通过SDP(Software Defined Perimeter)，本文尝试通过现有的开源组件实现SDP。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Zero Trust" scheme="https://coldwave96.github.io/categories/Zero-Trust/"/>
+    
+      <category term="Security Framework" scheme="https://coldwave96.github.io/categories/Zero-Trust/Security-Framework/"/>
+    
+    
+      <category term="Zero Trust" scheme="https://coldwave96.github.io/tags/Zero-Trust/"/>
+    
+      <category term="SDP" scheme="https://coldwave96.github.io/tags/SDP/"/>
+    
+  </entry>
   
   <entry>
     <title>Jarvis OJ - Calcexe の Write-Up</title>
@@ -524,34 +551,6 @@
     <summary type="html">
     
       &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;总结一些堆溢出漏洞利用姿势。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Theories" scheme="https://coldwave96.github.io/categories/Theories/"/>
-    
-      <category term="Assembler" scheme="https://coldwave96.github.io/categories/Theories/Assembler/"/>
-    
-    
-      <category term="PWN" scheme="https://coldwave96.github.io/tags/PWN/"/>
-    
-      <category term="Heap" scheme="https://coldwave96.github.io/tags/Heap/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于堆的bin结构的理解</title>
-    <link href="https://coldwave96.github.io/2020/07/02/Heap-bin/"/>
-    <id>https://coldwave96.github.io/2020/07/02/Heap-bin/</id>
-    <published>2020-07-02T05:18:20.000Z</published>
-    <updated>2020-07-02T05:18:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;用户申请堆空间是通过malloc函数实现的，而malloc在内核中对应的是ptmalloc。ptmalloc像是内核和用户的中间商，中间商向卖家（操作系统内核）要大量的货物（大块内存空间），然后分配给买家（用户程序）。同样的，当用户释放chunk的时候，也不是直接归还给系统，而是被ptmalloc所管理。当用户在一次请求内存空间的时候，ptmalloc会在空闲的chunk中选择合适大小的分配给用户。这种机制的好处在于可以避免频繁的系统效用，降低内存分配的开销，提高效率。</p><p>&emsp;&emsp;而ptmalloc正是通过bin结构来管理空闲堆块。它会根据空闲chunk的大小及使用状态将chunk分为4类：fast bin，small bin，large bin和unsorted bin。</p><a id="more"></a><h2 id="fast-bin"><a href="#fast-bin" class="headerlink" title="fast bin"></a>fast bin</h2><p>&emsp;&emsp;对于size较小的chunk，释放之后单独处理，被放入fast bin中。</p><ul><li><p>32位系统，fast bin中的chunk大小范围在16字节到64字节；</p></li><li><p>64位系统，fast bin中的chunk大小范围在32字节到128字节。</p></li></ul><p>&emsp;&emsp;fast bin链表采用单向链表进行连接，并且每个bin采取了LIFO策略，最近释放的chunk会被更早地分配。所以当用户申请的chunk大小在fast bin范围内时，ptmalloc会首先判断fast bin中是否有对应大小的空闲chunk，有的话就会直接分配出去。</p><p>&emsp;&emsp;fast bin范围内chunk的inuse标志位始终被置为1，即它们不会和其他被释放的chunk合并，也就不会触发Unlink操作。</p><p>&emsp;&emsp;fastbin链表最末端的块fd域为0，此后每个块的fd域指向前一个块。因此通过fastbin只能泄漏heap的基地址。</p><h2 id="small-bin"><a href="#small-bin" class="headerlink" title="small bin"></a>small bin</h2><p>&emsp;&emsp;small bin中chunk大小范围的序号index从2到63，总共62个循环双向链表。</p><p>&emsp;&emsp;每个chunk的size大小用一个关系式表达是：<code>chunk_size = 2 * SIZE_SZ（4 or 8）* index</code></p><p>&emsp;&emsp;从关系式可以看出每个链表中的chunk大小是一样的，这也是堆中堆表的数据结构。并且可以发现small bin中的chunk_size与fast bin有重复，这仅是大小重复，而不是chunk重复。fast bin中的chunk也有可能被放到small bin中去。</p><p>&emsp;&emsp;此外small bin中每个bin对应的链表采用FIFO策略，所以同一个链表中先被释放的chunk会被先分配。</p><p>&emsp;&emsp;通过smallbin可以获得：</p><ul><li><p>1.libc.so的基地址；</p></li><li><p>2.heap基地址。</p></li></ul><h2 id="large-bin"><a href="#large-bin" class="headerlink" title="large bin"></a>large bin</h2><p>&emsp;&emsp;large bin也是遵循FIFO策略的循环双向链表，一共有63个bin，每个bin中的chunk大小不一致，但处于一定区间范围内。32位系统中chunk_size &gt;= 512字节。</p><h2 id="unsorted-bin"><a href="#unsorted-bin" class="headerlink" title="unsorted bin"></a>unsorted bin</h2><p>&emsp;&emsp;unsorted bin可以看作空闲chunk回归其所属bin之前的缓冲区，该bin只有一个遵循FIFO策略的循环双向链表，且其中的free chunk处于乱序状态。unsorted bin暂时存储free后的chunk，一段时间后会将chunk放入对应的bin中去。</p><p>&emsp;&emsp;通过unsorted bin我们可以获取到某个堆块的地址和main_areana的地址。一旦获取到某个堆块的地址就可以通过malloc的size进行计算从而获得堆基地址。一旦获取到main_arena的地址，因为main_arena存在于libc.so中就可以计算偏移得出libc.so的基地址。</p><p>&emsp;&emsp;因此，通过unsorted bin可以获得：</p><ul><li><p>1.libc.so的基地址；</p></li><li><p>2.heap基地址。</p></li></ul><h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>&emsp;&emsp;可以实现泄露的漏洞：</p><ul><li><p>堆内存未初始化</p></li><li><p>堆溢出</p></li><li><p>Use-After-Free</p></li><li><p>越界读</p></li><li><p>heap extend</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;emsp;用户申请堆空间是通过malloc函数实现的，而malloc在内核中对应的是ptmalloc。ptmalloc像是内核和用户的中间商，中间商向卖家（操作系统内核）要大量的货物（大块内存空间），然后分配给买家（用户程序）。同样的，当用户释放chunk的时候，也不是直接归还给系统，而是被ptmalloc所管理。当用户在一次请求内存空间的时候，ptmalloc会在空闲的chunk中选择合适大小的分配给用户。这种机制的好处在于可以避免频繁的系统效用，降低内存分配的开销，提高效率。&lt;/p&gt;
-&lt;p&gt;&amp;emsp;&amp;emsp;而ptmalloc正是通过bin结构来管理空闲堆块。它会根据空闲chunk的大小及使用状态将chunk分为4类：fast bin，small bin，large bin和unsorted bin。&lt;/p&gt;
     
     </summary>
     
