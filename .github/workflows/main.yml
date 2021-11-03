@@ -44,7 +44,7 @@ jobs:
     - name: Deploy hexo blog
       env: 
         # Github 仓库
-        GITHUB_REPO: github.com/coldwave96/coldwave96.github.io
+        GITHUB_REPO: github.com/Coldwave96/Coldwave96.github.io
       # 将编译后的博客文件推送到指定仓库
       run: |
         cd ./public && git init && git add .
