@@ -1,0 +1,81 @@
+---
+title: ret2libc && Lazy Binding
+date: 2020-05-19 23:13:03
+categories:
+- Theories
+- Assembler
+tags:
+- PWN
+- ROP
+- Stack
+---
+## Introduction
+
+&emsp;&emsp;本文主要记录了我对于ret2libc和延迟绑定技术原理的理解。
+
+<!-- more -->
+
+## ret2libc
+
+&emsp;&emsp;ret2libc主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、execve()这种系统级函数(如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式)。
+
+&emsp;&emsp;因为程序是动态链接生成的，所以在程序运行时会调用libc.so(程序被装载时，动态链接器会将程序所有所需的动态链接库加载至进程空间，libc.so就是其中最基本的一个)，libc.so是linux下C语言库中的运行库glibc的动态链接版，并且libc.so中包含了大量的可以利用的函数，包括system()、execve()等系统级函数，我们可以通过找到这些函数在内存中的地址覆盖掉返回地址来获得当前进程的控制权。
+
+&emsp;&emsp;通常情况下，我们会选择执行system(“/bin/sh”)来打开 shell，这样需要解决两个问题：
+
+* 找到system()函数的地址
+
+* 在内存中找到’/bin/sh’字符串的地址
+
+&emsp;&emsp;ret2libc方法可以实现DEP保护和ASLR即地址空间布局随机化这两种保护措施的绕过。
+
+## GOT表(Global offset Table)
+
+&emsp;&emsp;GOT表可以解决模块间数据访问的问题：
+
+&emsp;&emsp;假设变量b被定义在其他模块中，其地址需要在程序装载时才能够确定。利用到前面的代码地址无关的思想，把地址相关的部分放入数据段中，然而这里的变量b的地址与其自身所在的模块装载的地址有关。那么这个问题就要通过GOT表来解决。
+
+&emsp;&emsp;ELF中在数据段里面建立了一个指向这些变量的指针数组，也就是我们所说的GOT表(Global offset Table，全局偏移表)，它的功能就是当代码需要引用全局变量时，可以通过GOT表间接引用。
+
+## 延迟绑定(Lazy Binding) && PLT表(Procedure Linkage Table)
+
+&emsp;&emsp;因为动态链接的程序是在运行时需要对全局和静态数据访问进行GOT定位，然后间接寻址。同样，对于模块间的调用也需要GOT定位，再才间接跳转，这么做势必会影响到程序的运行速度。
+
+&emsp;&emsp;而且程序在运行时很大一部分函数都可能用不到，于是ELF采用了当函数第一次使用时才进行绑定的思想，也就是我们所说的延迟绑定。
+
+&emsp;&emsp;ELF实现延迟绑定是通过PLT，原先GOT中存放着全局变量和函数调用，现在把他拆成另个部分.got和.got.plt，用.got存放着全局变量引用，用.got.plt存放着函数引用。
+
+&emsp;&emsp;所以延迟绑定技术解决的是模块间函数调用的问题，调用时是函数名@plt的形式。
+
+&emsp;&emsp;延迟绑定的实现步骤为：
+
+&emsp;&emsp;建立一个got.plt表，这个表里存放的是全局函数的实际地址。
+
+&emsp;&emsp;但是最开始的时候，里面存放的是一个跳转而不是实际地址。因为加载动态链接库的时候，实际上用不到所有的函数，所以为了节省程序运行时间，在实际调用某个函数的时候才会去找该函数的实际地址。
+
+&emsp;&emsp;当程序需要调用到其他模块中的函数时例如test() ，就去访问保存在.got.plt中的test@plt。
+
+&emsp;&emsp;这里有两种情况，第一种就是第一次使用这个函数，这个地方就存放着test@plt第二条指令的地址，其实相当于什么都不做。第二种情况就是，当第二次调用test@plt函数时，就会通过第一条指令跳转到真正的函数地址。
+
+&emsp;&emsp;整个过程就是所说的通过plt来实现延迟绑定。
+
+&emsp;&emsp;下面再详细的解释一下：
+
+&emsp;&emsp;对每一个全局函数，链接器生成一个与之相对应的影子函数，就是test@plt。
+
+&emsp;&emsp;所有对test函数的调用都会换成对test@plt的调用，实际上这个test@plt的样子为：
+
+```
+test@plt:
+jmp *(test@got.plt)
+push index
+jmp _init()
+```
+
+&emsp;&emsp;其中第一条指令直接从got.plt中去拿真实的函数地址，如果已经之前已经发生过调用，got.plt就已经保存了真实的地址，如果是第一次调用，则got.plt中放的是test@plt中的第二条指令，这就使得当执行第一次调用时，test@plt中的第一条指令其实什么事也没做，直接继续往下执行，第二条指令的作用是把当前要调用的函数在got.plt中的编号作为参数传给_init()，而_init()这个函数则用于把test进行重定位，然后把结果写入到got.plt相应的地方，最后直接跳过去该函数。
+
+## 总结
+
+&emsp;&emsp;最后总结一下：
+
+&emsp;&emsp;程序调用外部函数的整个过程就是，第一次访问test@plt函数时，动态链接器就会去动态共享模块中查找test函数的真实地址然后将真实地址保存到test@got中(.got.plt)；第二次访问test@plt时，就直接跳转到test@got中去。
