@@ -1,5 +1,5 @@
 ---
-title: Deep Learning for Anomaly Detection: A Review
+title: Deep Learning for Anomaly Detection - A Review
 date: 2023-03-21 16:36:58
 categories:
 - Essay
@@ -8,11 +8,6 @@ tags:
 - Anomaly Detection
 - Deep Learning
 ---
-
-Reading note about \<Deep Learning for Anomaly Detection: A Review\>.
-
-<!-- more -->
-
 ## Info
 
 * 名称：Deep Learning for Anomaly Detection: A Review
@@ -22,6 +17,8 @@ Reading note about \<Deep Learning for Anomaly Detection: A Review\>.
 	* LONGBING CAO, University of Technology Sydney
 	* ANTON VAN DEN HENGEL, University of Adelaide
 * 原文链接：[arxiv](https://arxiv.org/abs/2007.02500)
+
+<!-- more -->
 
 ## Intro
 
