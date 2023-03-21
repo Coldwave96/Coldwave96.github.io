@@ -9,6 +9,10 @@ tags:
 - Deep Learning
 ---
 
+Reading note about \<Deep Learning for Anomaly Detection: A Review\>.
+
+<!-- more -->
+
 ## Info
 
 * 名称：Deep Learning for Anomaly Detection: A Review
@@ -18,8 +22,6 @@ tags:
 	* LONGBING CAO, University of Technology Sydney
 	* ANTON VAN DEN HENGEL, University of Adelaide
 * 原文链接：[arxiv](https://arxiv.org/abs/2007.02500)
-
-<!-- more -->
 
 ## Intro
 
