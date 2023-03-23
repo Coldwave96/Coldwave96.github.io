@@ -19,8 +19,8 @@ theme_color:
 menu:
   Home: /
   Archives: /archives
-  Tags: /tags
-  Categories: /categories
+  # Tags: /tags
+  # Categories: /categories
   Library: /Library
   Tools: /Tools
   About: /about
@@ -289,9 +289,9 @@ sidebar_display: post # all/index/post/index-none/post-none/hidden
 # ---------------
 # Google Adsense
 google_adsense:
-  enable: false
+  enable: true
   js: //pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
-  client: ca-pub-...........
+  client: ca-pub-4826942730187324
   enable_page_level_ads: true
 
 # Security
