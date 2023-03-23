@@ -51,10 +51,14 @@ tags:
     - CH4：许多弱监督/半监督算法抗噪能力不好
     - CH5：现有很多异常检测算法均针对点异常，面对上下文异常及组异常效果不好
     - CH6：模型可解释性不强，面对某些争议难以合理解释
-![](/img/DLforAD/1.png)
+<center>
+    <img src="/img/DLforAD/1.png" width="800">
+</center>
 
 * 深度学习异常检测方法分类
-![](/img/DLforAD/2.png)
+<center>
+    <img src="/img/DLforAD/2.png" width="850">
+</center>
 
 * 深度学习特征提取
     - 直接运用流行的深度学习模型AlexNet【1】，VGG【2】，ResNet【4】等提取低维度特征
@@ -94,7 +98,13 @@ tags:
 
 ## Related Materials
 * 算法列表
-![](/img/DLforAD/3.png)
-![](/img/DLforAD/4.png)
+<center>
+    <img src="/img/DLforAD/3.png" width="850">
+</center>
+<center>
+    <img src="/img/DLforAD/4.png" width="850">
+</center>
 * [数据集列表](https://git.io/JTs93)
-![](/img/DLforAD/5.png)
+<center>
+    <img src="/img/DLforAD/5.png" width="850">
+</center>

@@ -29,8 +29,12 @@ tags:
 ## Paragraph
 
 * 样本中的URL统一只保留前200个字节，多余的部分截断，不足的部分用<PAD>填充。
-![](/img/URLNet/1.png)
-![](/img/URLNet/2.png)
+<center>
+    <img src="/img/URLNet/1.png" width="850">
+</center>
+<center>
+    <img src="/img/URLNet/2.png" width="850">
+</center>
 * 特征提取
     - Whole URL BoW
         - Bag of Words
