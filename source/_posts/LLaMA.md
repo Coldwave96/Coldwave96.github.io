@@ -14,6 +14,8 @@ tags:
 - 作者：Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet Marie-Anne Lachaux, Timothee Lacroix, Baptiste Rozière, Naman Goyal Eric Hambro, Faisal Azhar, Aurelien Rodriguez, Armand Joulin Edouard Grave, Guillaume Lample - Meta AI
 - 原文链接：[LLaMA: Open and Efficient Foundation Language Models](http://arxiv.org/abs/2302.13971)
 
+<!-- more -->
+
 ## Intro
 
 - 训练了一系列的语言模型在不同的推断预算上实现最佳表现，模型参数从7B到65B不等。其中，13B模型大多数 benchmarks 表现超越 GPT-3，规模只有 GPT-3 的十分之一。65B模型能够和最大最好的语言模型 Chinchilla 或 PaLM-540B 竞争。
