@@ -44,7 +44,7 @@ tags:
 	<img src="/img/LLaMA/1.png" width="850">
 </center>
 
-&emsp;&emsp;分词器（Tokenizer）基于 bytepair encoding（BPE）算法【2】，具体实现参考 SentencePiece【3】。处理完成之后，整体数据集大约包含1.4T tokens。除了 Wikipedia 和 Books 的数据运行了大约 2 轮之外，其他数据只使用一次。
+分词器（Tokenizer）基于 bytepair encoding（BPE）算法【2】，具体实现参考 SentencePiece【3】。处理完成之后，整体数据集大约包含1.4T tokens。除了 Wikipedia 和 Books 的数据运行了大约 2 轮之外，其他数据只使用一次。
 
 ### Network
 
