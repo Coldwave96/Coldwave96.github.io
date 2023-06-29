@@ -21,6 +21,8 @@ tags:
     - Jie Tang：Tsinghua University，Beijing Academy of Artificial Intelligence (BAAI)
 - 原文链接：[arxiv](https://www.notion.so/GLM-General-Language-Model-Pre-training-with-Autoregressive-Blank-Infilling-5e61ef3557d2439bb3a3b344e8b26583?pvs=4#56fecaacdf6049f9bdb25e7edacb7f11)
 
+<!--more -->
+
 ## Intro
 
 * 现有的预训练框架无法灵活的应对所有NLP任务，本文提出基于自回归 + 空白填充（blank infilling）的预训练模型GLM（General Language Model）应对NLU（Natural Language Understanding）任务以及文本生成任务。

@@ -3,7 +3,7 @@ title: Deep Learning for Anomaly Detection - A Review
 date: 2023-03-21 16:36:58
 categories:
 - Essay
-- Reading Notes
+- Notes
 tags:
 - Anomaly Detection
 - Deep Learning

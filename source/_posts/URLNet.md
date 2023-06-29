@@ -3,7 +3,7 @@ title: URLNet - Learning a URL Representation with Deep Learning for Malicious U
 date: 2023-03-23 14:57:10
 categories:
 - Essay
-- Reading Notes
+- Notes
 tags:
 - NLP
 - Deep Learning
