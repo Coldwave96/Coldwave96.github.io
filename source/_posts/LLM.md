@@ -74,26 +74,27 @@ tags:
 &emsp;&emsp;想要构建一个大语言模型，首先第一步是要预训练出一个初步的 NLP 模型，目的是通过给定的 Token， 能够预测下一个 Token。
 
 <center>
-	<img src="/img/LLM/LLM4.gif" width="850">
+	<img src="/img/LLM/LLM4.png" width="850">
 </center>
 
 &emsp;&emsp;具体方式通过计算模型预测的下一个单词与真实的下一个单词之间的误差，通过算法获取降低误差的梯度，传播梯度更新模型参数。
 
 <center>
-	<img src="/img/LLM/LLM5.gif" width="850">
+	<img src="/img/LLM/LLM5.png" width="850">
 	<img src="/img/LLM/LLM6.png" width="850">
 </center>
 
 &emsp;&emsp;第二步是微调 Fine-Tune， 收集特定领域的数据，由该领域额专家对这些数据进行精心标注，通过上一步类似的训练手段，进一步更新模型的参数权重。
 
 <center>
-	<img src="/img/LLM/LLM7.gif" width="850">
+	<img src="/img/LLM/LLM7-1.png" width="850">
+	<img src="/img/LLM/LLM7-2.png" width="850">
 </center>
 
 &emsp;&emsp;微调完成之后的模型就已经有了不错的变表现，可以部署推理了。输入一个句子，预测每个单词出现的频率，将频率最大的作为输出，循环往复，直到遇到终止符。
 
 <center>
-	<img src="/img/LLM/LLM8.gif" width="850">
+	<img src="/img/LLM/LLM8.png" width="850">
 </center>
 
 ### 训练流程
