@@ -35,10 +35,11 @@ jobs:
       # 下载 hexo-cli 脚手架及相关安装包
       run: |
         npm install -g hexo-cli
+        npm install
         git clone https://github.com/volantis-x/community && cd community
         git reset --hard b96c4289a1833260acfe8252f5cd21bd4fa862d3
         git submodule update --init
-        npm install
+        npm i
     - name: Generate files
       # 编译 markdown 文件
       run: |
