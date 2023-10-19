@@ -12,13 +12,13 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level5的Write-Up。题目和level3_x64一样，只是禁用system和execve函数，让我们尝试使用mmap和mprotect函数。关于这两个函数背景知识可以参考[Linux内存映射机制](https://coldwave96.github.io/2020/06/22/mmap/)。
+这是JarvisOJ的PWN题部分[XMAN]level5的Write-Up。题目和level3_x64一样，只是禁用system和execve函数，让我们尝试使用mmap和mprotect函数。关于这两个函数背景知识可以参考[Linux内存映射机制](https://coldwave96.github.io/2020/06/22/mmap/)。
 
 <!-- more -->
 
 ## Analysis
 
-&emsp;&emsp;总体思路很简单：
+总体思路很简单：
 
 * 分配一块内存buf并设置(mmap)/修改(mprotect)这块内存属性为rwx
 
@@ -26,7 +26,7 @@ tags:
 
 * 控制程序跳转到分配的buf中执行shellcode
 
-&emsp;&emsp;如果通过mmap函数实现：
+如果通过mmap函数实现：
 
 * 通过内存地址泄露获取libc加载基址
 
@@ -38,7 +38,7 @@ tags:
 
 * 控制程序跳转到buf执行shellcode
 
-&emsp;&emsp;如果通过mprotect函数实现：
+如果通过mprotect函数实现：
 
 * 通过内存地址泄露获取libc加载基址
 
@@ -52,11 +52,11 @@ tags:
 
 ## PWN
 
-&emsp;&emsp;这里简单点选择mprotect函数实现，因为mmap函数需要设置6个参数，而mprotect函数以及过程中会用到的read/write函数都只需要设置3个参数。
+这里简单点选择mprotect函数实现，因为mmap函数需要设置6个参数，而mprotect函数以及过程中会用到的read/write函数都只需要设置3个参数。
 
-&emsp;&emsp;由于是64位程序，所以需要通过寄存器传参。在程序中找了一下，发现只有万能Gadgets可以用。关于万能Gadgets，可以看一下我之前的[ret2csu - 万能Gadgets](https://coldwave96.github.io/2020/06/15/Useful-Gadgets/)。
+由于是64位程序，所以需要通过寄存器传参。在程序中找了一下，发现只有万能Gadgets可以用。关于万能Gadgets，可以看一下我之前的[ret2csu - 万能Gadgets](https://coldwave96.github.io/2020/06/15/Useful-Gadgets/)。
 
-&emsp;&emsp;下面直接给出EXP脚本：
+下面直接给出EXP脚本：
 
 ```Python
 * # coding:utf-8
@@ -125,10 +125,10 @@ tags:
 * sh.close()
 ```
 
-&emsp;&emsp;EXP运行结果：
+EXP运行结果：
 
 ![](/img/XMAN-level5/XMAN1.png)
 
 ## PS
 
-&emsp;&emsp;关于mprotect函数的参数，第一个参数addr是内存页的首地址，内存是要求是以页为单位访问。一页是４kb也就是0x1000字节所以mprotect的第一个参数必须是0x1000的倍数，并且又要包含bss段，所以设置为0x600000。第二个参数是要设置的权限的地址的范围，也是页大小为单位，又需要能包含bss段，故而设置为最小单位0x1000。第三个参数就是具体属性，这里设置成RWX即7。
+关于mprotect函数的参数，第一个参数addr是内存页的首地址，内存是要求是以页为单位访问。一页是４kb也就是0x1000字节所以mprotect的第一个参数必须是0x1000的倍数，并且又要包含bss段，所以设置为0x600000。第二个参数是要设置的权限的地址的范围，也是页大小为单位，又需要能包含bss段，故而设置为最小单位0x1000。第三个参数就是具体属性，这里设置成RWX即7。

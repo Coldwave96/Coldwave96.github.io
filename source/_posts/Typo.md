@@ -11,23 +11,23 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;Typo作为ARM架构的题目，算是简单的入门题，让初学者能够了解ARM架构的函数调用过程。
+Typo作为ARM架构的题目，算是简单的入门题，让初学者能够了解ARM架构的函数调用过程。
 
 <!-- more -->
 
 ## Step 1
 
-&emsp;&emsp;程序看起来是一个很有趣的打字游戏：
+程序看起来是一个很有趣的打字游戏：
 
 ![](/img/Typo/Typo1.png)
 
-&emsp;&emsp;checksec发现是arm架构的32位程序：
+checksec发现是arm架构的32位程序：
 
 ![](/img/Typo/Typo2.png)
 
 ## Step 2
 
-&emsp;&emsp;再简单的温习一下ARM架构的函数调用：
+再简单的温习一下ARM架构的函数调用：
 
 ![](/img/Typo/Typo3.png)
 
@@ -43,43 +43,43 @@ tags:
 
 * r11  ->  fp  => 当前函数栈帧的栈底,也就是栈基地址FP；
 
-&emsp;&emsp;ARM架构的栈布局如下图所示：
+ARM架构的栈布局如下图所示：
 
 ![](/img/Typo/Typo4.png)
 
-&emsp;&emsp;main stack frame为调用函数的栈帧，func1 stack frame为当前函数(被调用者)的栈帧，栈底在高地址，栈向下增长。图中FP就是栈基址，它指向函数的栈帧起始地址；
+main stack frame为调用函数的栈帧，func1 stack frame为当前函数(被调用者)的栈帧，栈底在高地址，栈向下增长。图中FP就是栈基址，它指向函数的栈帧起始地址；
 
-&emsp;&emsp;SP则是函数的栈指针，它指向栈顶的位置。ARM压栈的顺序很是规矩，依次为当前函数指针PC、返回指针LR、栈指针SP、栈基址FP、传入参数个数及指针、本地变量和临时变量。先压栈的main stack 进入在高地址。
+SP则是函数的栈指针，它指向栈顶的位置。ARM压栈的顺序很是规矩，依次为当前函数指针PC、返回指针LR、栈指针SP、栈基址FP、传入参数个数及指针、本地变量和临时变量。先压栈的main stack 进入在高地址。
 
 ## Step 3
 
-&emsp;&emsp;回到Typo程序本身，在程序中有‘/bin/sh’字符串：
+回到Typo程序本身，在程序中有‘/bin/sh’字符串：
 
 ![](/img/Typo/Typo5.png)
 
-&emsp;&emsp;同时看到是sub_10ba8函数调用这个字符串，根据sub_10ba8函数发现这个函数其实就是system函数。在这个函数下面紧接着就是sub_110b4函数可以调用sub_10ba8即system函数。
+同时看到是sub_10ba8函数调用这个字符串，根据sub_10ba8函数发现这个函数其实就是system函数。在这个函数下面紧接着就是sub_110b4函数可以调用sub_10ba8即system函数。
 
 ![](/img/Typo/Typo6.png)
 
-&emsp;&emsp;有了system函数和’/bin/sh’，接下来需要的是找一个gadget控制R0寄存器：
+有了system函数和’/bin/sh’，接下来需要的是找一个gadget控制R0寄存器：
 
 ![](/img/Typo/Typo7.png)
 
-&emsp;&emsp;根据找到的gadget构造这样的栈结构：
+根据找到的gadget构造这样的栈结构：
 
 ![](/img/Typo/Typo8.png)
 
-&emsp;&emsp;这样在程序返回时, 经过ROP Chain就会实现`r0 -> “/bin/sh”`, `r4 -> junk_data`, `pc = system_addr`的效果, 进而执行`system("/bin/sh")`来get shell。
+这样在程序返回时, 经过ROP Chain就会实现`r0 -> “/bin/sh”`, `r4 -> junk_data`, `pc = system_addr`的效果, 进而执行`system("/bin/sh")`来get shell。
 
-&emsp;&emsp;最后就是寻找溢出点，确定padding的长度。
+最后就是寻找溢出点，确定padding的长度。
 
 ![](/img/Typo/Typo9.png)
 
-&emsp;&emsp;利用cyclic可以计算出padding长度112。
+利用cyclic可以计算出padding长度112。
 
 ## Step 4
 
-&emsp;&emsp;所以解题脚本如下：
+所以解题脚本如下：
 
 ```
 from pwn import *
@@ -97,6 +97,6 @@ sh.interactive()
 sh.close()
 ```
 
-&emsp;&emsp;运行结果：
+运行结果：
 
 ![](/img/Typo/Typo10.png)

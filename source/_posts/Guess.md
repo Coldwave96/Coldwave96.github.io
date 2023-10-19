@@ -10,79 +10,79 @@ tags:
 ---
 ## Step 1
 
-&emsp;&emsp;首先尝试运行程序，发现没有任何回显：
+首先尝试运行程序，发现没有任何回显：
 
 ![](/img/Guess/Guess1.png)
 
 <!-- more -->
 
-&emsp;&emsp;checksec一下：
+checksec一下：
 
 ![](/img/Guess/Guess2.png)
 
-&emsp;&emsp;开启了DEP，栈上不可执行。
+开启了DEP，栈上不可执行。
 
 ## Step 2
 
-&emsp;&emsp;将程序丢到IDA中，首先是main函数：
+将程序丢到IDA中，首先是main函数：
 
 ![](/img/Guess/Guess3.png)
 
-&emsp;&emsp;这很明显是一个socket服务器端的代码，监听的端口是0x270f即9999。nc上去看一下：
+这很明显是一个socket服务器端的代码，监听的端口是0x270f即9999。nc上去看一下：
 
 ![](/img/Guess/Guess4.png)
 
-&emsp;&emsp;再回到程序中去看下处理函数handle()：
+再回到程序中去看下处理函数handle()：
 
 ![](/img/Guess/Guess5.png)
 
-&emsp;&emsp;首先有一个alarm定时函数超时退出，会影响动态调试，可以把这个函数用NOP patch掉。后面接收的输入长度和申明的变量长度一致，不存在溢出。
+首先有一个alarm定时函数超时退出，会影响动态调试，可以把这个函数用NOP patch掉。后面接收的输入长度和申明的变量长度一致，不存在溢出。
 
-&emsp;&emsp;接着是rtrim()函数：
+接着是rtrim()函数：
 
 ![](/img/Guess/Guess6.png)
 
-&emsp;&emsp;这个函数把输入的字符串下标为奇数位的位置清０，但是gdb attach上去看了一下发现并没有改变。
+这个函数把输入的字符串下标为奇数位的位置清０，但是gdb attach上去看了一下发现并没有改变。
 
-&emsp;&emsp;根据逆向的伪代码发现是通过fork创建子程序而不是多线程，所以需要找一下具体子程序的进程号：
+根据逆向的伪代码发现是通过fork创建子程序而不是多线程，所以需要找一下具体子程序的进程号：
 
 ![](/img/Guess/Guess7.png)
 
-&emsp;&emsp;152是父进程的进程号，`nc 127.0.0.1 9999`之后程序会fork一个子进程，进程号为155。接下来`gdb attach 155`看下子进程的堆栈信息：
+152是父进程的进程号，`nc 127.0.0.1 9999`之后程序会fork一个子进程，进程号为155。接下来`gdb attach 155`看下子进程的堆栈信息：
 
 ![](/img/Guess/Guess8.png)
 
-&emsp;&emsp;在连接的程序界面输入100个‘1’跳过第一段输入字符长度的检测：
+在连接的程序界面输入100个‘1’跳过第一段输入字符长度的检测：
 
 ![](/img/Guess/Guess9.png)
 
-&emsp;&emsp;在执行rtrim()函数之前的位置下个断点：
+在执行rtrim()函数之前的位置下个断点：
 
 ![](/img/Guess/Guess10.png)
 
-&emsp;&emsp;再在执行完rtrim()函数后下个断点：
+再在执行完rtrim()函数后下个断点：
 
 ![](/img/Guess/Guess11.png)
 
-&emsp;&emsp;发现输入的字符串并没有改变……那就跳过不管了。最后调用了is_flag_correct()函数：
+发现输入的字符串并没有改变……那就跳过不管了。最后调用了is_flag_correct()函数：
 
 ![](/img/Guess/Guess12.png)
 
-&emsp;&emsp;该函数首先检测输入的字符串长度是不是100，输入存放在flag_hex。然后将0x401100位置的数据复制到bin_by_hex，0x401100位置的数据除了0-9以及大小写ABCDEF之外都是0xFF。接着将FAKE{9b355e394d2070ebd0df195d8b234509cc29272bc412}赋给flag（当然这是假的flag）。
+该函数首先检测输入的字符串长度是不是100，输入存放在flag_hex。然后将0x401100位置的数据复制到bin_by_hex，0x401100位置的数据除了0-9以及大小写ABCDEF之外都是0xFF。接着将FAKE{9b355e394d2070ebd0df195d8b234509cc29272bc412}赋给flag（当然这是假的flag）。
 
-&emsp;&emsp;接下来是函数的主体部分，对用户输入的字符串进行处理，每两位为一组，循环50次。将输入的字符在bin_by_hex中寻找对应的值，如果不在0-9以及大小写ABCDEF中时退出程序。然后通过’｜’运算将输入的100字节长度的字符串变为50字节长度，再比较given_flag和flag，返回比较结果。
+接下来是函数的主体部分，对用户输入的字符串进行处理，每两位为一组，循环50次。将输入的字符在bin_by_hex中寻找对应的值，如果不在0-9以及大小写ABCDEF中时退出程序。然后通过’｜’运算将输入的100字节长度的字符串变为50字节长度，再比较given_flag和flag，返回比较结果。
 
-&emsp;&emsp;这里是将flag_hex字符串的ASC II值当作bin_by_hex的索引，相当于将原来char类型的变量转换成了int类型，就会造成问题。当我们控制输入的字符串最终变为负数的索引时，程序就会回去找对应的值。
+这里是将flag_hex字符串的ASC II值当作bin_by_hex的索引，相当于将原来char类型的变量转换成了int类型，就会造成问题。当我们控制输入的字符串最终变为负数的索引时，程序就会回去找对应的值。
 
-&emsp;&emsp;而根据栈的布局，bin_by_hex的地址是高于flag的，结合上一句提到的负索引问题，我们就可以实现将given_flag设置为真正的flag从而通过检验。
+而根据栈的布局，bin_by_hex的地址是高于flag的，结合上一句提到的负索引问题，我们就可以实现将given_flag设置为真正的flag从而通过检验。
 
-&emsp;&emsp;但是我们依然不清楚真正的flag是什么，所以将正确的flag修改每一位，猜测每一位，这样最终猜解出来flag。
+但是我们依然不清楚真正的flag是什么，所以将正确的flag修改每一位，猜测每一位，这样最终猜解出来flag。
 
 ## Step 3
 
-&emsp;&emsp;分析结束就是具体怎么利用了，首先根据id_flag_correct函数bin_by_hex和flag相距0x40即64，所以我们需要控制索引每位减64。
+分析结束就是具体怎么利用了，首先根据id_flag_correct函数bin_by_hex和flag相距0x40即64，所以我们需要控制索引每位减64。
 
-&emsp;&emsp;测试脚本如下：
+测试脚本如下：
 
 ```Python
 from pwn import *
@@ -102,11 +102,11 @@ sh.recv()
 sh.close()
 ```
 
-&emsp;&emsp;运行结果如下图所示：
+运行结果如下图所示：
 
 ![](/img/Guess/Guess13.png)
 
-&emsp;&emsp;可见我们成功的将given_flag设置为了真正的flag，通过了检测。下一步就是要尝试一个一个的爆破，获取正确的flag：
+可见我们成功的将given_flag设置为了真正的flag，通过了检测。下一步就是要尝试一个一个的爆破，获取正确的flag：
 
 ```Python
 from pwn import *
@@ -143,6 +143,6 @@ print flag
 sh.close()
 ```
 
-&emsp;&emsp;脚本运行结果：
+脚本运行结果：
 
 ![](/img/Guess/Guess14.png)

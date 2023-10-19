@@ -11,59 +11,59 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;Add是MIPS架构的一道入门级别的栈溢出题，MIPS架构是一种采取精简指令集（RISC）的处理器架构。
+Add是MIPS架构的一道入门级别的栈溢出题，MIPS架构是一种采取精简指令集（RISC）的处理器架构。
 
 <!-- more -->
 
 ## Step 1
 
-&emsp;&emsp;checksec发现是MIPS架构的32位程序：
+checksec发现是MIPS架构的32位程序：
 
 ![](/img/Add/Add1.png)
 
-&emsp;&emsp;连接到服务器端看下程序运行逻辑：
+连接到服务器端看下程序运行逻辑：
 
 ![](/img/Add/Add2.png)
 
-&emsp;&emsp;看起来是个简单的加法计算器。
+看起来是个简单的加法计算器。
 
 ## Step 2
 
-&emsp;&emsp;Ghidra反编译看下main函数的代码：
+Ghidra反编译看下main函数的代码：
 
 ![](/img/Add/Add3.png)
 
 ![](/img/Add/Add4.png)
 
-&emsp;&emsp;结合retdec反编译的C代码：
+结合retdec反编译的C代码：
 
 ![](/img/Add/Add5.png)
 
-&emsp;&emsp;在LAB_00400b18中有这样一个片段：
+在LAB_00400b18中有这样一个片段：
 
 ![](/img/Add/Add6.png)
 
-&emsp;&emsp;根据main函数的代码发现buf放的是输入内容，而程序接受输入的时候是遇到\n才停止，所以存在输入过长导致栈溢出的问题。
+根据main函数的代码发现buf放的是输入内容，而程序接受输入的时候是遇到\n才停止，所以存在输入过长导致栈溢出的问题。
 
-&emsp;&emsp;上图中片段可以实现打印buf的地址，想要执行这个功能需要满足buf和challenge相等，buf是由我们控制的。
+上图中片段可以实现打印buf的地址，想要执行这个功能需要满足buf和challenge相等，buf是由我们控制的。
 
 &emsp;&emspchallenge表面上是rand()生成的随机数，但是由于随机种子是由srand(0x123456)生成的，即为固定值，导致challenge也是固定值。
 
-&emsp;&emsp;通过上面的分析我们可以得到栈上buf的地址，加上程序没有NX保护。所以当在buf中布置好shellcode控制程序跳转执行即可。
+通过上面的分析我们可以得到栈上buf的地址，加上程序没有NX保护。所以当在buf中布置好shellcode控制程序跳转执行即可。
 
 ## Step 3
 
-&emsp;&emsp;利用cyclic生成200个字节，通过调试发现溢出偏移量为112即0x70。这里要注意只有退出程序才会回到返回地址，所以最后需要一个退出的操作。
+利用cyclic生成200个字节，通过调试发现溢出偏移量为112即0x70。这里要注意只有退出程序才会回到返回地址，所以最后需要一个退出的操作。
 
-&emsp;&emsp;另外在调试中发现如果直接部署在buf上，在shellcode中指令会将/bin/sh字符串修改导致get shell 失败。所以需要将shellcode再偏移4或8和字节。
+另外在调试中发现如果直接部署在buf上，在shellcode中指令会将/bin/sh字符串修改导致get shell 失败。所以需要将shellcode再偏移4或8和字节。
 
-&emsp;&emsp;利用msfvenom生成payload：
+利用msfvenom生成payload：
 
 ![](/img/Add/Add7.png)
 
 ## Step 4
 
-&emsp;&emsp;下面是PWN脚本：
+下面是PWN脚本：
 
 ```
 from pwn import *
@@ -95,6 +95,6 @@ sh.interactive()
 sh.close()
 ```
 
-&emsp;&emsp;脚本运行结果：
+脚本运行结果：
 
 ![](/img/Add/Add8.png)

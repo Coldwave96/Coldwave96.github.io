@@ -10,61 +10,61 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;一道比较简单的堆溢出的题目，主要是配合测试下小工具[LibcOffset](https://github.com/Coldwave96/LibcOffset)，一个用来计算各个版本的libc文件main_arena offset的Python脚本。
+一道比较简单的堆溢出的题目，主要是配合测试下小工具[LibcOffset](https://github.com/Coldwave96/LibcOffset)，一个用来计算各个版本的libc文件main_arena offset的Python脚本。
 
 <!-- more -->
 
-&emsp;&emsp;程序运行截图：看起来是一道典型的堆溢出题目
+程序运行截图：看起来是一道典型的堆溢出题目
 
 ![](/img/ItemBoard/ItemBoard1.png)
 
-&emsp;&emsp;checksec：64位程序，有DEP和ASLR保护机制
+checksec：64位程序，有DEP和ASLR保护机制
 
 ![](/img/ItemBoard/ItemBoard2.png)
 
 ## Analysis
 
-&emsp;&emsp;将程序通过IDA Pro逆向查看伪代码，首先是main函数：
+将程序通过IDA Pro逆向查看伪代码，首先是main函数：
 
 ![](/img/ItemBoard/ItemBoard3.png)
 
-&emsp;&emsp;new_item函数创建新的item：
+new_item函数创建新的item：
 
 ![](/img/ItemBoard/ItemBoard4.png)
 
-&emsp;&emsp;list_item列出所有的item：
+list_item列出所有的item：
 
 ![](/img/ItemBoard/ItemBoard5.png)
 
-&emsp;&emsp;show_item展示具体的item：
+show_item展示具体的item：
 
 ![](/img/ItemBoard/ItemBoard6.png)
 
-&emsp;&emsp;remove_item函数删除item：
+remove_item函数删除item：
 
 ![](/img/ItemBoard/ItemBoard7.png)
 
-&emsp;&emsp;通过初步的分析发现代码中存在两处问题：
+通过初步的分析发现代码中存在两处问题：
 
 * 一是在new_item函数中buf的大小是1024，但是函数中并没有限制content_len的大小，所以当输入内容超过buf大小之后会造成缓冲区溢出，被利用构造ROP Chain。
 
 * 二是在remove_item函数中本该释放item指针的set_null函数实际上却是个空函数，所以实际上这个函数并没有什么用，存在UAF漏洞。
 
-&emsp;&emsp;结合题目给出了libc.so文件，大体上的思路是利用UAF泄露基地址和libc地址，进而获取system函数的地址。再利用UAF或者ROP Chain执行system函数getshell。
+结合题目给出了libc.so文件，大体上的思路是利用UAF泄露基地址和libc地址，进而获取system函数的地址。再利用UAF或者ROP Chain执行system函数getshell。
 
-&emsp;&emsp;利用自己编写的小工具[LibcOffset](https://github.com/Coldwave96/LibcOffset)查询本地以及题目给的libc文件的main_arena_offset。
+利用自己编写的小工具[LibcOffset](https://github.com/Coldwave96/LibcOffset)查询本地以及题目给的libc文件的main_arena_offset。
 
-&emsp;&emsp;本地调试环境：
+本地调试环境：
 
 ![](/img/ItemBoard/ItemBoard8.png)
 
-&emsp;&emsp;题目给的是glibc 2.19版本的：
+题目给的是glibc 2.19版本的：
 
 ![](/img/ItemBoard/ItemBoard9.png)
 
 ## Solution
 
-&emsp;&emsp;这里只记录通过UAF get shell的方法：
+这里只记录通过UAF get shell的方法：
 
 ```Python
 # coding:utf-8
@@ -134,6 +134,6 @@ sh.interactive()
 sh.close()
 ```
 
-&emsp;&emsp;运行结果：
+运行结果：
 
 ![](/img/ItemBoard/ItemBoard10.png)

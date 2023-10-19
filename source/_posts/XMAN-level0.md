@@ -11,17 +11,17 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level0的Write-Up，也是第一次尝试PWN题，这题比较简单，就是简单的栈溢出覆盖返回地址，很适合刚上手的Rookie（比如我==）。
+这是JarvisOJ的PWN题部分[XMAN]level0的Write-Up，也是第一次尝试PWN题，这题比较简单，就是简单的栈溢出覆盖返回地址，很适合刚上手的Rookie（比如我==）。
 
 <!-- more -->
 
 ## Step 1
 
-&emsp;&emsp;首先checksec一下程序：
+首先checksec一下程序：
 
 ![](/img/XMAN-level0/XMAN1.png)
 
-&emsp;&emsp;checksec是检查程序是否打开或关闭某些保护机制的一个脚本。相关参数意义为：
+checksec是检查程序是否打开或关闭某些保护机制的一个脚本。相关参数意义为：
 
 * RELRO：RELRO会有Partial RELRO和FULL RELRO，如果开启FULL RELRO，意味着我们无法修改got表；
 
@@ -33,33 +33,33 @@ tags:
 
 * FORTIFY：FORTIFY_SOURCE机制对格式化字符串有两个限制：(1)包含%n的格式化字符串不能位于程序内存中的可写地址；(2)当使用位置参数时，必须使用范围内的所有参数。所以如果要使用%7$x，你必须同时使用1,2,3,4,5和6。
 
-&emsp;&emsp;运行程序如下图所示：
+运行程序如下图所示：
 
 ![](/img/XMAN-level0/XMAN2.png)
 
 ## Step 2
 
-&emsp;&emsp;把程序拖到Hopper Disassambler中看下伪C代码：
+把程序拖到Hopper Disassambler中看下伪C代码：
 
 ![](/img/XMAN-level0/XMAN3.png)
 
-&emsp;&emsp;函数中有个非常明显的vulnerable_function函数，明确的告诉我们存在漏洞，看下代码果然存在栈溢出漏洞。
+函数中有个非常明显的vulnerable_function函数，明确的告诉我们存在漏洞，看下代码果然存在栈溢出漏洞。
 
-&emsp;&emsp;然后还看到一个callsystem函数，在函数中调用了shell：
+然后还看到一个callsystem函数，在函数中调用了shell：
 
 ![](/img/XMAN-level0/XMAN4.png)
 
-&emsp;&emsp;这样思路就很简单了，通过vulnerable_function函数的栈溢出覆盖返回地址，跳转到callsystem函数入口调出shell。
+这样思路就很简单了，通过vulnerable_function函数的栈溢出覆盖返回地址，跳转到callsystem函数入口调出shell。
 
 ## Step 3
 
-&emsp;&emsp;由vulnerable_function函数可以发现buffer到rbp的距离为0x80字节，加上0x08字节的rbp（64位程序中rbp为8字节，32位程序中为4字节），这样就可以得到vulnerable_function函数的返回地址了，然后把这个返回地址覆盖为callsystem函数的入口地址即可：
+由vulnerable_function函数可以发现buffer到rbp的距离为0x80字节，加上0x08字节的rbp（64位程序中rbp为8字节，32位程序中为4字节），这样就可以得到vulnerable_function函数的返回地址了，然后把这个返回地址覆盖为callsystem函数的入口地址即可：
 
 ![](/img/XMAN-level0/XMAN5.png)
 
 ## Appendix
 
-&emsp;&emsp;EXP代码:
+EXP代码:
 
 ```Python
 from pwn import *

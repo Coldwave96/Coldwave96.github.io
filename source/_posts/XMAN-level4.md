@@ -12,39 +12,39 @@ tags:
 ---
 ## Introduction
 
-&emsp;&emsp;这是JarvisOJ的PWN题部分[XMAN]level4的Write-Up，题目思路上和level3一样，只不过在细节处理上有稍微的不一样。本题中由于不知道libc的版本，，所以需要pwntools的DynELF模块寻找函数的内存地址。
+这是JarvisOJ的PWN题部分[XMAN]level4的Write-Up，题目思路上和level3一样，只不过在细节处理上有稍微的不一样。本题中由于不知道libc的版本，，所以需要pwntools的DynELF模块寻找函数的内存地址。
 
 <!-- more -->
 
 ## Step 1
 
-&emsp;&emsp;程序运行图：
+程序运行图：
 
 ![](/img/XMAN-level4/XMAN1.png)
 
-&emsp;&emsp;checksec：32位程序，仅开启DEP保护
+checksec：32位程序，仅开启DEP保护
 
 ![](/img/XMAN-level4/XMAN2.png)
 
 ## Step 2
 
-&emsp;&emsp;把程序丢到hopper中，发现vulnerable_function函数中的read函数存在溢出漏洞：
+把程序丢到hopper中，发现vulnerable_function函数中的read函数存在溢出漏洞：
 
 ![](/img/XMAN-level4/XMAN3.png)
 
-&emsp;&emsp;但是程序中既找不到system函数也找不到`/bin/sh`的字符串：
+但是程序中既找不到system函数也找不到`/bin/sh`的字符串：
 
 ![](/img/XMAN-level4/XMAN4.png)
 
 ![](/img/XMAN-level4/XMAN5.png)
 
-&emsp;&emsp;所以第一反应是和[level3](https://coldwave96.github.io/2020/05/20/XMAN-level3/)一样，leak出libc地址然后调用libc中的system函数。
+所以第一反应是和[level3](https://coldwave96.github.io/2020/05/20/XMAN-level3/)一样，leak出libc地址然后调用libc中的system函数。
 
-&emsp;&emsp;但是有个问题是我们不知道libc库的版本，所以我们需要通过pwntools的DynELF来寻找system函数的地址。
+但是有个问题是我们不知道libc库的版本，所以我们需要通过pwntools的DynELF来寻找system函数的地址。
 
-&emsp;&emsp;DynELF是pwntools中专门用来应对没有libc情况的漏洞利用模块，在提供一个目标程序任意地址内存泄露函数的情况下，可以解析任意加载库的人铱符号地址。具体原理解析可以看FREEBUF上的[Pwntools之DynELF原理探究](https://www.freebuf.com/articles/system/193646.html)一文。
+DynELF是pwntools中专门用来应对没有libc情况的漏洞利用模块，在提供一个目标程序任意地址内存泄露函数的情况下，可以解析任意加载库的人铱符号地址。具体原理解析可以看FREEBUF上的[Pwntools之DynELF原理探究](https://www.freebuf.com/articles/system/193646.html)一文。
 
-&emsp;&emsp;这样我们的思路就很清楚了：
+这样我们的思路就很清楚了：
 
 * 通过vulerable_function()的read()栈溢出构造ROP创造任意地址内存泄露函数
 
@@ -56,7 +56,7 @@ tags:
 
 ## Step 3
 
-&emsp;&emsp;直接给出EXP脚本：
+直接给出EXP脚本：
 
 ```Python
 * # coding:utf-8
@@ -97,6 +97,6 @@ tags:
 * sh.close()
 ```
 
-&emsp;&emsp;脚本运行结果图：
+脚本运行结果图：
 
 ![](/img/XMAN-level4/XMAN6.png)
