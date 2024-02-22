@@ -47,10 +47,10 @@ jobs:
         GITHUB_REPO: github.com/Coldwave96/Coldwave96.github.io
       # 将编译后的博客文件推送到指定仓库
       run: |
-        echo "blog.coldsnap.eu.org" > CNAME
         cd ./public && git init && git add .
         git config user.name "coldwave96"
         git config user.email "676803965@qq.com"
+        echo "blog.coldsnap.eu.org" > CNAME
         git add .
         git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
         git push --force --quiet "https://${{ secrets.ACCESS_TOKEN }}@$GITHUB_REPO" master:master        
