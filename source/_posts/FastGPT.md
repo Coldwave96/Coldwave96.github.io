@@ -15,7 +15,7 @@ tags:
 
 # 整体框架说明
 
-![sealos-fastgpt.webp](/img/FastGPT/sealos-fastgpt.webp)
+![sealos-fastgpt.webp](/img/FastGPT/sealos-fastgpt.png)
 
 - 整体框架由 4 部分组成，分别为数据库、FastGPT、OneAPI、大模型
 
