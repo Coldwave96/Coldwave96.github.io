@@ -1,2 +1,2 @@
 # Hexo
- Personal Blog
+Personal Blog

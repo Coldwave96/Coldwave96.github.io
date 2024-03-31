@@ -35,6 +35,7 @@ jobs:
       # 下载 hexo-cli 脚手架及相关安装包
       run: |
         npm install -g hexo-cli
+        npm install hexo-blog-encrypt
         npm install
     - name: Generate files
       # 编译 markdown 文件
@@ -51,6 +52,8 @@ jobs:
         git config user.name "coldwave96"
         git config user.email "676803965@qq.com"
         echo "blog.coldsnap.eu.org" > CNAME
+        echo "# Hexo" > README.md
+        echo "Personal Blog" >> README.md
         git add .
         git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
         git push --force --quiet "https://${{ secrets.ACCESS_TOKEN }}@$GITHUB_REPO" master:master        
