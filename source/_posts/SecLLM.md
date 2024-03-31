@@ -6,9 +6,14 @@ categories:
 - AI
 tags:
 - NLP
-password: Guoyulab@123
+password:
+Guoyulab@123
 ---
 # 集团网络安全大模型建设方案
+
+本文主要内容是关于目前网络安全垂直领域大模型情况调研以及集团大模型额度建设方案设想。
+
+<!-- more -->
 
 # 基础情况调研
 
