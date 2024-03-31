@@ -6,8 +6,7 @@ categories:
 - AI
 tags:
 - NLP
-password:
-Guoyulab@123
+password: Guoyulab@123
 ---
 # 集团网络安全大模型建设方案
 
