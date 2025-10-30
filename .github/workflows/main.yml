@@ -51,7 +51,7 @@ jobs:
         cd ./public && git init && git add .
         git config user.name "coldwave96"
         git config user.email "676803965@qq.com"
-        echo "blog.coldsnap.myfw.us" > CNAME
+        echo "blog.110910.xyz" > CNAME
         echo "# Hexo" > README.md
         echo "Personal Blog" >> README.md
         git add .
