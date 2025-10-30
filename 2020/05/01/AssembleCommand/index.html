@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="汇编指令长度"><meta name="keywords" content="PWN,Reverse,Updating"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>汇编指令长度 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%A1%E6%9C%89%E6%93%8D%E4%BD%9C%E6%95%B0%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">没有操作数的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E5%8F%AA%E6%B6%89%E5%8F%8A%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">操作数只涉及寄存器的的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%B6%89%E5%8F%8A%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">操作数涉及内存地址的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%B6%89%E5%8F%8A%E7%AB%8B%E5%8D%B3%E6%95%B0%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">4.</span> <span class="toc-text">操作数涉及立即数的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">跳转指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E5%86%85%E8%B7%B3%E8%BD%AC"><span class="toc-number">5.1.</span> <span class="toc-text">段内跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%AD%E9%97%B4%E8%B7%B3%E8%BD%AC"><span class="toc-number">5.2.</span> <span class="toc-text">断间跳转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#inc%E6%8C%87%E4%BB%A4"><span class="toc-number">6.</span> <span class="toc-text">inc指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#push%E6%8C%87%E4%BB%A4"><span class="toc-number">7.</span> <span class="toc-text">push指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#segment%E5%A3%B0%E6%98%8E"><span class="toc-number">8.</span> <span class="toc-text">segment声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#int-21h"><span class="toc-number">9.</span> <span class="toc-text">int 21h</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">汇编指令长度</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-01</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/">Tools</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">324</span><span class="post-meta__separator">|</span><span>阅读时长: 1 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>不断完善中！！！</p>
+<span id="more"></span>
+
+<h2 id="没有操作数的指令"><a href="#没有操作数的指令" class="headerlink" title="没有操作数的指令"></a>没有操作数的指令</h2><ul>
+<li>指令长度为1个字节，如：pop rax</li>
+</ul>
+<h2 id="操作数只涉及寄存器的的指令"><a href="#操作数只涉及寄存器的的指令" class="headerlink" title="操作数只涉及寄存器的的指令"></a>操作数只涉及寄存器的的指令</h2><ul>
+<li>指令长度为2个字节，如：mov bx,ax</li>
+</ul>
+<h2 id="操作数涉及内存地址的指令"><a href="#操作数涉及内存地址的指令" class="headerlink" title="操作数涉及内存地址的指令"></a>操作数涉及内存地址的指令</h2><ul>
+<li>指令长度为3个字节，如：mov ax,ds:[bx+si+idata]</li>
+</ul>
+<h2 id="操作数涉及立即数的指令"><a href="#操作数涉及立即数的指令" class="headerlink" title="操作数涉及立即数的指令"></a>操作数涉及立即数的指令</h2><ul>
+<li><p>指令长度为：寄存器类型+1</p>
+</li>
+<li><p>8位寄存器，寄存器类型&#x3D;1，如：mov al,8；指令长度为2个字节</p>
+</li>
+<li><p>16位寄存器，寄存器类型&#x3D;2，如：mov ax,8；指令长度为3个字节</p>
+</li>
+</ul>
+<h2 id="跳转指令"><a href="#跳转指令" class="headerlink" title="跳转指令"></a>跳转指令</h2><h3 id="段内跳转"><a href="#段内跳转" class="headerlink" title="段内跳转"></a>段内跳转</h3><ul>
+<li><p>指令长度为2个字节或3个字节，jmp指令本身占1个字节</p>
+</li>
+<li><p>段内短转移，8位位移量占一个字节，加上jmp指令一个字节，整条指令占2个字节，如：jmp short opr</p>
+</li>
+<li><p>段内近转移，16位位移量占两个字节，加上jmp指令一个字节，整条指令占3个字节<br>如：jmp near ptr opr</p>
+</li>
+</ul>
+<h3 id="断间跳转"><a href="#断间跳转" class="headerlink" title="断间跳转"></a>断间跳转</h3><ul>
+<li>指令长度为5个字节，如：jmp dword ptr table[bx][di]，或 jmp far ptr opr，或 jmp dword ptr opr</li>
+</ul>
+<h2 id="inc指令"><a href="#inc指令" class="headerlink" title="inc指令"></a>inc指令</h2><ul>
+<li>占用一个字节</li>
+</ul>
+<h2 id="push指令"><a href="#push指令" class="headerlink" title="push指令"></a>push指令</h2><ul>
+<li>占用一个字节</li>
+</ul>
+<h2 id="segment声明"><a href="#segment声明" class="headerlink" title="segment声明"></a>segment声明</h2><ul>
+<li>占用两个字节，如codesg segment</li>
+</ul>
+<h2 id="int-21h"><a href="#int-21h" class="headerlink" title="int 21h"></a>int 21h</h2><ul>
+<li>占用两个字节</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/05/01/AssembleCommand/">https://coldwave96.github.io/2020/05/01/AssembleCommand/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Reverse/">Reverse</a><a class="post-meta__tags" href="/tags/Updating/">Updating</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/01/GDBcommand/"><i class="fa fa-chevron-left">  </i><span>常用GDB指令</span></a></div><div class="next-post pull-right"><a href="/2020/05/01/WintoMac/"><span>将Hexo从Windows迁移到Mac上的踩坑教学</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

@@ -1,0 +1,1120 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Github上的部分hacker工具合集"><meta name="keywords" content="Github"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Github上的部分hacker工具合集 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">2.</span> <span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4%E6%9E%9A%E4%B8%BE%E6%88%96%E6%8E%A5%E7%AE%A1"><span class="toc-number">2.1.</span> <span class="toc-text">子域名爆破枚举或接管</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%88%96%E8%AE%A4%E8%AF%81%E7%88%86%E7%A0%B4"><span class="toc-number">2.2.</span> <span class="toc-text">数据库注入漏洞或认证爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E5%BC%B1%E7%94%A8%E6%88%B7%E5%90%8D%E6%88%96%E5%BC%B1%E5%8F%A3%E4%BB%A4%E6%9E%9A%E4%B8%BE%E7%88%86%E7%A0%B4"><span class="toc-number">2.3.</span> <span class="toc-text">网站弱用户名或弱口令枚举爆破</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E8%81%94%E7%BD%91%E8%AE%BE%E5%A4%87%E8%AE%A4%E8%AF%81%E7%88%86%E7%A0%B4%E6%88%96%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0"><span class="toc-number">2.4.</span> <span class="toc-text">物联网设备认证爆破或漏洞评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%B1%BB%E5%9E%8B%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B"><span class="toc-number">2.5.</span> <span class="toc-text">多类型跨站脚本漏洞检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E6%88%96%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4"><span class="toc-number">2.6.</span> <span class="toc-text">企业资产管理或数据保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%B6%E6%84%8F%E8%84%9A%E6%9C%AC%E6%88%96%E6%9C%A8%E9%A9%AC%E6%A3%80%E6%B5%8B"><span class="toc-number">2.7.</span> <span class="toc-text">恶意脚本或木马检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><span class="toc-number">2.8.</span> <span class="toc-text">内网渗透</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0%E6%88%96%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%89%AB%E6%8F%8F"><span class="toc-number">2.9.</span> <span class="toc-text">中间件漏洞评估或信息泄露扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%BB%84%E4%BB%B6%E6%88%96%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B%E6%89%AB%E6%8F%8F"><span class="toc-number">2.10.</span> <span class="toc-text">特殊组件或漏洞类型扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0"><span class="toc-number">2.11.</span> <span class="toc-text">无线网络漏洞评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E6%8E%A2%E6%B5%8B"><span class="toc-number">2.12.</span> <span class="toc-text">局域网探测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%88%96%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><span class="toc-number">2.13.</span> <span class="toc-text">动态或静态代码审计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AE%BE%E8%AE%A1%E6%89%AB%E6%8F%8F%E5%99%A8%E6%88%96%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0%E6%A1%86%E6%9E%B6"><span class="toc-number">2.14.</span> <span class="toc-text">模块化设计扫描器或漏洞评估框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E6%8C%81%E7%BB%AD%E6%80%A7%E5%A8%81%E8%83%81"><span class="toc-number">2.15.</span> <span class="toc-text">高级持续性威胁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%88%9B%E5%BB%BA%E8%BF%99%E4%B8%AA%E5%90%88%E8%BE%91%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">为什么创建这个合辑？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E8%80%85"><span class="toc-number">4.</span> <span class="toc-text">作者</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E7%AC%A6%E5%8F%B7%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">代码提交符号说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%95%E5%BE%8B%E5%A3%B0%E6%98%8E"><span class="toc-number">6.</span> <span class="toc-text">法律声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%8F%82%E4%B8%8E%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">如何参与？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE"><span class="toc-number">8.</span> <span class="toc-text">开源协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9D%83"><span class="toc-number">9.</span> <span class="toc-text">版权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%B4%E8%B0%A2"><span class="toc-number">10.</span> <span class="toc-text">致谢</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Github上的部分hacker工具合集</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-11</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/">Tools</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/Miscellaneous/">Miscellaneous</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">9.5k</span><span class="post-meta__separator">|</span><span>阅读时长: 35 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>Scanners Box</strong>也被称为 <strong>scanbox</strong>，是一个强大完备的黑客工具箱，它收集了Github上数10种类别的开源扫描器，包括子域名，数据库，中间件和其他模块化设计的扫描器等，<strong>但对于一些被大众所熟知的知名扫描工具，如nmap、w3af、brakeman、arachni、nikto、metasploit、aircrack-ng将不包括在本项目的收集范围内。</strong></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+<ul>
+<li><a href="#%E5%AD%90%E5%9F%9F%E5%90%8D%E7%88%86%E7%A0%B4%E6%9E%9A%E4%B8%BE%E6%88%96%E6%8E%A5%E7%AE%A1">子域名爆破枚举或接管</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E6%88%96%E8%AE%A4%E8%AF%81%E7%88%86%E7%A0%B4">数据库注入漏洞或认证爆破</a></li>
+<li><a href="#%E7%BD%91%E7%AB%99%E5%BC%B1%E7%94%A8%E6%88%B7%E5%90%8D%E6%88%96%E5%BC%B1%E5%8F%A3%E4%BB%A4%E6%9E%9A%E4%B8%BE%E7%88%86%E7%A0%B4">网站弱用户名或弱口令枚举爆破</a></li>
+<li><a href="#%E7%89%A9%E8%81%94%E7%BD%91%E8%AE%BE%E5%A4%87%E8%AE%A4%E8%AF%81%E7%88%86%E7%A0%B4%E6%88%96%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0">物联网设备认证爆破或漏洞评估</a></li>
+<li><a href="#%E5%A4%9A%E7%B1%BB%E5%9E%8B%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%BC%8F%E6%B4%9E%E6%A3%80%E6%B5%8B">多类型跨站脚本漏洞检测</a></li>
+<li><a href="#%E4%BC%81%E4%B8%9A%E8%B5%84%E4%BA%A7%E7%AE%A1%E7%90%86%E6%88%96%E6%95%B0%E6%8D%AE%E4%BF%9D%E6%8A%A4">企业资产管理或数据保护</a></li>
+<li><a href="#%E6%81%B6%E6%84%8F%E8%84%9A%E6%9C%AC%E6%88%96%E6%9C%A8%E9%A9%AC%E6%A3%80%E6%B5%8B">恶意脚本或木马检测</a></li>
+<li><a href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F">内网渗透</a></li>
+<li><a href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0%E6%88%96%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%89%AB%E6%8F%8F">中间件漏洞评估或信息泄露扫描</a></li>
+<li><a href="#%E7%89%B9%E6%AE%8A%E7%BB%84%E4%BB%B6%E6%88%96%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B%E6%89%AB%E6%8F%8F">特殊组件或漏洞类型扫描</a></li>
+<li><a href="#%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0">无线网络漏洞评估</a></li>
+<li><a href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E6%8E%A2%E6%B5%8B">局域网探测</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E6%88%96%E9%9D%99%E6%80%81%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">动态或静态代码审计</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%AE%BE%E8%AE%A1%E6%89%AB%E6%8F%8F%E5%99%A8%E6%88%96%E6%BC%8F%E6%B4%9E%E8%AF%84%E4%BC%B0%E6%A1%86%E6%9E%B6">模块化设计扫描器或漏洞评估框架</a></li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E6%8C%81%E7%BB%AD%E6%80%A7%E5%A8%81%E8%83%81">高级持续性威胁</a></li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<hr>
+<span id="more"></span>
+
+<h3 id="子域名爆破枚举或接管"><a href="#子域名爆破枚举或接管" class="headerlink" title="子域名爆破枚举或接管"></a>子域名爆破枚举或接管</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/subDomainsBrute">https://github.com/lijiejie/subDomainsBrute</a> - <strong>Lijiejie开发的一款使用广泛的子域名爆破枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ring04h/wydomain">https://github.com/ring04h/wydomain</a> - <strong>猪猪侠开发的一款域名收集全面、精准的子域名枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/le4f/dnsmaper">https://github.com/le4f/dnsmaper</a> - <strong>子域名枚举爆破工具以及地图位置标记</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xbug/orangescan">https://github.com/0xbug/orangescan</a> - <strong>提供web界面的在线子域名信息收集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TheRook/subbrute">https://github.com/TheRook/subbrute</a> - <strong>高效精准的子域名爆破工具,同时也是扫描器中最常用的子域名API库</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/We5ter/GSDF">https://github.com/We5ter/GSDF</a> - <strong>基于谷歌SSL透明证书的子域名查询脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mandatoryprogrammer/cloudflare_enum">https://github.com/mandatoryprogrammer/cloudflare_enum</a>  - <strong>使用CloudFlare进行子域名枚举的脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/guelfoweb/knock">https://github.com/guelfoweb/knock</a> - <strong>Knock子域名获取，可用于查找子域名接管漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/exp-db/PythonPool/tree/master/Tools/DomainSeeker">https://github.com/exp-db/PythonPool/tree/master/Tools/DomainSeeker</a> - <strong>多方式收集目标子域名信息</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/code-scan/BroDomain">https://github.com/code-scan/BroDomain</a> - <strong>兄弟域名查询</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/chuhades/dnsbrute">https://github.com/chuhades/dnsbrute</a> - <strong>高效的子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/yanxiu0614/subdomain3">https://github.com/yanxiu0614/subdomain3</a> - <strong>一款便捷高效的子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/michenriksen/aquatone">https://github.com/michenriksen/aquatone</a> - <strong>子域名枚举、探测工具。可用于子域名接管漏洞探测</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/evilsocket/dnssearch">https://github.com/evilsocket/dnssearch</a> - <strong>一款子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/reconned/domained">https://github.com/reconned/domained</a> - <strong>可用于子域名收集的一款工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/bit4woo/Teemo">https://github.com/bit4woo/Teemo</a> - <strong>域名邮箱等信息收集及枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/laramies/theHarvester">https://github.com/laramies/theHarvester</a> - <strong>邮箱、服务器信息收集及子域名枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/nmalcolm/Inventus">https://github.com/nmalcolm/Inventus</a> - <strong>通过爬虫实现的子域名收集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/aboul3la/Sublist3r">https://github.com/aboul3la/Sublist3r</a> - <strong>强大的快速子域枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jonluca/Anubis">https://github.com/jonluca/Anubis</a> - <strong>子域名枚举及信息搜集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/n4xh4ck5/N4xD0rk">https://github.com/n4xh4ck5/N4xD0rk</a> - <strong>子域名查询工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/infosec-au/altdns">https://github.com/infosec-au/altdns</a> - <strong>通过字符串组合排列的高效子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/FeeiCN/ESD">https://github.com/FeeiCN/ESD</a> - <strong>基于AsyncIO协程以及非重复字典的子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/UnaPibaGeek/ctfr">https://github.com/UnaPibaGeek/ctfr</a> - <strong>通过域名透明证书记录获取子域名</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/giovanifss/Dumb">https://github.com/giovanifss/Dumb</a> - <strong>灵活扩展的子域名爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Haskell</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/caffix/amass">https://github.com/caffix/amass</a> - <strong>Go语言开发的子域名枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ice3man543/subfinder">https://github.com/Ice3man543/subfinder</a> - <strong>继承于Sublist3r项目的模块化体系结构，一个强劲的子域名枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ice3man543/SubOver">https://github.com/Ice3man543/SubOver</a> - <strong>一款精准的子域名结构检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/janniskirschner/horn3t">https://github.com/janniskirschner/horn3t</a> - <strong>带有网页截图功能的子可视化域名枚举工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="数据库注入漏洞或认证爆破"><a href="#数据库注入漏洞或认证爆破" class="headerlink" title="数据库注入漏洞或认证爆破"></a>数据库注入漏洞或认证爆破</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xbug/SQLiScanner">https://github.com/0xbug/SQLiScanner</a> - <strong>一款基于SQLMAP和Charles的被动SQL注入漏洞扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/stamparm/DSSS">https://github.com/stamparm/DSSS</a> - <strong>99行代码实现的sql注入漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/youngyangyang04/NoSQLAttack">https://github.com/youngyangyang04/NoSQLAttack</a>  - <strong>一款针对mongoDB的攻击工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Neohapsis/bbqsql">https://github.com/Neohapsis/bbqsql</a> - <strong>SQL盲注利用框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NetSPI/PowerUpSQL">https://github.com/NetSPI/PowerUpSQL</a> - <strong>攻击SQLSERVER的Powershell脚本框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Powershell</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/WhitewidowScanner/whitewidow">https://github.com/WhitewidowScanner/whitewidow</a> - <strong>一款数据库扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/stampery/mongoaudit">https://github.com/stampery/mongoaudit</a> - <strong>MongoDB审计及渗透工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/torque59/Nosql-Exploitation-Framework">https://github.com/torque59/Nosql-Exploitation-Framework</a> - <strong>NoSQL扫描、爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/missDronio/blindy">https://github.com/missDronio/blindy</a> - <strong>MySQL盲注爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fengxuangit/Fox-scan">https://github.com/fengxuangit/Fox-scan</a> - <strong>基于SQLMAP的主动和被动资源发现的漏洞扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/JohnTroony/Blisqy">https://github.com/JohnTroony/Blisqy</a> - <strong>用于http header中的时间盲注爆破工具，仅针对MySQL&#x2F;MariaDB</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ron190/jsql-injection">https://github.com/ron190/jsql-injection</a> - <strong>Java 编写的SQL注入工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Java</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Hadesy2k/sqliv">https://github.com/Hadesy2k/sqliv</a> - <strong>基于搜索引擎的批量SQL注入漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/sqlmate">https://github.com/s0md3v/sqlmate</a> - <strong>在SQLMAP基础上变SQLMAP得更加易用和便捷</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m8r0wn/enumdb">https://github.com/m8r0wn/enumdb</a>  - <strong>MySQL以及MSSQL爆破脱裤工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="网站弱用户名或弱口令枚举爆破"><a href="#网站弱用户名或弱口令枚举爆破" class="headerlink" title="网站弱用户名或弱口令枚举爆破"></a>网站弱用户名或弱口令枚举爆破</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/htpwdScan">https://github.com/lijiejie/htpwdScan</a>  - <strong>一个简单的HTTP暴力破解、撞库攻击脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/netxfly/crack_ssh">https://github.com/netxfly/crack_ssh</a> - <strong>Go写的协程版的SSH、Redis、mongoDB弱口令破解工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/shengqi158/weak_password_detect">https://github.com/shengqi158/weak_password_detect</a> - <strong>多线程探测弱口令</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/Blazy">https://github.com/s0md3v/Blazy</a> - <strong>支持测试 CSRF, Clickjacking, Cloudflare 和 WAF识别的弱口令探测器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MooseDojo/myBFF">https://github.com/MooseDojo/myBFF</a> - <strong>对CiscoVPN、Citrix Gateway等各类服务进行弱口令检测的脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TideSec/web_pwd_common_crack">https://github.com/TideSec/web_pwd_common_crack</a> - <strong>一款通用的web弱口令破解脚本，可批量检测没有验证码的管理后台。</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="物联网设备认证爆破或漏洞评估"><a href="#物联网设备认证爆破或漏洞评估" class="headerlink" title="物联网设备认证爆破或漏洞评估"></a>物联网设备认证爆破或漏洞评估</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rapid7/IoTSeeker">https://github.com/rapid7/IoTSeeker</a> - <strong>物联网设备默认密码扫描检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/shodan-labs/iotdb">https://github.com/shodan-labs/iotdb</a> - <strong>使用nmap扫描IoT设备</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>XML</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/googleinurl/RouterHunterBR">https://github.com/googleinurl/RouterHunterBR</a> - <strong>路由器设备漏洞扫描利用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/scu-igroup/telnet-scanner">https://github.com/scu-igroup/telnet-scanner</a> - <strong>Telnet服务密码撞库</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/viraintel/OWASP-Nettacker">https://github.com/viraintel/OWASP-Nettacker</a> - <strong>自动化信息搜集及渗透测试工具，比较适用于IoT扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/threat9/routersploit">https://github.com/threat9/routersploit</a> - <strong>嵌入式设备漏洞扫描及利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/w3h/icsmaster/tree/master/nse">https://github.com/w3h/icsmaster/tree/master/nse</a> - <strong>数字化工控设备认证爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>NSE</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<h3 id="多类型跨站脚本漏洞检测"><a href="#多类型跨站脚本漏洞检测" class="headerlink" title="多类型跨站脚本漏洞检测"></a>多类型跨站脚本漏洞检测</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0x584A/fuzzXssPHP">https://github.com/0x584A/fuzzXssPHP</a> - <strong>PHP版本的反射型XSS扫描</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟        |         <strong>Language</strong>: <strong>PHP</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/chuhades/xss_scan">https://github.com/chuhades/xss_scan</a> - <strong>批量扫描XSS的Python脚本</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 2.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/BlackHole1/autoFindXssAndCsrf">https://github.com/BlackHole1/autoFindXssAndCsrf</a> - <strong>自动化检测页面是否存在XSS和CSRF漏洞的浏览器插件</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟        |         <strong>Language</strong>: <strong>Javascript</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/shogunlab/shuriken">https://github.com/shogunlab/shuriken</a> - <strong>使用命令行进行XSS批量检测</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 2.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/XSStrike">https://github.com/s0md3v/XSStrike</a> - <strong>可识别并绕过WAF的XSS扫描工具</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 3.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/stamparm/DSXS">https://github.com/stamparm/DSXS</a> - <strong>支持GET、POST方式的高效XSS扫描器</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 3.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✔️</p>
+<h3 id="企业资产管理或数据保护"><a href="#企业资产管理或数据保护" class="headerlink" title="企业资产管理或数据保护"></a>企业资产管理或数据保护</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ysrc/xunfeng">https://github.com/ysrc/xunfeng</a> - <strong>网络资产识别引擎，漏洞检测引擎</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/x0day/Multisearch-v2">https://github.com/x0day/Multisearch-v2</a> - <strong>Bing、Google、360、Zoomeye等搜索引擎聚合搜索，可用于发现企业被搜索引擎收录的敏感资产信息</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ekultek/Zeus-Scanner">https://github.com/Ekultek/Zeus-Scanner</a> - <strong>集成化的综合搜索引擎，能够抓取被搜索引擎隐藏的url,并交由sqlmap、nmap扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xbug/Biu-framework">https://github.com/0xbug/Biu-framework</a> - <strong>企业内网基础服务安全扫描框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/metac0rtex/GitHarvester">https://github.com/metac0rtex/GitHarvester</a> - <strong>Github repos信息搜集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/repoog/GitPrey">https://github.com/repoog/GitPrey</a> - <strong>GitHub敏感信息扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xbug/Hawkeye">https://github.com/0xbug/Hawkeye</a> - <strong>企业资产、敏感信息GitHub泄露监控系统</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/UnkL4b/GitMiner">https://github.com/UnkL4b/GitMiner</a> - <strong>Github敏感信息搜索工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dxa4481/truffleHog">https://github.com/dxa4481/truffleHog</a> - <strong>GitHub敏感信息扫描工具,包括检测commit等</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/1N3/Goohak">https://github.com/1N3/Goohak</a> - <strong>自动化对指定域名进行Google hacking搜索并收集信息</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/UKHomeOffice/repo-security-scanner">https://github.com/UKHomeOffice/repo-security-scanner</a> - <strong>用于搜索git commit中的敏感信息，例如密码、私钥等的客户端工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/FeeiCN/GSIL">https://github.com/FeeiCN/GSIL</a> - <strong>Github敏感信息泄露扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MiSecurity/x-patrol">https://github.com/MiSecurity/x-patrol</a> - <strong>Github泄露检测巡航工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/anshumanbh/git-all-secrets">https://github.com/anshumanbh/git-all-secrets</a> - <strong>集合多个开源GitHub敏感信息扫描的企业信息泄露巡航工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/VKSRC/Github-Monitor">https://github.com/VKSRC/Github-Monitor</a> - <strong>由vipkid SRC开发的Github信息泄漏监控系统</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="恶意脚本或木马检测"><a href="#恶意脚本或木马检测" class="headerlink" title="恶意脚本或木马检测"></a>恶意脚本或木马检测</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/he1m4n6a/findWebshell">https://github.com/he1m4n6a/findWebshell</a>  -<strong>一款简单的webshell检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tencent/HaboMalHunter">https://github.com/Tencent/HaboMalHunter</a>  -<strong>哈勃分析系统，Linux系统病毒分析及安全检测</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/PlagueScanner/PlagueScanner">https://github.com/PlagueScanner/PlagueScanner</a> - <strong>使用python实现的集成ClamAV、ESET、Bitdefender的反病毒引擎</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/nbs-system/php-malware-finder">https://github.com/nbs-system/php-malware-finder</a> - <strong>一款高效率PHP-webshell扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/emposha/PHP-Shell-Detector">https://github.com/emposha/PHP-Shell-Detector</a> - <strong>测试效率高达99%的webshell检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/erevus-cn/scan_webshell">https://github.com/erevus-cn/scan_webshell</a> - <strong>一款基础的基于正则的webshell扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/emposha/Shell-Detector">https://github.com/emposha/Shell-Detector</a> - <strong>Webshell扫描工具，支持PHP&#x2F;Perl&#x2F;ASP&#x2F;ASPX webshell扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m4rco-/dorothy2">https://github.com/m4rco-/dorothy2</a> - <strong>一款木马、僵尸网络分析框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/droidefense/engine">https://github.com/droidefense/engine</a> - <strong>高级安卓木马病毒分析框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Java</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lcatro/network_backdoor_scanner">https://github.com/lcatro/network_backdoor_scanner</a> - <strong>基于网络流量的内网探测框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>语言</strong>: <strong>C++</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fdiskyou/hunter">https://github.com/fdiskyou/hunter</a> - <strong>调用 Windows API 枚举用户登录信息</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>语言</strong>: <strong>C++</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/BlackHole1/WebRtcXSS">https://github.com/BlackHole1/WebRtcXSS</a> - <strong>自动化利用XSS入侵内网</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tib3rius/AutoRecon">https://github.com/Tib3rius/AutoRecon</a> - <strong>多线程目标网段探测工具，适用于大型内网探测扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<h3 id="中间件漏洞评估或信息泄露扫描"><a href="#中间件漏洞评估或信息泄露扫描" class="headerlink" title="中间件漏洞评估或信息泄露扫描"></a>中间件漏洞评估或信息泄露扫描</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ring04h/wyportmap">https://github.com/ring04h/wyportmap</a> - <strong>目标端口扫描、系统服务指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ring04h/weakfilescan">https://github.com/ring04h/weakfilescan</a> - <strong>动态多线程敏感信息泄露检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/EnableSecurity/wafw00f">https://github.com/EnableSecurity/wafw00f</a> - <strong>WAF产品指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rbsec/sslscan">https://github.com/rbsec/sslscan</a> - <strong>SSL&#x2F;TLS服务安全评估</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>C</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/urbanadventurer/whatweb">https://github.com/urbanadventurer/whatweb</a> - <strong>Web指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TideSec/TideFinger">https://github.com/TideSec/TideFinger</a> - <strong>Web指纹识别工具，整合多个指纹库结合多种指纹检测方法，检测高效准确</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>        |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TideSec/FuzzScanner">https://github.com/TideSec/FuzzScanner</a> - <strong>综合型web信息搜集平台，部署方便，功能多样且实用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>        |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tanjiti/FingerPrint">https://github.com/tanjiti/FingerPrint</a> - <strong>Web应用指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/nanshihui/Scan-T">https://github.com/nanshihui/Scan-T</a> - <strong>网络爬虫式指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/OffensivePython/Nscan">https://github.com/OffensivePython/Nscan</a> - <strong>基于Masscan和Zmap的网络扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ywolf/F-NAScan">https://github.com/ywolf/F-NAScan</a> - <strong>网络资产信息扫描, ICMP存活探测,端口扫描，端口指纹服务识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/maurosoria/dirsearch">https://github.com/maurosoria/dirsearch</a> - <strong>web路径收集与扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/x0day/bannerscan">https://github.com/x0day/bannerscan</a> - <strong>C段Banner与路径扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/RASSec/RASscan">https://github.com/RASSec/RASscan</a> - <strong>端口服务扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/3xp10it/bypass_waf">https://github.com/3xp10it/bypass_waf</a> - <strong>waf自动暴破绕过</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/3xp10it/xcdn">https://github.com/3xp10it/xcdn</a> - <strong>尝试找出cdn背后的真实ip</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xyntax/BingC">https://github.com/Xyntax/BingC</a> - <strong>基于Bing搜索引擎的C段、旁站查询，多线程，支持API</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xyntax/DirBrute">https://github.com/Xyntax/DirBrute</a> - <strong>多线程WEB目录爆破工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zer0h/httpscan">https://github.com/zer0h/httpscan</a> - <strong>一个爬虫式的网段Web主机发现小工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lietdai/doom">https://github.com/lietdai/doom</a>  - <strong>Thorn上实现的分布式任务分发的ip端口漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/chichou/grab.js">https://github.com/chichou/grab.js</a>  - <strong>类似 zgrab 的快速 TCP 指纹抓取解析工具，支持更多协议</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Nitr4x/whichCDN">https://github.com/Nitr4x/whichCDN</a> - <strong>CDN识别、检测</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/secfree/bcrpscan">https://github.com/secfree/bcrpscan</a> - <strong>基于爬虫的web路径扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mozilla/ssh_scan">https://github.com/mozilla/ssh_scan</a> - <strong>服务器SSH配置信息扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/18F/domain-scan">https://github.com/18F/domain-scan</a> - <strong>针对域名及其子域名的资产数据检测／扫描，包括http&#x2F;https检测等</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggusoft/inforfinder">https://github.com/ggusoft/inforfinder</a> - <strong>域名资产收集及指纹识别工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/boy-hack/gwhatweb">https://github.com/boy-hack/gwhatweb</a> - <strong>CMS识别, python gevent实现</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mosuan/FileScan">https://github.com/Mosuan/FileScan</a> - <strong>敏感文件扫描、二次判断降低误报率、扫描内容规则化、多目录扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xyntax/FileSensor">https://github.com/Xyntax/FileSensor</a> - <strong>基于爬虫的动态敏感文件探测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/deibit/cansina">https://github.com/deibit/cansina</a> - <strong>web路径扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mozilla/cipherscan">https://github.com/mozilla/cipherscan</a> - <strong>目标主机服务SSL类型识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;Bash Shell</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/xmendez/wfuzz">https://github.com/xmendez/wfuzz</a> - <strong>Web应用fuzz工具、框架，同时可用于web路径、服务扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/Breacher">https://github.com/s0md3v/Breacher</a> - <strong>多线程的后台路径扫描器，也可用于发现Execution After Redirect漏洞f</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ztgrace/changeme">https://github.com/ztgrace/changeme</a> - <strong>弱口令扫描器，不仅支持普通登录页，也支持ssh、mongodb等组件</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/medbenali/CyberScan">https://github.com/medbenali/CyberScan</a> - <strong>渗透测试辅助工具，支持分析数据包、解码、端口扫描、IP地址分析等</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m0nad/HellRaiser">https://github.com/m0nad/HellRaiser</a> - <strong>基于nmap的扫描器，与cve漏洞关联</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/scipag/vulscan">https://github.com/scipag/vulscan</a> - <strong>基于Nmap的高级漏洞扫描器，命令行环境使用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟         |         <strong>编程语言</strong>: <strong>NSE</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jekyc/wig">https://github.com/jekyc/wig</a> - <strong>Web应用信息搜集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/eldraco/domain_analyzer">https://github.com/eldraco/domain_analyzer</a> - <strong>围绕web服务的域名进行信息收集和”域传送”等漏洞扫描，也支持针对背后的服务器端口扫描等</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cloudtracer/paskto">https://github.com/cloudtracer/paskto</a> - <strong>基于Nikto扫描规则的被动式路径扫描以及信息爬虫</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zerokeeper/WebEye">https://github.com/zerokeeper/WebEye</a> - <strong>快速识别web服务器类型、CMS类型、WAF类型、WHOIS信息、以及语言框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m3liot/shcheck">https://github.com/m3liot/shcheck</a> - <strong>用于检查web服务的http header的安全性</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/aipengjie/sensitivefilescan">https://github.com/aipengjie/sensitivefilescan</a> - <strong>一款高效快捷的敏感文件扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fnk0c/cangibrina">https://github.com/fnk0c/cangibrina</a> - <strong>通过字典穷举、google、robots.txt等途径的跨平台后台管理路径扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/n4xh4ck5/CMSsc4n">https://github.com/n4xh4ck5/CMSsc4n</a> - <strong>常规CMS指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ekultek/WhatWaf">https://github.com/Ekultek/WhatWaf</a> - <strong>WAF指纹识别及自动化bypass工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dzonerzy/goWAPT">https://github.com/dzonerzy/goWAPT</a> - <strong>Web应用fuzz工具、框架，同时可用于web路径&#x2F;服务扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/blackye/webdirdig">https://github.com/blackye/webdirdig</a> - <strong>web敏感目录、信息泄漏扫描脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/GitHackTools/BillCipher">https://github.com/GitHackTools/BillCipher</a> - <strong>用于网站或IP地址的信息收集工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/boy-hack/w8fuckcdn">https://github.com/boy-hack/w8fuckcdn</a> - <strong>通过扫描全网获得真实IP的自动化程序</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/boy-hack/w11scan">https://github.com/boy-hack/w11scan</a> - <strong>分布式web指纹识别平台</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Nekmo/dirhunt">https://github.com/Nekmo/dirhunt</a> - <strong>爬虫式web目录扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MetaChar/pyHAWK">https://github.com/MetaChar/pyHAWK</a> - <strong>数据库文件、私钥等敏感文件泄露扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/H4ckForJob/dirmap">https://github.com/H4ckForJob/dirmap</a> - <strong>一个高级web目录扫描工具，功能将会强于DirBuster、Dirsearch、cansina、御剑</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟         |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/Photon">https://github.com/s0md3v/Photon</a> - <strong>可以提取网址，电子邮件，文件，网站帐户等的高速爬虫</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/1N3/BlackWidow">https://github.com/1N3/BlackWidow</a> - <strong>Web站点信息搜集工具，包括邮箱、电话等信息</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<h3 id="特殊组件或漏洞类型扫描"><a href="#特殊组件或漏洞类型扫描" class="headerlink" title="特殊组件或漏洞类型扫描"></a>特殊组件或漏洞类型扫描</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/1N3/XSSTracer">https://github.com/1N3/XSSTracer</a>  - <strong>用于检测跨站跟踪, 点击劫持等问题的工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xHJK/dumpall">https://github.com/0xHJK/dumpall</a> - <strong><code>.git</code> &#x2F; <code>.svn</code> &#x2F; <code>.DS_Store</code>等信息泄露集成利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/shengqi158/svnhack">https://github.com/shengqi158/svnhack</a> - <strong>A <code>.svn</code> 文件夹泄露利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>NSE</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack">https://github.com/lijiejie/GitHack</a> - <strong><code>.git</code> 文件夹泄露利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/blackye/Jenkins">https://github.com/blackye/Jenkins</a> - <strong>Jenkins漏洞探测、用户抓取爆破</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/code-scan/dzscan">https://github.com/code-scan/dzscan</a> - <strong>首款集成化的Discuz扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/chuhades/CMS-Exploit-Framework">https://github.com/chuhades/CMS-Exploit-Framework</a>  -<strong>一款简洁优雅的CMS扫描及利用框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/IIS_shortname_Scanner">https://github.com/lijiejie/IIS_shortname_Scanner</a> - <strong>IIS短文件名暴力枚举漏洞利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/riusksk/FlashScanner">https://github.com/riusksk/FlashScanner</a> - <strong>Flash-XSS扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/epinna/tplmap">https://github.com/epinna/tplmap</a> - <strong>服务器端模板注入漏洞检测与利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cr0hn/dockerscan">https://github.com/cr0hn/dockerscan</a> - <strong>Docker容器集群安全评估及利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m4ll0k/WPSeku">https://github.com/m4ll0k/WPSeku</a>  - <strong>一款精简的Wordpress扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rastating/wordpress-exploit-framework">https://github.com/rastating/wordpress-exploit-framework</a> - <strong>集成化wordpress漏洞利用框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ilmila/J2EEScan">https://github.com/ilmila/J2EEScan</a> - <strong>用于扫描J2EE应用的一款burpsuite插件</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Java</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/riusksk/StrutScan">https://github.com/riusksk/StrutScan</a> - <strong>一款基于Perl的Strut2的历史漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/D35m0nd142/LFISuite">https://github.com/D35m0nd142/LFISuite</a> - <strong>本地文件包含漏洞利用及扫描工具，支持反弹shell</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0x4D31/salt-scanner">https://github.com/0x4D31/salt-scanner</a> - <strong>基于Salt Open以及Vulners Linux Audit API的linux漏洞扫描器，支持与JIRA、slack平台结合使用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tijme/angularjs-csti-scanner">https://github.com/tijme/angularjs-csti-scanner</a> - <strong>自动化探测客户端AngularJS模板注入漏洞工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/irsdl/IIS-ShortName-Scanner">https://github.com/irsdl/IIS-ShortName-Scanner</a> - <strong>Java编写的IIS短文件名暴力枚举漏洞利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/Wordpresscan">https://github.com/swisskyrepo/Wordpresscan</a> - <strong>基于WPScan以及WPSeku的优化版wordpress扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/CHYbeta/cmsPoc">https://github.com/CHYbeta/cmsPoc</a> - <strong>CMS渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/3gstudent/Smbtouch-Scanner">https://github.com/3gstudent/Smbtouch-Scanner</a> - <strong>自动化扫描内网中存在的由shadow brokers泄露的ETERNAL系列漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/OsandaMalith/LFiFreak">https://github.com/OsandaMalith/LFiFreak</a> - <strong>本地文件包含漏洞利用及扫描工具，支持反弹shell</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mak-/parameth">https://github.com/mak-/parameth</a> - <strong>用于枚举脚本的GET&#x2F;POST未知参数字段</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lucifer1993/struts-scan">https://github.com/Lucifer1993/struts-scan</a> - <strong>struts2漏洞全版本检测和利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>C#&#x2F;Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/hahwul/a2sv">https://github.com/hahwul/a2sv</a> - <strong>SSL漏洞扫描，例如心脏滴血漏洞等</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NickstaDB/BaRMIe">https://github.com/NickstaDB/BaRMIe</a> - <strong>用于攻击爆破Java Remote Method Invocation服务的工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Java</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/RetireJS/grunt-retire">https://github.com/RetireJS/grunt-retire</a> - <strong>扫描Node.js扩展库的常见漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/kotobukki/BDA">https://github.com/kotobukki/BDA</a> - <strong>针对Hadoop、Spark等大数据平台的的漏洞探测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jagracey/Regex-DoS">https://github.com/jagracey/Regex-DoS</a> - <strong>Node.js库RegEx 拒绝服务扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/milesrichardson/docker-onion-nmap">https://github.com/milesrichardson/docker-onion-nmap</a> - <strong>使用nmap扫描Tor网络上隐藏的”onion”服务</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Bash Shell</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Moham3dRiahi/XAttacker">https://github.com/Moham3dRiahi/XAttacker</a> - <strong>Web CMS exploit 工具,包含针对主流 CMS 的 66 个不同的 exploits</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lijiejie/BBScan">https://github.com/lijiejie/BBScan</a> - <strong>一个迷你的信息泄漏批量扫描脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/almandin/fuxploider">https://github.com/almandin/fuxploider</a> - <strong>文件上传漏洞扫描器及利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Jamalc0m/wphunter">https://github.com/Jamalc0m/wphunter</a> - <strong>Wordpress漏洞扫描器,同时也支持敏感文件泄露扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/retirejs/retire.js">https://github.com/retirejs/retire.js</a> - <strong>检测网站依赖的Javascript库中存在的已知通用漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/3xp10it/xupload">https://github.com/3xp10it/xupload</a> - <strong>自动检测上传功能是否可上传webshell</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mobrine-mob/M0B-tool">https://github.com/mobrine-mob/M0B-tool</a> - <strong>CMS指纹识别及自动化渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rezasp/vbscan">https://github.com/rezasp/vbscan</a> - <strong>论坛框架vBulletin黑盒漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MrSqar-Ye/BadMod">https://github.com/MrSqar-Ye/BadMod</a> - <strong>CMS指纹识别及自动化渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tuhinshubhra/CMSeeK">https://github.com/Tuhinshubhra/CMSeeK</a> - <strong>CMS漏洞检测和利用套件</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cloudsploit/scans">https://github.com/cloudsploit/scans</a> - <strong>AWS服务器安全审计工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Node.js</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/radenvodka/SVScanner">https://github.com/radenvodka/SVScanner</a> - <strong>针对wordpress、magento、joomla等CMS的漏洞扫描器及自动利用工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/rezasp/joomscan">https://github.com/rezasp/joomscan</a> - <strong>OWASP旗下Joomla漏洞扫描项目</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Perl</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/6IX7ine/djangohunter">https://github.com/6IX7ine/djangohunter</a> - <strong>用于检测因错误配置导致敏感信息暴露的Django应用程序</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/vulmon/Vulmap">https://github.com/vulmon/Vulmap</a> - <strong>Linux以及Windows服务器本地漏洞扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Powershell&#x2F;Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/seungsoo-lee/DELTA">https://github.com/seungsoo-lee/DELTA</a> - <strong>SDN网络安全评估及利用框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Java&#x2F;Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/thelinuxchoice/facebash">https://github.com/thelinuxchoice/facebash</a> - <strong>基于TOR网络的Facebook登录爆破脚本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Bash Shell</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/cyberark/KubiScan">https://github.com/cyberark/KubiScan</a> - <strong>k8s集群错误权限配置扫描检查工具</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 3.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✔️</p>
+<h3 id="无线网络漏洞评估"><a href="#无线网络漏洞评估" class="headerlink" title="无线网络漏洞评估"></a>无线网络漏洞评估</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/savio-code/fern-wifi-cracker">https://github.com/savio-code/fern-wifi-cracker</a> - <strong>无线安全审计工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/P0cL4bs/WiFi-Pumpkin">https://github.com/P0cL4bs/WiFi-Pumpkin</a> - <strong>无线安全渗透测试套件</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/MisterBianco/BoopSuite">https://github.com/MisterBianco/BoopSuite</a> - <strong>无线网络审计工具，支持2-5GHZ频段</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/besimaltnok/PiFinger">https://github.com/besimaltnok/PiFinger</a> - <strong>检查WIFI是否是”大菠萝”所开放的热点，并给予网络评分</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/derv82/wifite2">https://github.com/derv82/wifite2</a> - <strong>自动化无线网络攻击工具Wifite的重构版本</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<h3 id="局域网探测"><a href="#局域网探测" class="headerlink" title="局域网探测"></a>局域网探测</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m4n3dw0lf/PytheM">https://github.com/m4n3dw0lf/PytheM</a> - <strong>支持ARP欺骗、中间人攻击等多种攻击的网络渗透测试套件</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/sowish/LNScan">https://github.com/sowish/LNScan</a>  - <strong>基于BBScan via.lijiejie的本地网络扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/niloofarkheirkhah/nili">https://github.com/niloofarkheirkhah/nili</a> - <strong>网络扫描，中间人攻击，协议检测与逆向</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/SkyLined/LocalNetworkScanner">https://github.com/SkyLined/LocalNetworkScanner</a> - <strong>基于javascript的本地网络扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Javascript</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<h3 id="动态或静态代码审计"><a href="#动态或静态代码审计" class="headerlink" title="动态或静态代码审计"></a>动态或静态代码审计</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/wufeifei/cobra">https://github.com/wufeifei/cobra</a> - <strong>白盒代码安全审计系统</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/OneSourceCat/phpvulhunter">https://github.com/OneSourceCat/phpvulhunter</a> - <strong>静态PHP代码审计</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Qihoo360/phptrace">https://github.com/Qihoo360/phptrace</a> - <strong>跟踪、分析PHP运行情况的工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>C</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ajinabraham/NodeJsScan">https://github.com/ajinabraham/NodeJsScan</a> - <strong>NodeJS应用代码审计</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/shengqi158/pyvulhunter">https://github.com/shengqi158/pyvulhunter</a>  - <strong>Python应用审计</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/python-security/pyt">https://github.com/python-security/pyt</a> - <strong>Python应用静态代码审计</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/emanuil/php-reaper">https://github.com/emanuil/php-reaper</a> - <strong>用于扫描PHP应用程序中可能存在SQL漏洞的ADOdb代码</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/lowjoel/phortress">https://github.com/lowjoel/phortress</a> - <strong>用于检测潜在安全漏洞的PHP静态代码分析工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<h3 id="模块化设计扫描器或漏洞评估框架"><a href="#模块化设计扫描器或漏洞评估框架" class="headerlink" title="模块化设计扫描器或漏洞评估框架"></a>模块化设计扫描器或漏洞评估框架</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/infobyte/faraday">https://github.com/infobyte/faraday</a> - <strong>跨平台集成化渗透测试辅助平台及漏洞管理平台</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/az0ne/AZScanner">https://github.com/az0ne/AZScanner</a> - <strong>自动漏洞扫描器，子域名爆破，端口扫描，目录爆破，常用框架漏洞检测</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/blackye/lalascan">https://github.com/blackye/lalascan</a> - <strong>集合owasp top10漏洞扫描和边界资产发现能力的分布式web漏洞扫描框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/blackye/BkScanner">https://github.com/blackye/BkScanner</a> - <strong>BkScanner 分布式、插件化web漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ysrc/GourdScanV2">https://github.com/ysrc/GourdScanV2</a> - <strong>ysrc出品的被动式漏洞扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/netxfly/passive_scan">https://github.com/netxfly/passive_scan</a> - <strong>基于http代理的web漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/1N3/Sn1per">https://github.com/1N3/Sn1per</a> - <strong>自动化扫描器，包括中间件扫描以及设备指纹识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/RASSec/pentestEr_Fully-automatic-scanner">https://github.com/RASSec/pentestEr_Fully-automatic-scanner</a> - <strong>定向全自动化渗透测试工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lcys/lcyscan">https://github.com/Lcys/lcyscan</a> - <strong>Python插件化漏洞扫描器，支持生成扫描报表</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xyntax/POC-T">https://github.com/Xyntax/POC-T</a> - <strong>渗透测试插件化并发框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/v3n0m-Scanner/V3n0M-Scanner">https://github.com/v3n0m-Scanner/V3n0M-Scanner</a> - <strong>支持检测SQLi&#x2F;XSS&#x2F;LFI&#x2F;RFI等漏洞的扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Skycrab/leakScan">https://github.com/Skycrab/leakScan</a> - <strong>Web化的的漏洞扫描框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhangzhenfeng/AnyScan">https://github.com/zhangzhenfeng/AnyScan</a> - <strong>一款web化的自动化渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tuhinshubhra/RED_HAWK">https://github.com/Tuhinshubhra/RED_HAWK</a> - <strong>一款集成信息收集、漏洞扫描、指纹识别等的多合一扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/DamnWebScanner">https://github.com/swisskyrepo/DamnWebScanner</a> - <strong>基于Chrome、Opera插件的被动式漏洞扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/anilbaranyelken/tulpar">https://github.com/anilbaranyelken/tulpar</a> - <strong>支持多种web漏洞扫描，仅命令行环境使用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m4ll0k/Spaghetti">https://github.com/m4ll0k/Spaghetti</a> - <strong>web应用扫描器，支持指纹识别、文件目录爆破、SQL&#x2F;XSS&#x2F;RFI等漏洞扫描，也可直接用于struts、ShellShock等扫描</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Yukinoshita47/Yuki-Chan-The-Auto-Pentest">https://github.com/Yukinoshita47/Yuki-Chan-The-Auto-Pentest</a> - <strong>集成子域名枚举、Nmap、WAF指纹识别等模块的web应用扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/0xsauby/yasuo">https://github.com/0xsauby/yasuo</a> - <strong>使用Ruby开发的扫描网络中主机存在的第三方web应用服务漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Ruby</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/hatRiot/clusterd">https://github.com/hatRiot/clusterd</a> - <strong>Web应用自动化扫描框架,支持自动化上传webshell</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/erevus-cn/pocscan">https://github.com/erevus-cn/pocscan</a> - <strong>一款开源 Poc 调用框架,可轻松调用Pocsuite,Tangscan,Beebeeto,Knowsec老版本POC，可使用docker部署</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TophantTechnology/osprey">https://github.com/TophantTechnology/osprey</a> - <strong>斗象能力中心出品并长期维护的开源漏洞检测框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/yangbh/Hammer">https://github.com/yangbh/Hammer</a> - <strong>Web应用漏洞扫描框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lucifer1993/AngelSword">https://github.com/Lucifer1993/AngelSword</a> - <strong>被动式漏洞扫描，支持历史cve编号漏洞识别</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/zaproxy/zaproxy">https://github.com/zaproxy/zaproxy</a> - <strong>The OWASP ZAP core project出品的综合性渗透测试工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Java</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/s0md3v/Striker">https://github.com/s0md3v/Striker</a> - <strong>一款多方位信息收集、指纹识别及漏洞扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dermotblair/webvulscan">https://github.com/dermotblair/webvulscan</a> - <strong>一款web应用漏洞扫描器，支持扫描反射型以及存储型XSS、SQL injection等漏洞，支持输出pdf报告</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>PHP</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/alienwithin/OWASP-mth3l3m3nt-framework">https://github.com/alienwithin/OWASP-mth3l3m3nt-framework</a> - <strong>渗透测试辅助工具，综合利用框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/toyakula/luna">https://github.com/toyakula/luna</a> - <strong>基于被动式扫描框架的自动化web漏洞扫描工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Manisso/fsociety">https://github.com/Manisso/fsociety</a> - <strong>渗透测试辅助框架，包含信息搜集、无线渗透、web应用扫描等功能</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/boy-hack/w9scan">https://github.com/boy-hack/w9scan</a> - <strong>内置1200+插件的web漏洞扫描框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/YalcinYolalan/WSSAT">https://github.com/YalcinYolalan/WSSAT</a> - <strong>Web服务安全评估工具,提供基于Windows操作系统的简单.exe应用</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>C#</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/AmyangXYZ/AssassinGo">https://github.com/AmyangXYZ/AssassinGo</a> - <strong>使用Go开发的可扩展以及高并发渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Go</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/m4ll0k/Galileo">https://github.com/m4ll0k/Galileo</a> - <strong>一个操作上类似metasploit的web应用安全审计框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/joker25000/Optiva-Framework">https://github.com/joker25000/Optiva-Framework</a> - <strong>一款web应用漏洞扫描器，支持扫描反射型以及存储型XSS、SQL injection等漏洞</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✖️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/theInfectedDrake/TIDoS-Framework">https://github.com/theInfectedDrake/TIDoS-Framework</a> - <strong>集成104个模块的web应用程序渗透测试框架</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/TideSec/WDScanner">https://github.com/TideSec/WDScanner</a> - <strong>一款功能完备的企业级漏洞扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x&#x2F;PHP</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/j3ssie/Osmedeus">https://github.com/j3ssie/Osmedeus</a> - <strong>一款具备多角度信息收集和漏洞扫描能力的全自动扫描器</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 3.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/jeffzh3ng/Fuxi-Scanner">https://github.com/jeffzh3ng/Fuxi-Scanner</a> - <strong>支持资产探测与管理的一款开源的网络安全检测工具</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/knownsec/Pocsuite">https://github.com/knownsec/Pocsuite</a> - <strong>开源漏洞检测框架</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟🌟🌟        |         <strong>Language</strong>: <strong>Python 2.x</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/opensec-cn/kunpeng">https://github.com/opensec-cn/kunpeng</a> - <strong>Golang编写的开源POC框架&#x2F;库，以动态链接库的形式提供各种语言调用</strong></li>
+</ul>
+<p><strong>Rating</strong>: 🌟🌟🌟🌟🌟        |         <strong>Language</strong>: <strong>Go</strong>         |         <strong>Ongoing[last 6 months]</strong>: ✔️</p>
+<h3 id="高级持续性威胁"><a href="#高级持续性威胁" class="headerlink" title="高级持续性威胁"></a>高级持续性威胁</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Neo23x0/Loki">https://github.com/Neo23x0/Loki</a> - <strong>根据公开情报库里的IOC信息检索本地是否存在相同hash的文件或与恶意C2的网络连接</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Python 2.x</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Neo23x0/Loki">https://github.com/Neo23x0/Loki</a> - <strong>根据公开情报库里的IOC信息检索本地是否存在相同hash、相似文本内容的文件或与恶意C2的网络连接</strong></li>
+</ul>
+<p><strong>评分</strong>: 🌟🌟🌟🌟🌟        |         <strong>编程语言</strong>: <strong>Bash Shell</strong>         |         <strong>仍在维护</strong>: ✔️</p>
+<hr>
+<h2 id="为什么创建这个合辑？"><a href="#为什么创建这个合辑？" class="headerlink" title="为什么创建这个合辑？"></a>为什么创建这个合辑？</h2><p>本合辑的初衷是为了向各类企业安全从业者提供在企业信息安全防护体系建设过程中可以参考的开源安全扫描工具，以期望他们能够利用这些扫描器对业务进行自检，从而保障业务的安全</p>
+<h2 id="作者"><a href="#作者" class="headerlink" title="作者"></a>作者</h2><p><strong>Wester</strong>(sina weibo <a target="_blank" rel="noopener" href="http://weibo.com/zzyme/">@Wester的小号</a>) &amp;&amp; <strong>Martin</strong>(sina weibo <a target="_blank" rel="noopener" href="http://weibo.com/u/1312149403">@Mart1n_ZHOU</a>)</p>
+<h2 id="代码提交符号说明"><a href="#代码提交符号说明" class="headerlink" title="代码提交符号说明"></a>代码提交符号说明</h2><p><strong>[↑]</strong> 表示 <strong>更新扫描地址或描述</strong><br><br><strong>[+]</strong> 表示 <strong>添加扫描器</strong><br><br><strong>[-]</strong> 表示 <strong>移除扫描器</strong><br><br><strong>[category]</strong> 表示 <strong>修改扫描器分类</strong><br><br><strong>[contributor]</strong> 表示 <strong>添加某人至致谢榜</strong><br></p>
+<h2 id="法律声明"><a href="#法律声明" class="headerlink" title="法律声明"></a>法律声明</h2><p>本项目所列举的扫描器仅供各位研究学习目的使用，使用过程中也请严格遵守当地法律法规，如果您是中国公民，请严格遵守《中华人民共和国网络安全法》相关规定，也请勿触犯《中华人民共和国刑法》第286条”破坏计算机系统罪”相关条例，否则造成的严重后果与仓库作者无关，特此声明！</p>
+<h2 id="如何参与？"><a href="#如何参与？" class="headerlink" title="如何参与？"></a>如何参与？</h2><p>非常欢迎大家一起来参与建设,如果你有关于此项目的想法、建议或者发现了一些有价值的扫描器，请记得要告诉我们 :)</p>
+<h2 id="开源协议"><a href="#开源协议" class="headerlink" title="开源协议"></a>开源协议</h2><p>scanbox在Mozilla协议条款下发布</p>
+<h2 id="版权"><a href="#版权" class="headerlink" title="版权"></a>版权</h2><p>非常开心能够看到这个仓库在安全社区如此广泛的传播，但我也希望大家能够尊重知识，尊重劳动，因此转载的时候请在您的文章里注明来自<a target="_blank" rel="noopener" href="https://github.com/We5ter/Scanners-Box">https://github.com/We5ter/Scanners-Box</a> ,同时也请不要通过二次发表此文章谋取不正当的利益（如原创投稿）</p>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>非常感谢下面这些安全研究员为我们提供的宝贵建议和反馈</p>
+<ul>
+<li><strong>@0c0c0f</strong>     </li>
+<li><strong>@藏形匿影</strong></li>
+<li><strong>@Mottoin团队</strong></li>
+<li><strong>@BlackHole</strong></li>
+<li><strong>@CodeColorist</strong></li>
+<li><strong>@3xp10it</strong></li>
+<li><strong>@re4lity</strong></li>
+<li><strong>@s0md3v</strong></li>
+<li><strong>@boy-hack</strong></li>
+<li><strong>@marsII</strong></li>
+<li><strong>@tom0li</strong></li>
+<li><strong>@hksanduo</strong></li>
+<li><strong>@alexlauerman</strong></li>
+<li><strong>@MedivhMT</strong></li>
+<li><strong>@TideSec</strong></li>
+<li><strong>@0xHJK</strong></li>
+</ul>
+<p>转载于<a target="_blank" rel="noopener" href="https://github.com/We5ter/Scanners-Box">Scanners-Box</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/11/11/GithubTools/">https://coldwave96.github.io/2019/11/11/GithubTools/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Github/">Github</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/11/11/EncryptTools/"><i class="fa fa-chevron-left">  </i><span>勒索病毒解密工具汇总</span></a></div><div class="next-post pull-right"><a href="/2019/11/08/MaliciousURLs/"><span>机器学习实现恶意URL检测</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

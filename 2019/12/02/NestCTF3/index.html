@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="CTF答题夺旗赛（第三季）WriteUPs"><meta name="keywords" content="NEST"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>CTF答题夺旗赛（第三季）WriteUPs | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#weak"><span class="toc-number">1.</span> <span class="toc-text">weak</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#md5-brute"><span class="toc-number">2.</span> <span class="toc-text">md5_brute</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#help"><span class="toc-number">3.</span> <span class="toc-text">help</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#word"><span class="toc-number">4.</span> <span class="toc-text">word</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#search"><span class="toc-number">5.</span> <span class="toc-text">search</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#encrypt"><span class="toc-number">6.</span> <span class="toc-text">encrypt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%94%B1%E8%B7%B3rap%E7%AF%AE%E7%90%83"><span class="toc-number">7.</span> <span class="toc-text">唱跳rap篮球</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#code"><span class="toc-number">8.</span> <span class="toc-text">code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#upload"><span class="toc-number">9.</span> <span class="toc-text">upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">10.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">CTF答题夺旗赛（第三季）WriteUPs</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-02</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/">WriteUPs</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/CTF/">CTF</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>前几天参加了由<a target="_blank" rel="noopener" href="https://nest.ichunqiu.com/">网络内生安全试验场</a>（Network Endogens Security Testbed，NEST）举办的CTF答题夺旗赛（第三季）。题目整体比较简单，简单的写一下WriteUPs。</p>
+<span id="more"></span>
+
+<h2 id="weak"><a href="#weak" class="headerlink" title="weak"></a>weak</h2><p>打开后就是一个某公司网站:</p>
+<p><img src="/img/NestCTF3/NestCTF3-1.png"></p>
+<p>只有一个管理平台可以点击，之后进入用户管理平台：</p>
+<p><img src="/img/NestCTF3/NestCTF3-2.png"></p>
+<p>点击跳转到测试页发现一段源码如下图所示：</p>
+<p><img src="/img/NestCTF3/NestCTF3-3.png"></p>
+<p>看过源码再结合题目名字weak，很显然就是一个php弱等于的问题：php中有两种比较的符号 &#x3D;&#x3D; 与 &#x3D;&#x3D;&#x3D; ，&#x3D;&#x3D;&#x3D; 在进行比较的时候，会先判断两种字符串的类型是否相等，再比较&#x3D;&#x3D; 在进行比较的时候，会先将字符串类型转化成相同，再比较, 如果遇到了0e\d+这种字符串，就会将这种字符串解析为科学计数法。”0e132456789” &#x3D;&#x3D; “0e7124511451155”中 2 个数的值都是 0 因而就相等了。如果不满足0e\d+这种模式就不会相等。</p>
+<p>首先是判断是否通过POST传入username和password两个数据，如果传入了就进行下面的判断，看到最下面，如果logined为TRUE就输出flag，所以需要使前两个if里面的结果为False，第三个if里的结果为True。</p>
+<p>第一个判断中的ctype_alpha函数是做纯字符检测 ， 如果在当前语言环境中传入参数里的每个字符都是一个字母，那么就返回TRUE，反之则返回FALSE，然后前面有一个!所以username需要传入 的全部是字母。</p>
+<p>第二个判断中的is_numeric函数是检测变量是否为数字或数字字符串，如果是数字和数字字符串则返回 TRUE，否则返回 FALSE。 所以password需要传入纯数字。</p>
+<p>第三个判断的意思是username和password两个的md5值相同，但是两者本身不同，用到的就是刚开始说的php弱等于，下面是一些收集到的md5加密后为0e开头的字符串:</p>
+<p>纯字母：</p>
+<table>
+<thead>
+<tr>
+<th align="center">明文</th>
+<th align="center">密文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">UYXFLOI</td>
+<td align="center">0e552539585246568817348686838809</td>
+</tr>
+<tr>
+<td align="center">PJNPDWY</td>
+<td align="center">0e291529052894702774557631701704</td>
+</tr>
+<tr>
+<td align="center">DYAXWCA</td>
+<td align="center">0e424759758842488633464374063001</td>
+</tr>
+</tbody></table>
+<p>纯数字：</p>
+<table>
+<thead>
+<tr>
+<th align="center">明文</th>
+<th align="center">密文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">571579406</td>
+<td align="center">0e972379832854295224118025748221</td>
+</tr>
+<tr>
+<td align="center">3465814713</td>
+<td align="center">0e258631645650999664521705537122</td>
+</tr>
+<tr>
+<td align="center">5432453531</td>
+<td align="center">0e512318699085881630861890526097</td>
+</tr>
+</tbody></table>
+<p>通过上面的表，用户名输入UYXFLOI，密码输入571579406，就可以获得flag。</p>
+<p><img src="/img/NestCTF3/NestCTF3-4.png"></p>
+<h2 id="md5-brute"><a href="#md5-brute" class="headerlink" title="md5_brute"></a>md5_brute</h2><p>打开之后一步一步跟着文本的指导，就可以得到flag。</p>
+<p><img src="/img/NestCTF3/NestCTF3-5.png"></p>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><p>打开之后是和weak差不多的某公司网站，只有页面上的“帮助”点击之后有反应，一看地址栏是<a target="_blank" rel="noopener" href="http://120.55.43.255:17325/?file=help.php%EF%BC%8C">http://120.55.43.255:17325/?file=help.php，</a> 很轻易的就能联想到file参数可能存在文件包含漏洞，经过测试果然存在本地文件包含。</p>
+<p>在首页查看源代码，在最底部找到这样的提示：</p>
+<p><img src="/img/NestCTF3/NestCTF3-6.png"></p>
+<p>所以提交file&#x3D;..&#x2F;..&#x2F;flag即可获得flag。</p>
+<p><img src="/img/NestCTF3/NestCTF3-7.png"></p>
+<h2 id="word"><a href="#word" class="headerlink" title="word"></a>word</h2><p>这可能是最有（wu）趣（liao）的题目了，一个加密的word文件，密码在题目中告诉你了，然后就没有然后了。</p>
+<p>最开始我还以为给出的flag是某一种算法加密后的，后来……</p>
+<p>好吧，出题人你赢了&#x3D;&#x3D;</p>
+<h2 id="search"><a href="#search" class="headerlink" title="search"></a>search</h2><p>还是熟悉的某公司网站，搜索框随便输个数字，得到这样一个页面：</p>
+<p><img src="/img/NestCTF3/NestCTF3-8.png"></p>
+<p>再看一下网址：<a target="_blank" rel="noopener" href="http://120.55.43.255:11777/search.php?id=1%EF%BC%8Cid%E5%8F%82%E6%95%B0%E5%BF%85%E7%84%B6%E5%AD%98%E5%9C%A8%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%E3%80%82%E4%B8%8B%E9%9D%A2%E7%9A%84%E6%96%B9%E6%B3%95%E9%9A%8F%E4%BE%BF%E6%89%8B%E5%B7%A5%E6%B3%A8%E5%85%A5%E6%88%96%E8%80%85sqlmap%E9%83%BD%E5%8F%AF%E4%BB%A5%E8%BD%BB%E6%9D%BE%E7%9A%84%E6%90%9E%E5%AE%9A%E3%80%82">http://120.55.43.255:11777/search.php?id=1，id参数必然存在注入漏洞。下面的方法随便手工注入或者sqlmap都可以轻松的搞定。</a></p>
+<h2 id="encrypt"><a href="#encrypt" class="headerlink" title="encrypt"></a>encrypt</h2><p>打开之后是这样一段数字和字母：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">69725f765f61797d74797465667321275f6f5f6c796573655f746121615f61736867655376736f697b417965796c73457321</span><br></pre></td></tr></table></figure>
+
+<p>这是一段hex编码的字符串，揭开之后是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ir_v_ay&#125;tytefs!&#x27;_o_lyese_ta!a_ashgeSvsoi&#123;AyeylsEs!</span><br></pre></td></tr></table></figure>
+
+<p>显然已经出来了，只剩最后一步。这是栅栏密码，经过尝试，发现为7个一组，解码之后可以得到flag。</p>
+<h2 id="唱跳rap篮球"><a href="#唱跳rap篮球" class="headerlink" title="唱跳rap篮球"></a>唱跳rap篮球</h2><p>emmmmm，最无语的题。打开就是个登陆界面，查看源码发现最后由这样的提示：</p>
+<p><img src="/img/NestCTF3/NestCTF3-9.png"></p>
+<p>所以怎么办呢，caixukun&#x2F;19980802登陆就可以获得flag：</p>
+<p><img src="/img/NestCTF3/NestCTF3-10.png"></p>
+<p>emmmmm，除了无语还是无语……</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>又是编码题，打开之后又是一堆奇怪的数字：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">9a9a9a6a9aa9656699a699a566995956996a996aa6a965aa9a6aa596a699665a9aa699655a696569655a9a9a9a595a6965569a59665566955a6965a9596a99aa9a9566a699aa9a969969669aa6969a9559596669</span><br></pre></td></tr></table></figure>
+
+<p>最奇怪的是只有5，6，9，a这4种字符，找了很久，这居然是曼彻斯特编码，还是差分曼彻斯特编码：5:0101；6:0110；9:1001；a：1010。然后转换为16进制，再转换成字符串即可获得flag。</p>
+<p>具体的可以看<a target="_blank" rel="noopener" href="http://antcave.cn/archives/400">这里</a>。</p>
+<h2 id="upload"><a href="#upload" class="headerlink" title="upload"></a>upload</h2><p>打开之后是一个简单的上传界面，只能上传png格式的文件，且验证过程是在后台进行，所以无法绕过。查看源码，发现一个有趣的首页图片地址：(这题刚开始没多久就已经被师傅们玩坏了，没有截图，只能自己想象了)</p>
+<p><a target="_blank" rel="noopener" href="http://120.55.43.255:11881/include.php?file=dXBsb2Fk">http://120.55.43.255:11881/include.php?file=dXBsb2Fk</a></p>
+<p>file提交的参数经过base64解码之后结果是upload。有趣，上传的图片文件名会被base64编码。但是当我们通过file参数提交上传的图片名base64编码后的字符串之后，可以访问图片，且图片文件被解析成脚本。</p>
+<p>分析清楚之后，那接下来就很简单了，创建一个一句话的图片马，上传之后用蚁剑去连接，flag文件就在根目录下。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>关于PWN和逆向的题，别问，问就是简（bu）单（hui），不（xu）值（yao）一（xue）提（xi）。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/12/02/NestCTF3/">https://coldwave96.github.io/2019/12/02/NestCTF3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NEST/">NEST</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/12/17/Traverxec/"><i class="fa fa-chevron-left">  </i><span>Hack The Box - Traverxec の Write-Up</span></a></div><div class="next-post pull-right"><a href="/2019/12/02/TcpRst/"><span>Python实现TCP旁路阻断</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

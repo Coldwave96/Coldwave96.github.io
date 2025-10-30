@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="ret2libc &amp;&amp; Lazy Binding"><meta name="keywords" content="PWN,Stack,ROP"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>ret2libc &amp;&amp; Lazy Binding | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-number">2.</span> <span class="toc-text">ret2libc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GOT%E8%A1%A8-Global-offset-Table"><span class="toc-number">3.</span> <span class="toc-text">GOT表(Global offset Table)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E7%BB%91%E5%AE%9A-Lazy-Binding-amp-amp-PLT%E8%A1%A8-Procedure-Linkage-Table"><span class="toc-number">4.</span> <span class="toc-text">延迟绑定(Lazy Binding) &amp;&amp; PLT表(Procedure Linkage Table)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">ret2libc &amp;&amp; Lazy Binding</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-19</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.4k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本文主要记录了我对于ret2libc和延迟绑定技术原理的理解。</p>
+<span id="more"></span>
+
+<h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><p>ret2libc主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、execve()这种系统级函数(如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式)。</p>
+<p>因为程序是动态链接生成的，所以在程序运行时会调用libc.so(程序被装载时，动态链接器会将程序所有所需的动态链接库加载至进程空间，libc.so就是其中最基本的一个)，libc.so是linux下C语言库中的运行库glibc的动态链接版，并且libc.so中包含了大量的可以利用的函数，包括system()、execve()等系统级函数，我们可以通过找到这些函数在内存中的地址覆盖掉返回地址来获得当前进程的控制权。</p>
+<p>通常情况下，我们会选择执行system(“&#x2F;bin&#x2F;sh”)来打开 shell，这样需要解决两个问题：</p>
+<ul>
+<li><p>找到system()函数的地址</p>
+</li>
+<li><p>在内存中找到’&#x2F;bin&#x2F;sh’字符串的地址</p>
+</li>
+</ul>
+<p>ret2libc方法可以实现DEP保护和ASLR即地址空间布局随机化这两种保护措施的绕过。</p>
+<h2 id="GOT表-Global-offset-Table"><a href="#GOT表-Global-offset-Table" class="headerlink" title="GOT表(Global offset Table)"></a>GOT表(Global offset Table)</h2><p>GOT表可以解决模块间数据访问的问题：</p>
+<p>假设变量b被定义在其他模块中，其地址需要在程序装载时才能够确定。利用到前面的代码地址无关的思想，把地址相关的部分放入数据段中，然而这里的变量b的地址与其自身所在的模块装载的地址有关。那么这个问题就要通过GOT表来解决。</p>
+<p>ELF中在数据段里面建立了一个指向这些变量的指针数组，也就是我们所说的GOT表(Global offset Table，全局偏移表)，它的功能就是当代码需要引用全局变量时，可以通过GOT表间接引用。</p>
+<h2 id="延迟绑定-Lazy-Binding-amp-amp-PLT表-Procedure-Linkage-Table"><a href="#延迟绑定-Lazy-Binding-amp-amp-PLT表-Procedure-Linkage-Table" class="headerlink" title="延迟绑定(Lazy Binding) &amp;&amp; PLT表(Procedure Linkage Table)"></a>延迟绑定(Lazy Binding) &amp;&amp; PLT表(Procedure Linkage Table)</h2><p>因为动态链接的程序是在运行时需要对全局和静态数据访问进行GOT定位，然后间接寻址。同样，对于模块间的调用也需要GOT定位，再才间接跳转，这么做势必会影响到程序的运行速度。</p>
+<p>而且程序在运行时很大一部分函数都可能用不到，于是ELF采用了当函数第一次使用时才进行绑定的思想，也就是我们所说的延迟绑定。</p>
+<p>ELF实现延迟绑定是通过PLT，原先GOT中存放着全局变量和函数调用，现在把他拆成另个部分.got和.got.plt，用.got存放着全局变量引用，用.got.plt存放着函数引用。</p>
+<p>所以延迟绑定技术解决的是模块间函数调用的问题，调用时是函数名@plt的形式。</p>
+<p>延迟绑定的实现步骤为：</p>
+<p>建立一个got.plt表，这个表里存放的是全局函数的实际地址。</p>
+<p>但是最开始的时候，里面存放的是一个跳转而不是实际地址。因为加载动态链接库的时候，实际上用不到所有的函数，所以为了节省程序运行时间，在实际调用某个函数的时候才会去找该函数的实际地址。</p>
+<p>当程序需要调用到其他模块中的函数时例如test() ，就去访问保存在.got.plt中的test@plt。</p>
+<p>这里有两种情况，第一种就是第一次使用这个函数，这个地方就存放着test@plt第二条指令的地址，其实相当于什么都不做。第二种情况就是，当第二次调用test@plt函数时，就会通过第一条指令跳转到真正的函数地址。</p>
+<p>整个过程就是所说的通过plt来实现延迟绑定。</p>
+<p>下面再详细的解释一下：</p>
+<p>对每一个全局函数，链接器生成一个与之相对应的影子函数，就是test@plt。</p>
+<p>所有对test函数的调用都会换成对test@plt的调用，实际上这个test@plt的样子为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test@plt:</span><br><span class="line">jmp *(test@got.plt)</span><br><span class="line">push index</span><br><span class="line">jmp _init()</span><br></pre></td></tr></table></figure>
+
+<p>其中第一条指令直接从got.plt中去拿真实的函数地址，如果已经之前已经发生过调用，got.plt就已经保存了真实的地址，如果是第一次调用，则got.plt中放的是test@plt中的第二条指令，这就使得当执行第一次调用时，test@plt中的第一条指令其实什么事也没做，直接继续往下执行，第二条指令的作用是把当前要调用的函数在got.plt中的编号作为参数传给_init()，而_init()这个函数则用于把test进行重定位，然后把结果写入到got.plt相应的地方，最后直接跳过去该函数。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后总结一下：</p>
+<p>程序调用外部函数的整个过程就是，第一次访问test@plt函数时，动态链接器就会去动态共享模块中查找test函数的真实地址然后将真实地址保存到test@got中(.got.plt)；第二次访问test@plt时，就直接跳转到test@got中去。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/05/19/LazyBinding/">https://coldwave96.github.io/2020/05/19/LazyBinding/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Stack/">Stack</a><a class="post-meta__tags" href="/tags/ROP/">ROP</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/20/XMAN-level3/"><i class="fa fa-chevron-left">  </i><span>XMAN level3 の Write-Up</span></a></div><div class="next-post pull-right"><a href="/2020/05/19/ret2win/"><span>ROP Emporium の ret2win</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

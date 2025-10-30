@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="旁路阻断技术"><meta name="keywords" content="By-pass Block"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>旁路阻断技术 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E7%BD%91%E5%85%B3%E4%BA%A7%E5%93%81%E8%81%94%E5%8A%A8"><span class="toc-number">2.</span> <span class="toc-text">与网关产品联动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EARP%E7%9A%84%E9%98%BB%E6%96%AD"><span class="toc-number">3.</span> <span class="toc-text">基于ARP的阻断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-Reset"><span class="toc-number">4.</span> <span class="toc-text">TCP Reset</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">旁路阻断技术</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-02</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Products/">Products</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.5k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>旁路阻断是通过旁路监听通信数据，然后进行协议还原，根据内容进行阻断。这类技术的优点是不影响互联网访问的速度，并且对用户没有特殊的设置要求。通俗讲是并联在互联网的出口上，不会影响原来网络的稳定性，部署也很方便。</p>
+<p>采用旁路的方式管理网络并阻断非法连接的方法可以分为三类：</p>
+<ul>
+<li><p>通过与网关产品联动，建立临时规则</p>
+</li>
+<li><p>进行基于ARP的阻断方式</p>
+</li>
+<li><p>发送TCP Reset包</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="与网关产品联动"><a href="#与网关产品联动" class="headerlink" title="与网关产品联动"></a>与网关产品联动</h2><p>通过与网关产品的联动方式主要是向防火墙发送临时规则，以及路由器或交换机发送临时ACL列表，阻断当前这个会话。</p>
+<p>这种方式存在着这么几个方面的问题：</p>
+<p>1、首先是联动协议问题。“联动”一直是网络安全界中的一个很时髦的概念，虽然已经有五六年的历史，但是到目前为止，还远远没有得到充分的发展。现在联动得实现是以现有得某个厂家为核心，其他厂家的产品在一些半公开的SDK的支持下实现与核心厂家的某个产品实现互联。这样导致现有和多产品有联动功能，但是没有联动得实际效果。</p>
+<p>2、联动信息的滞后。即使产品与防火墙有着优良的联动相应方式，IDS产品在检测得过程中发现了非法得连接，生成一条临时规则发送到防火墙，防火墙应用这条规则阻断这个连接;在这一个过程中存在着三个延时，一、IDS发现非法连接，生成临时规则;二、规则传输给防火墙;三、防火墙应用规则。这三个演示得总时间最好情况下是小于两秒，而且这个过程当中IDS的检测是滞后IDS检测到非法连接时，这个连接已经建立了，如果这个连接时蠕虫，或木马，两秒的延时足够成功攻击了。</p>
+<p>3、当遇到大规模的非法连接的时候，IDS会针对每一条会话向防火墙添加临时规则，这样势必造成防火墙临时规则增大，降低防火墙的效率，引起防火墙包转发延时，严重造成防火墙瘫痪，网络中断。</p>
+<h2 id="基于ARP的阻断"><a href="#基于ARP的阻断" class="headerlink" title="基于ARP的阻断"></a>基于ARP的阻断</h2><p>基于arp的阻断共有三种方式：ARP 欺骗、ARP 投毒和 ARP 攻击。</p>
+<p>先了解ARP的原理。ARP 用于将 IP 地址匹配到或解析至恰当的 MAC 地址，所有的网络设备都有一张 ARP 表，里面临时记忆着该设备已经匹配起来的所有的 IP 地址和 MAC 地址。ARP 表能够确保该设备不需要向已经与自己进行过通信的计算机重复 ARP 询问。当有人在未获得授权时就企图更改 MAC 和 IP 地址的 ARP 表格中的信息时，就发生了 ARP 攻击。通过这种方式我们可以伪造ARP应答包，使得非法连接主机的ARP表错误，无法连接到网关，从而阻断连接。</p>
+<p>这种阻断方式从效果上讲是很强力，但是同时也造成了一个问题，其不但阻止了非法连接，而且也阻断了合法连接，这对于网络中的正常应用有着很大的影响。</p>
+<h2 id="TCP-Reset"><a href="#TCP-Reset" class="headerlink" title="TCP Reset"></a>TCP Reset</h2><p>以IDS为例，IDS设备是一个典型的旁路监听并通过TCP Reset进行阻断的网络安全设备。IDS TCP Reset实现方法，当IDS发现一条非法的连接IDS将会向通信的两端各发送一个TCP RESET包，从而实现主动切断连接的目的，此时通信双方的堆栈将会把这个RESET包解释为另一端的回应，然后停止整个通信过程，释放缓冲区并撤销所有TCP状态信息。这个时候，攻击数据包可能还在目标主机操作系统TCP&#x2F;IP堆栈缓冲区中，没有被提交给应用程序，由于缓冲区被清空了，所以攻击不会发生。</p>
+<p>对于RESET包来说，IDS发出的RESET包的前提是知道整个会话当前的序列号和确认号，否则这个RESET包将会被忽略。我们假定一个会话得确认号必须为152如果你发送的RESET包的确认号为142，那么堆栈将会认为这是一个无效的数据包或者被破坏的数据包而将它忽略掉。</p>
+<p>从另一方面讲所有的IDS在响应攻击时都有延迟时间，因为IDS从抓取数据包，监测攻击，产生RESET包，到最后发出RESET整个过程都要消耗一定的时间。很多的IDS使用libpcap库来抓包，大部分IDS构建在类BSD的系统上，BSD系统下是利用BPF(Berkeley Packet Filters)进行抓包，BPF默认将会开一个很大的缓冲区，在一个典型的网络中，IDS发出RESET包的过程大约会延迟半秒。在Linux和Solaris平台上，性能要稍微好一点，但是肯定也有延迟时间。</p>
+<p>而且TCP Reset对于网络应用来说也有着很大的局限性，其只能针对通常得标准TCP连接发送阻断信息，对于UDP会话无能为力。再则目前得一些网络应用软件在会话连接保持上都很强得能力，TCP Reset包对于他们的效果基本可以忽略。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>综上所述，想要实现旁路阻断，与网关产品联动和TCP Reset包是两种比较靠谱的方法。但是同时两种方法都存在自己的问题，目前最常用的是TCP Reset包技术实现TCP旁路阻断，且文中提到的主要缺陷也是可以解决的。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/12/02/SideBlock/">https://coldwave96.github.io/2019/12/02/SideBlock/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/By-pass-Block/">By-pass Block</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/12/02/TcpRst/"><i class="fa fa-chevron-left">  </i><span>Python实现TCP旁路阻断</span></a></div><div class="next-post pull-right"><a href="/2019/11/20/DC-4/"><span>Vulnhub - DC-4 の Write-Up</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

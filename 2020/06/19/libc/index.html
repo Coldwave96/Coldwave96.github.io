@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="libc &amp;&amp; glibc &amp;&amp; glib 杂谈"><meta name="keywords" content="PWN,Reverse"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>libc &amp;&amp; glibc &amp;&amp; glib 杂谈 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#libc-amp-amp-glibc"><span class="toc-number">2.</span> <span class="toc-text">libc &amp;&amp; glibc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ANSI-C"><span class="toc-number">2.1.</span> <span class="toc-text">ANSI C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-C"><span class="toc-number">2.2.</span> <span class="toc-text">GNU C</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#glibc-amp-amp-glib"><span class="toc-number">3.</span> <span class="toc-text">glibc &amp;&amp; glib</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">libc &amp;&amp; glibc &amp;&amp; glib 杂谈</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-06-19</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>这段时间学习PWN题的时候需要使用不同版本的libc库，导致在本地执行EXP脚本的时候总是失败，所以搜集了一些有关linux的C语言环境的资料。</p>
+<span id="more"></span>
+
+<h2 id="libc-amp-amp-glibc"><a href="#libc-amp-amp-glibc" class="headerlink" title="libc &amp;&amp; glibc"></a>libc &amp;&amp; glibc</h2><p>Linux平台提供的C标准库包括：</p>
+<ul>
+<li><p>一组头文件，定义了很多类型和宏，声明了很多库函数。这些头文件放在哪些目录下取决于不同的编译器，stdarg.h和stddef.h位于&#x2F;usr&#x2F;lib&#x2F;gcc&#x2F;i486-linux-gnu&#x2F;4.3.2&#x2F;include目录下，stdio.h、stdlib.h、time.h、math.h、assert.h位于&#x2F;usr&#x2F;include目录下。C99标准定义的头文件有24个。</p>
+</li>
+<li><p>一组库文件，提供了库函数的实现。大多数库函数在libc共享库中，有些库函数在另外的共享库中，例如数学函数在libm中。通常libc共享库是&#x2F;lib&#x2F;libc.so.6。</p>
+</li>
+</ul>
+<p>libc是Linux下的ANSI C函数库；glibc是Linux下的GUN C函数库。 glibc本身是GNU旗下的C标准库，后来逐渐成为了Linux的标准C库，而Linux下原来的标准C库Linux libc逐渐不再被维护。</p>
+<p>Linux下面的标准C库不仅有这一个，如uclibc、klibc，以及上面被提到的Linux libc，但是glibc无疑是用得最多的。glibc在&#x2F;lib目录下的.so文件为libc.so.6。</p>
+<h3 id="ANSI-C"><a href="#ANSI-C" class="headerlink" title="ANSI C"></a>ANSI C</h3><p>ANSI C函数库是基本的C语言函数库，包含了C语言最基本的库函数。这个库可以根据头文件划分为15个部分，其中包括：</p>
+<ul>
+<li><p>&lt;ctype.h&gt;：包含用来测试某个特征字符的函数的函数原型，以及用来转换大小写字母的函数原型；</p>
+</li>
+<li><p>&lt;errno.h&gt;：定义用来报告错误条件的宏；</p>
+</li>
+<li><p>&lt;float.h&gt;：包含系统的浮点数大小限制；</p>
+</li>
+<li><p>&lt;math.h&gt;：包含数学库函数的函数原型；</p>
+</li>
+<li><p>&lt;stddef.h&gt;：包含执行某些计算 C 所用的常见的函数定义；</p>
+</li>
+<li><p>&lt;stdio.h&gt;：包含标准输入输出库函数的函数原型，以及他们所用的信息；</p>
+</li>
+<li><p>&lt;stdlib.h&gt;：包含数字转换到文本，以及文本转换到数字的函数原型，还有内存分配、随机数字以及其他实用函数的函数原型；</p>
+</li>
+<li><p>&lt;string.h&gt;：包含字符串处理函数的函数原型；</p>
+</li>
+<li><p>&lt;time.h&gt;：包含时间和日期操作的函数原型和类型；</p>
+</li>
+<li><p>&lt;stdarg.h&gt;：包含函数原型和宏，用于处理未知数值和类型的函数的参数列表；</p>
+</li>
+<li><p>&lt;signal.h&gt;：包含函数原型和宏，用于处理程序执行期间可能出现的各种条件；</p>
+</li>
+<li><p>&lt;setjmp.h&gt;：包含可以绕过一般函数调用并返回序列的函数的原型，即非局部跳转；</p>
+</li>
+<li><p>&lt;locale.h&gt;：包含函数原型和其他信息，使程序可以针对所运行的地区进行修改。地区的表示方法可以使计算机系统处理不同的数据表达约定，如全世界的日期、时间、美元数和大数字；</p>
+</li>
+<li><p>&lt;assert.h&gt;：包含宏和信息，用于进行诊断，帮助程序调试。</p>
+</li>
+</ul>
+<p>上述库函数在其各种支持C语言的IDE中都是有的。 </p>
+<h3 id="GNU-C"><a href="#GNU-C" class="headerlink" title="GNU C"></a>GNU C</h3><p>GNU C函数库是一种类似于第三方插件的东西。由于Linux是用C语言写的，所以Linux的一些操作是用C语言实现的，因此，GUN组织开发了一个C语言的库 以便让我们更好的利用C语言开发基于Linux操作系统的程序。 不过现在的不同的Linux的发行版本对这两个函数库有不同的处理方法，有的可能已经集成在同一个库里了。</p>
+<h2 id="glibc-amp-amp-glib"><a href="#glibc-amp-amp-glib" class="headerlink" title="glibc &amp;&amp; glib"></a>glibc &amp;&amp; glib</h2><p>不是长得像就是双胞胎。glib和glibc基本上没有太大联系，可能唯一的共同点就是，都是C编程需要调用的库而已。 </p>
+<p>glib是Gtk+库和Gnome的基础。glib可以在多个平台下使用，比如Linux、Unix、Windows等。glib为许多标准的、常用的C语言结构提供了相应的替代物。 </p>
+<p>它由基础类型、对核心应用的支持、实用功能、数据类型和对象系统五个部分组成，可以在<a target="_blank" rel="noopener" href="http://www.gtk.org/">gtk网站</a>下载其源代码。是一个综合用途的实用的轻量级的C程序库，它提供C语言的常用的数据结构的定义、相关的处理函数，有趣而实用的宏，可移植的封装和一些运行时机能，如事件循环、线程、动态调用、对象系统等的API。GTK+是可移植的，当然glib也是可移植的，你可以在linux下，也可以在windows下使用它。使用gLib2.0（glib的2.0版本）编写的应用程序，在编译时应该在编译命令中加入<code>pkg-config --cflags --libs glib-2.0</code>，如：<code>gcc pkg-config --cflags --libs glib-2.0 hello.c -o hello</code></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/06/19/libc/">https://coldwave96.github.io/2020/06/19/libc/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Reverse/">Reverse</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/06/22/XMAN-level4/"><i class="fa fa-chevron-left">  </i><span>XMAN level4 の Write-Up</span></a></div><div class="next-post pull-right"><a href="/2020/06/15/ret2csu/"><span>ROP Emporium の ret2csu</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

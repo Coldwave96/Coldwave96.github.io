@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Unlink原理和简单利用"><meta name="keywords" content="PWN,Heap"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Unlink原理和简单利用 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E6%83%B3%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%AE%80%E5%8D%95%E5%88%A9%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">理想情况下的简单利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%8B%E9%85%B7%E7%8E%B0%E5%AE%9E"><span class="toc-number">4.</span> <span class="toc-text">残酷现实</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Unlink原理和简单利用</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-01</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Unlink机制的利用是堆溢出中很常见的手段，这里记录一下自己的理解。</p>
+<span id="more"></span>
+
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>利用Unlink机制实现堆溢出攻击是通过对chunk进行布局，借助内存回收机制触发Unlink操作形成攻击。</p>
+<p>首先了解一下Unlink操作。Unlink实现将一个双向链表中的空闲块拿出来，然后与目前物理相邻的chunk进行合并。</p>
+<p>基本过程套用CTF Wiki的经典图示：</p>
+<p><img src="/img/Unlink/Unlink1.png"></p>
+<p>chunk的合并分为向前和向后合并，这里的前和后都是指在物理内存中的位置，而不是fd和bk链表所指的堆块。以当前chunk为基准，将previous free chunk合并到当前chunk称为向后合并，将next free chunk合并到当前chunk称为向前合并。</p>
+<p>向后合并流程：</p>
+<ul>
+<li><p>首先检测前一个chunk是否为free状态，通过检测previous chunk的PREV_INUSE(P)标志位，如果为0表示free状态。但内存中第一个申请的chunk的前一个chunk一般都被认为在使用中不会发生向后合并；</p>
+</li>
+<li><p>如果不是内存中的第一个chunk且它的前一个chunk标记为free状态时，发生向后合并；</p>
+</li>
+<li><p>首先修改chunk的size位大小为两个chunk size之和；</p>
+</li>
+<li><p>再将指针移动到前一个chunk处；</p>
+</li>
+<li><p>最后调用unlink将前一个chunk从它所在的链表中移除。</p>
+</li>
+</ul>
+<p>向前合并也会做相应的标志位检测，判断需要向前合并的时候，只改变size的大小，而不改变指针。</p>
+<h2 id="理想情况下的简单利用"><a href="#理想情况下的简单利用" class="headerlink" title="理想情况下的简单利用"></a>理想情况下的简单利用</h2><p>以32位程序为例，如果有两个相邻的chunk，在第一个chunk写入数据的时候存在溢出。此时内存示意图：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">low address</span><br><span class="line">+---------------------+   &lt;--first chunk ptr</span><br><span class="line">|     prev_size       |</span><br><span class="line">+---------------------+</span><br><span class="line">|        size         |          </span><br><span class="line">+---------------------+   &lt;--first                  </span><br><span class="line">|                     |</span><br><span class="line">|     allocated       |         </span><br><span class="line">|      chunk          |      </span><br><span class="line">+---------------------+   &lt;--second chunk ptr                </span><br><span class="line">|    prev_size        |         </span><br><span class="line">+---------------------+                     </span><br><span class="line">|         size        |         </span><br><span class="line">+---------------------+   &lt;--second                  </span><br><span class="line">|     Allocated       |         </span><br><span class="line">|       chunk         |     </span><br><span class="line">+---------------------+ </span><br><span class="line">high address     </span><br></pre></td></tr></table></figure>
+
+<p>这时候我们将nextchunk的fd和bk指针修改为指定的值：size修改为<code>-4</code>即<code>0xfffffffc</code>，fd修改为<code>target_addr - 12</code>，bk修改为<code>shellcode_addr</code>。</p>
+<p>覆盖后的内存示意图：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">low address</span><br><span class="line">+---------------------+   &lt;--first chunk ptr</span><br><span class="line">|     prev_size       |</span><br><span class="line">+---------------------+</span><br><span class="line">|        size         |          </span><br><span class="line">+---------------------+   &lt;--first                  </span><br><span class="line">|                     |</span><br><span class="line">|     allocated       |         </span><br><span class="line">|      chunk          |      </span><br><span class="line">+---------------------+   &lt;--second chunk ptr                </span><br><span class="line">|    XXXXXXXXX        |         </span><br><span class="line">+---------------------+                     </span><br><span class="line">|   size=0xfffffffc   |         </span><br><span class="line">+---------------------+   &lt;--second   </span><br><span class="line">|     exit@got-12     |  </span><br><span class="line">|    shellcode_addr   |               </span><br><span class="line">|     Allocated       |         </span><br><span class="line">|       chunk         |     </span><br><span class="line">+---------------------+      </span><br><span class="line">high address</span><br></pre></td></tr></table></figure>
+
+<p>当我们free第一个chunk的时候：</p>
+<ul>
+<li><p>判断向前合并，此时由于第一个chunk的前一个chunk总是处于使用状态，即使根本不存在，故而转为判断向后合并；</p>
+</li>
+<li><p>判断的方法是检查下下个chunk的<code>PREV_ISUSE</code>标志位。即当前chunk加上当前size得到下个chunk，下个chunk加上下个size得到下下个chunk，因为我们设置下个chunk大小为<code>-4</code>，则下个chunk的<code>pre_size</code>位置被认为是下下个chunk的开始，下个size位置是<code>0xfffffffc</code>标志未置位，被认为是free所以转而对后一个chunk采取Unlink操作。</p>
+</li>
+</ul>
+<p>此时根据上面Unlink操作的图示，一步一步分析下情况：</p>
+<ul>
+<li><p><code>FD = P -&gt; fd = target_addr - 12</code>；</p>
+</li>
+<li><p><code>BK = P -&gt; bk = shellcode_addr</code>；</p>
+</li>
+<li><p><code>FD -&gt; bk = BK</code>，即<code>P -&gt; fd -&gt; bk = BK</code>，表示shellcode的地址被写进了<code>P -&gt; fd -&gt; bk</code>位置，而这里实际是<code>P -&gt; fd + 12</code>的位置。因为<code>P -&gt; fd</code>指向的是前一个chunk的头部，加12是跳过<code>prev_size</code>、<code>size</code>和<code>fd</code>，到达<code>bk</code>的位置。而<code>P -&gt; fd = target_addr - 12</code>，所以<code>shellcode_addr</code>实际被写到了<code>target_addr</code>的位置；</p>
+</li>
+<li><p><code>BK -&gt; fd = FD</code>，即<code>P -&gt; bk -&gt; fd = FD</code>，表示<code>target_addr - 12</code>被写到<code>P -&gt; bk -&gt; fd</code>位置，，而这里实际是<code>P -&gt; bk + 8</code>的位置。因为<code>P -&gt; bk</code>指向的是第二个chunk的头部，加8是跳过<code>prev_size</code>和<code>size</code>到达<code>fd</code>。而<code>P -&gt; bk + 8</code>实际是<code>shellcode_addr + 8</code>的位置，即<code>target_addr - 12</code>被写到<code>shellcode_addr + 8</code>处。所以这里需要注意两点，一是需要确保<code>shellcode_addr + 8</code>地址具有可写的权限；二是<code>shellcode_addr + 8</code>处的值其实是被破坏的，需要想办法绕过这里。</p>
+</li>
+</ul>
+<p>如果我们将<code>target_addr</code>设置为某个函数got表地址，那么当程序调用这个函数的时候，会直接执行<code>shellcode_addr</code>处的代码。</p>
+<p>这样我们就通过Unlink实现了任意地址读写，看起来很完美，但是这是在没有任何检查的情况下才能实现的。</p>
+<h2 id="残酷现实"><a href="#残酷现实" class="headerlink" title="残酷现实"></a>残酷现实</h2><p>理想很美好，现实很残酷。实际上Unlink操作时会进行一系列的检测：</p>
+<ul>
+<li><p>Double Free检测：该机制不允许释放一个已经处于free状态的chunk。因此，当攻击者将second chunk的size设置为-4的时候，就意味着该size的PREV_INUSE位为0，也就是说second chunk之前的first chunk(我们需要free的chunk)已经处于free状态，那么这时候再free(first)的话，就会报出double free错误。</p>
+</li>
+<li><p>next size非法检测：该机制检测next size是否在8到当前arena的整个系统内存大小之间。因此当检测到next size为-4的时候，就会报出invalid next size错误。</p>
+</li>
+<li><p>双链表冲突检测：该机制会在执行Unlink操作的时候检测链表中前一个chunk的fd与后一个chunk的bk是否都指向当前需要Unlink的chunk。这样攻击者就无法替换second chunk的fd与fd了。</p>
+</li>
+</ul>
+<p>所以前路遥远，只能埋头学习。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/07/01/Unlink/">https://coldwave96.github.io/2020/07/01/Unlink/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Heap/">Heap</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/02/Heap-bin/"><i class="fa fa-chevron-left">  </i><span>关于堆的bin结构的理解</span></a></div><div class="next-post pull-right"><a href="/2020/06/30/Heap/"><span>堆溢出入门基础知识</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

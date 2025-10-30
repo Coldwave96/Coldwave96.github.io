@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Python实现TCP旁路阻断"><meta name="keywords" content="By-pass Block"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Python实现TCP旁路阻断 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">1 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Raw-Socket"><span class="toc-number">2.</span> <span class="toc-text">2 Raw Socket</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="toc-number">2.1.</span> <span class="toc-text">2.1	传输层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">2.2.</span> <span class="toc-text">2.2	网络层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-number">2.3.</span> <span class="toc-text">2.3	数据链路层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">3 具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">3.1	原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.</span> <span class="toc-text">3.2	实现</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Python实现TCP旁路阻断</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-02</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Program/">Program</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Program/Python/">Python</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1 背景"></a>1 背景</h2><p>TCP旁路阻断技术通过监听通信信道，抓包还原TCP协议，然后通过给通信两方发送TCP Reset包实现旁路阻断TCP连接。</p>
+<p>Python中可通过Raw Socket进行以太网嗅探和发送Reset包。</p>
+<span id="more"></span>
+
+<h2 id="2-Raw-Socket"><a href="#2-Raw-Socket" class="headerlink" title="2 Raw Socket"></a>2 Raw Socket</h2><p>Raw Socket提供一种方法来绕过整个网络堆栈遍历和直接将以太网帧数据送到一个应用程序。</p>
+<p>有很多种方法来创建raw sockets，例如AF_INET，PF_INET，AF_PACKET，PF_PACKET等。相互之前的区别在于AF_INET和PF_INET只能到网络7层模型的网络层，而AF_PACKET和PF_PACKET可以到MAC层，即数据链路层。</p>
+<h3 id="2-1传输层"><a href="#2-1传输层" class="headerlink" title="2.1	传输层"></a>2.1	传输层</h3><p>最简单的传输层socket就是最常用的socket，而非raw socket。建立方式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(AF_INET,SOCK_STREAM/SOCK_DGRAM, protocol)</span><br></pre></td></tr></table></figure>
+
+<p>收发数据用于TCP和UDP协议，发送和接收的数据都不包含UDP头或TCP头，使用ip地址+端口号作为地址。</p>
+<h3 id="2-2网络层"><a href="#2-2网络层" class="headerlink" title="2.2	网络层"></a>2.2	网络层</h3><p>建立方式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(AF_INET,SOCK_STREAM/SOCK_DGRAM, protocol)</span><br></pre></td></tr></table></figure>
+
+<p>第一个参数：PF_INET&#x2F;AF_INET。二者的的区别为指定address family时一般设置为AF_INET，即使用IP；指定protocal family时一般设置PF_INET。在头文件中有如下定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#define AF_INET 0</span><br><span class="line">#define PF_INET AF_INET</span><br></pre></td></tr></table></figure>
+
+<p>所以AF_INET与PF_INET完全一样；</p>
+<p>第二个参数说明建立的是一个raw socket；</p>
+<p>第三个参数分为3种情况：</p>
+<ul>
+<li><p>a.参数protocol用来指明所要接收的协议号，如果是象IPPROTO_TCP(6)这种非0，非255号的协议，则内核碰到ip头中protocol域和创建socket所使用参数protocol相同的IP包，就会交给这个rawsocket来处理。</p>
+</li>
+<li><p>b.如果protocol是IPPROTO_RAW(255)，这个socket只能用来发送IP包，而不能接收任何数据.发送的数据需要自己填充IP包头，并且自己计算校验和。</p>
+</li>
+<li><p>c.如果protocol是IPPROTO_IP(0)，在linux和sco unix上是不允许建立的。</p>
+</li>
+</ul>
+<p>网络层raw socket的特点为该套接字可以接收协议类型为(icmp，igmp等)发往本机的ip数据包；不能收到非发往本地ip的数据包(ip软过滤会丢弃这些不是发往本机ip的数据包)；不能收到从本机发送出去的数据包；发送时需要自己组织tcp，udp，icmp等传输层协议头部，可以setsockopt来自己包装ip头部；接收的UDP和TCP协议号的数据不会传给任何原始套接字接口，UDP和TCP协议的数据需要通过MAC层原始套接字来获得。</p>
+<h3 id="2-3数据链路层"><a href="#2-3数据链路层" class="headerlink" title="2.3	数据链路层"></a>2.3	数据链路层</h3><p>建立方式为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockfd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_IP/ETH_P_ARP/ETH_P_ALL))</span><br></pre></td></tr></table></figure>
+
+<p>发送和接收数据使用MAC地址，可以在MAC层发送和接收任意的数据，如果有上层协议需要自行添加协议头。</p>
+<p>第三个参数protocol协议类型一共有四个：</p>
+<ul>
+<li><p>ETH_P_IP 0x800 只接收发往本机mac的ip类型的数据帧；</p>
+</li>
+<li><p>ETH_P_ARP 0x806 只接受发往本机mac的arp类型的数据帧；</p>
+</li>
+<li><p>ETH_P_ARP 0x8035 只接受发往本机mac的rarp类型的数据帧；</p>
+</li>
+<li><p>ETH_P_ALL 0x3 接收发往本机mac的所有类型ip，arp，rarp的数据帧, 接收从本机发出的所有类型的数据帧.(混杂模式打开的情况下,会接收到非发往本地mac的数据帧)。</p>
+</li>
+</ul>
+<p>需要注意的是这一种socket使用的收发地址都是通过指定网卡实现，接受和发送的数据都是数据帧，格式如下：</p>
+<hr>
+<pre><code>    |eth header|             data          |
+</code></pre>
+<hr>
+<p>即： </p>
+<hr>
+<pre><code>|MACdesAddr(6)|MACsrcAddr(6)|protocal(2)|        data      |
+</code></pre>
+<hr>
+<p>综述MAC层socket可以接收发往本地mac的数据帧；可以接收从本机发送出去的数据帧(第3个参数需要设置为ETH_P_ALL)；可以接收非发往本地mac的数据帧(网卡需要设置为promisc混杂模式)。</p>
+<h2 id="3-具体实现"><a href="#3-具体实现" class="headerlink" title="3 具体实现"></a>3 具体实现</h2><h3 id="3-1原理"><a href="#3-1原理" class="headerlink" title="3.1	原理"></a>3.1	原理</h3><p>把任意的TCP连接给Reset掉是比较容易的，因为TCP在收到数据包时，对发送者仅仅做以下简单的校验：五元组校验；校验和检测；序列号校验。如此松散的校验机制很容易就可以pass。</p>
+<p>包构造的原理图如下图所示：</p>
+<p><img src="/img/TcpRst/TcpRst1.png"></p>
+<h3 id="3-2实现"><a href="#3-2实现" class="headerlink" title="3.2	实现"></a>3.2	实现</h3><p>首先创建raw socket连接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">listen</span>():</span><br><span class="line">    listen_socket = socket.socket(</span><br><span class="line">        socket.AF_PACKET,</span><br><span class="line">        socket.SOCK_RAW,</span><br><span class="line">        socket.ntohs(<span class="number">0x0003</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>然后监听网卡，接收数据，解析数据帧，寻找tcp协议的数据帧，放弃掉原本的RST包以及FIN包，然后判断ip地址是否在黑名单中:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> sender <span class="keyword">in</span> addresses:</span><br><span class="line">    <span class="keyword">if</span> sender <span class="keyword">not</span> <span class="keyword">in</span> stats[<span class="string">&quot;seen&quot;</span>]:</span><br><span class="line">        stats[<span class="string">&quot;seen&quot;</span>].append(sender)</span><br><span class="line"><span class="keyword">elif</span> receiver <span class="keyword">in</span> addresses:</span><br><span class="line">    <span class="keyword">if</span> receiver <span class="keyword">not</span> <span class="keyword">in</span> stats[<span class="string">&quot;seen&quot;</span>]:</span><br><span class="line">        stats[<span class="string">&quot;seen&quot;</span>].append(receiver)</span><br></pre></td></tr></table></figure>
+
+<p>如果检测到禁止的tcp连接，就会给连接双方均发送TCP Reset包断开连接，实现tcp旁路阻断的功能。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/12/02/TcpRst/">https://coldwave96.github.io/2019/12/02/TcpRst/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/By-pass-Block/">By-pass Block</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/12/02/NestCTF3/"><i class="fa fa-chevron-left">  </i><span>CTF答题夺旗赛（第三季）WriteUPs</span></a></div><div class="next-post pull-right"><a href="/2019/12/02/SideBlock/"><span>旁路阻断技术</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

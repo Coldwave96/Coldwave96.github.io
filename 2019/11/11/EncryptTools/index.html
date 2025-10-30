@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="勒索病毒解密工具汇总"><meta name="keywords" content="Encrypt"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>勒索病毒解密工具汇总 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8B%92%E7%B4%A2%E8%BD%AF%E4%BB%B6%E8%A7%A3%E5%AF%86%E5%B7%A5%E5%85%B7"><span class="toc-number">1.</span> <span class="toc-text">1 勒索软件解密工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%BC%E5%90%88%E6%80%A7%E8%A7%A3%E5%AF%86%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99"><span class="toc-number">2.</span> <span class="toc-text">2 综合性解密工具网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8B%92%E7%B4%A2%E4%BF%A1%E6%81%AF%E7%BB%BC%E5%90%88%E6%80%A7%E6%9F%A5%E8%AF%A2%E7%BD%91%E7%AB%99"><span class="toc-number">3.</span> <span class="toc-text">3 勒索信息综合性查询网站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">4 注意事项</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">勒索病毒解密工具汇总</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-11</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/">Tools</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/Cryptography/">Cryptography</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.8k</span><span class="post-meta__separator">|</span><span>阅读时长: 7 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>此处汇总了众多勒索病毒解密工具信息，有需要者可自取哦！（工具很多，建议收藏）</p>
+<span id="more"></span>
+
+<h2 id="1-勒索软件解密工具"><a href="#1-勒索软件解密工具" class="headerlink" title="1 勒索软件解密工具"></a>1 勒索软件解密工具</h2><p>✎[Apocalypse勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/10111-apocalypse-ransomware">https://www.pcrisk.com/removal-guides/10111-apocalypse-ransomware</a></p>
+<p>✎[Alcatrazlocker勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://files.avast.com/files/decryptor/avast_decryptor_alcatrazlocker.exe">https://files.avast.com/files/decryptor/avast_decryptor_alcatrazlocker.exe</a></p>
+<p>✎[Alma勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://info.phishlabs.com/blog/alma-ransomware-analysis-of-a-new-ransomware-threat-and-a-decrypter">https://info.phishlabs.com/blog/alma-ransomware-analysis-of-a-new-ransomware-threat-and-a-decrypter</a></p>
+<p>✎[Alpha勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://dl.360safe.com/Decryptor_AlphaDecrypter.cab">https://dl.360safe.com/Decryptor_AlphaDecrypter.cab</a></p>
+<p>✎[AL-Namrood勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/10535-al-namrood-ransomware">https://www.pcrisk.com/removal-guides/10535-al-namrood-ransomware</a></p>
+<p>✎[Apocalypse 勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.emsisoft.com/2016/06/29/apocalypse-ransomware-which-targets-companies-through-insecure-rdp/">http://blog.emsisoft.com/2016/06/29/apocalypse-ransomware-which-targets-companies-through-insecure-rdp/</a></p>
+<p>✎[Autolocky勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/decrypted-the-new-autolocky-ransomware-fails-to-impersonate-locky/">https://www.bleepingcomputer.com/news/security/decrypted-the-new-autolocky-ransomware-fails-to-impersonate-locky/</a></p>
+<p>✎[Bart勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://phishme.com/rockloader-downloading-new-ransomware-bart/">http://phishme.com/rockloader-downloading-new-ransomware-bart/</a></p>
+<p>✎[BitDtak勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/BitStakDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/BitStakDecrypter.zip</a></p>
+<p>✎[BarRax勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://blog.checkpoint.com/wp-content/uploads/2017/03/BarRaxDecryptor.zip">https://blog.checkpoint.com/wp-content/uploads/2017/03/BarRaxDecryptor.zip</a></p>
+<p>✎[CryptON 勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.emsisoft.com/2017/03/07/emsisoft-releases-free-decrypter-for-crypton-ransomware/">http://blog.emsisoft.com/2017/03/07/emsisoft-releases-free-decrypter-for-crypton-ransomware/</a></p>
+<p>✎[CoinVault勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/virus-removal/coinvault-ransomware-information">https://www.bleepingcomputer.com/virus-removal/coinvault-ransomware-information</a></p>
+<p>✎[CryptXXX勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://www.bleepingcomputer.com/virus-removal/cryptxxx-ransomware-help-information">http://www.bleepingcomputer.com/virus-removal/cryptxxx-ransomware-help-information</a></p>
+<p>✎[Crypt0勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/Crypt0Decrypter.zip">https://download.bleepingcomputer.com/demonslay335/Crypt0Decrypter.zip</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/10478-crypt0-ransomware">https://www.pcrisk.com/removal-guides/10478-crypt0-ransomware</a></p>
+<p>✎[Crypt38Keygen勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/Crypt38Keygen.zip">https://download.bleepingcomputer.com/demonslay335/Crypt38Keygen.zip</a></p>
+<p>✎[Crypren勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/pekeinfo/DecryptCrypren">https://github.com/pekeinfo/DecryptCrypren</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.nyxbone.com/malware/Crypren.html">http://www.nyxbone.com/malware/Crypren.html</a></p>
+<p>✎[CryptComsole勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/CryptConsoleDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/CryptConsoleDecrypter.zip</a></p>
+<p>✎[Crytomix勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://files.avast.com/files/decryptor/avast_decryptor_cryptomix.exe">https://files.avast.com/files/decryptor/avast_decryptor_cryptomix.exe</a></p>
+<p>✎[CryptoHostKeygen勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Demonslay335/CryptoHostKeygen">https://github.com/Demonslay335/CryptoHostKeygen</a></p>
+<p>✎[Cry9勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/11199-cry9-ransomware">https://www.pcrisk.com/removal-guides/11199-cry9-ransomware</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.emsisoft.com/2017/04/04/remove-cry9-ransomware-with-emsisofts-free-decrypter/">http://blog.emsisoft.com/2017/04/04/remove-cry9-ransomware-with-emsisofts-free-decrypter/</a></p>
+<p>✎[CoinVault勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.nomoreransom.org/uploads/CoinVaultDecryptor.zip">https://www.nomoreransom.org/uploads/CoinVaultDecryptor.zip</a></p>
+<p>✎[Cryptinfinite勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/9568-cryptinfinite-ransomware">https://www.pcrisk.com/removal-guides/9568-cryptinfinite-ransomware</a></p>
+<p>✎[CrazyCrypt勒索密钥生成工具]</p>
+<p><a target="_blank" rel="noopener" href="https://edr.sangfor.com.cn/file/tool/CrazyCrypt_Password.rar">https://edr.sangfor.com.cn/file/tool/CrazyCrypt_Password.rar</a></p>
+<p>✎[DXXD勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://www.bleepingcomputer.com/news/security/the-week-in-ransomware-october-14-2016-exotic-lockydump-comrade-and-more/">http://www.bleepingcomputer.com/news/security/the-week-in-ransomware-october-14-2016-exotic-lockydump-comrade-and-more/</a></p>
+<p>✎[DoNotOpen勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/DoNotOpenDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/DoNotOpenDecrypter.zip</a></p>
+<p>✎[Decrypt Protect[mbl advisory]勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://www.malwareremovalguides.info/decrypt-files-with-decrypt_mblblock-exe-decrypt-protect/">http://www.malwareremovalguides.info/decrypt-files-with-decrypt_mblblock-exe-decrypt-protect/</a></p>
+<p>✎[Enigma勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.im-infected.com/ransomware/remove-enigma-ransomware-virus-removal.html">https://www.im-infected.com/ransomware/remove-enigma-ransomware-virus-removal.html</a></p>
+<p>✎[EduCrypt勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/the-educrypt-ransomware-tries-to-teach-you-a-lesson/">https://www.bleepingcomputer.com/news/security/the-educrypt-ransomware-tries-to-teach-you-a-lesson/</a></p>
+<p>✎[GhostCrypt勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://www.bleepingcomputer.com/forums/t/614197/ghostcrypt-z81928819-help-support-topic-read-this-filetxt/">http://www.bleepingcomputer.com/forums/t/614197/ghostcrypt-z81928819-help-support-topic-read-this-filetxt/</a></p>
+<p>✎[GhostCrypt勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/GhostCryptDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/GhostCryptDecrypter.zip</a></p>
+<p>✎[Gomasom勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/gomasom-crypt-ransomware-decrypted/">https://www.bleepingcomputer.com/news/security/gomasom-crypt-ransomware-decrypted/</a></p>
+<p>✎[GandCrab勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/fbi-releases-master-decryption-keys-for-gandcrab-ransomware/">https://www.bleepingcomputer.com/news/security/fbi-releases-master-decryption-keys-for-gandcrab-ransomware/</a></p>
+<p>✎[Hidden tear勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://files.avast.com/files/decryptor/avast_decryptor_hiddentear.exe">https://files.avast.com/files/decryptor/avast_decryptor_hiddentear.exe</a></p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/hidden-tear-decrypter.zip">https://download.bleepingcomputer.com/demonslay335/hidden-tear-decrypter.zip</a></p>
+<p>✎[HydraCrypt&#x2F;UmbreCrypt勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.emsisoft.com/2016/02/12/decrypter-for-hydracrypt-and-umbrecrypt-available/">http://blog.emsisoft.com/2016/02/12/decrypter-for-hydracrypt-and-umbrecrypt-available/</a></p>
+<p>✎[HydraCrypt勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://tmp.emsisoft.com/fw/decrypt_hydracrypt.exe">https://tmp.emsisoft.com/fw/decrypt_hydracrypt.exe</a></p>
+<p>✎[Hidden Tear勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.cyber.nj.gov/threat-profiles/ransomware-variants/hidden-tear">https://www.cyber.nj.gov/threat-profiles/ransomware-variants/hidden-tear</a></p>
+<p>✎[InsaneCrypt勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/InsaneCryptDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/InsaneCryptDecrypter.zip</a></p>
+<p>✎[Ims00rry勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://securityaffairs.co/wordpress/88376/malware/ims00rry-ransomware-decryptor.html">https://securityaffairs.co/wordpress/88376/malware/ims00rry-ransomware-decryptor.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.emsisoft.com/decrypter/ims00rry">https://www.emsisoft.com/decrypter/ims00rry</a></p>
+<p>✎[Jigsaw勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/jigsaw-ransomware-becomes-cryptohitman-with-porno-extension/">https://www.bleepingcomputer.com/news/security/jigsaw-ransomware-becomes-cryptohitman-with-porno-extension/</a></p>
+<p>✎[JuicyLemon勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://dl.360safe.com/Decryptor_JuicyLemonDecoder.cab">https://dl.360safe.com/Decryptor_JuicyLemonDecoder.cab</a></p>
+<p>✎[JigSaw勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/JigSawDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/JigSawDecrypter.zip</a></p>
+<p>✎[Lockcrypt勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://labs.bitdefender.com/wp-content/uploads/downloads/lockcrypt-ransomware-decryptor/">https://labs.bitdefender.com/wp-content/uploads/downloads/lockcrypt-ransomware-decryptor/</a></p>
+<p>✎[Legion勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://botcrawl.com/legion-ransomware/">http://botcrawl.com/legion-ransomware/</a></p>
+<p>✎[LockedIn勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/LockedInDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/LockedInDecrypter.zip</a></p>
+<p>✎[MirCop勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/MirCopDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/MirCopDecrypter.zip</a></p>
+<p>✎[Mblblock勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://tmp.emsisoft.com/fw/decrypt_mblblock.exe">https://tmp.emsisoft.com/fw/decrypt_mblblock.exe</a></p>
+<p>✎[Marlboro勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/marlboro-ransomware-defeated-in-one-day/">https://www.bleepingcomputer.com/news/security/marlboro-ransomware-defeated-in-one-day/</a></p>
+<p>✎[Nullbyte勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/news/security/the-nullbyte-ransomware-pretends-to-be-the-necrobot-pokemon-go-application/">https://www.bleepingcomputer.com/news/security/the-nullbyte-ransomware-pretends-to-be-the-necrobot-pokemon-go-application/</a></p>
+<p>✎[NullByte勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/NullByteDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/NullByteDecrypter.zip</a></p>
+<p>✎[Nanolocker勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Cyberclues/nanolocker-decryptor">https://github.com/Cyberclues/nanolocker-decryptor</a></p>
+<p>✎[NMoreira勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.pcrisk.com/removal-guides/10689-nmoreira-ransomware">https://www.pcrisk.com/removal-guides/10689-nmoreira-ransomware</a></p>
+<p>✎[NanoLocker勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.malwareclipboard.com/2016/01/nanolocker-ransomware-analysis.html">http://blog.malwareclipboard.com/2016/01/nanolocker-ransomware-analysis.html</a></p>
+<p>✎[OpenToYou 勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.emsisoft.com/2016/12/30/emsisoft-releases-free-decrypter-for-opentoyou-ransomware/">http://blog.emsisoft.com/2016/12/30/emsisoft-releases-free-decrypter-for-opentoyou-ransomware/</a></p>
+<p>✎[Odcodc勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://www.nyxbone.com/malware/odcodc.html">http://www.nyxbone.com/malware/odcodc.html</a></p>
+<p>✎[ODCODCDecoder勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://dl.360safe.com/Decryptor_ODCODCDecoder.cab">https://dl.360safe.com/Decryptor_ODCODCDecoder.cab</a></p>
+<p>✎[Pclock勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.bleepingcomputer.com/forums/t/561970/new-pclock-cryptolocker-ransomware-discovered/">https://www.bleepingcomputer.com/forums/t/561970/new-pclock-cryptolocker-ransomware-discovered/</a></p>
+<p>✎[PopCorn勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://www.elevenpaths.com/downloads/RecoverPopCorn.zip">https://www.elevenpaths.com/downloads/RecoverPopCorn.zip</a></p>
+<p>✎[Ransom.Cryakl勒索病毒解密工具]</p>
+<p><a target="_blank" rel="noopener" href="http://blog.checkpoint.com/2015/11/04/offline-ransomware-encrypts-your-data-without-cc-communication/">http://blog.checkpoint.com/2015/11/04/offline-ransomware-encrypts-your-data-without-cc-communication/</a></p>
+<p>✎[Shade勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://blog.kaspersky.com/shade-decryptor/12661/">https://blog.kaspersky.com/shade-decryptor/12661/</a></p>
+<p>✎[SanSam勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/SamSamStringDecrypter.zip">https://download.bleepingcomputer.com/demonslay335/SamSamStringDecrypter.zip</a></p>
+<p>✎[Unlock92勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://download.bleepingcomputer.com/demonslay335/Unlock92Decrypter.zip">https://download.bleepingcomputer.com/demonslay335/Unlock92Decrypter.zip</a></p>
+<p>✎[Unlocker勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kyrus/crypto-un-locker">https://github.com/kyrus/crypto-un-locker</a></p>
+<p>✎[Wildfire勒索软件解密工具]</p>
+<p><a target="_blank" rel="noopener" href="https://downloadcenter.mcafee.com/products/mcafee-avert/wildfiredecrypt/wildfiredecrypt.exe">https://downloadcenter.mcafee.com/products/mcafee-avert/wildfiredecrypt/wildfiredecrypt.exe</a></p>
+<h2 id="2-综合性解密工具网站"><a href="#2-综合性解密工具网站" class="headerlink" title="2 综合性解密工具网站"></a>2 综合性解密工具网站</h2><p>✎卡巴斯基：勒索软件解密工具集</p>
+<p><a target="_blank" rel="noopener" href="https://noransom.kaspersky.com/?spm=a2c4g.11186623.2.3.bSlRlm">https://noransom.kaspersky.com/?spm=a2c4g.11186623.2.3.bSlRlm</a></p>
+<p>✎Avast：勒索软件解密工具集</p>
+<p><a target="_blank" rel="noopener" href="https://www.avast.com/zh-cn/ransomware-decryption-tools?spm=a2c4g.11186623.2.5.bSlRlm">https://www.avast.com/zh-cn/ransomware-decryption-tools?spm=a2c4g.11186623.2.5.bSlRlm</a></p>
+<p>✎Trendmicro：勒索软件解密方案</p>
+<p><a target="_blank" rel="noopener" href="https://esupport.trendmicro.com/solution/zh-cn/1115118.aspx?spm=a2c4g.11186623.2.4.bSlRlm">https://esupport.trendmicro.com/solution/zh-cn/1115118.aspx?spm=a2c4g.11186623.2.4.bSlRlm</a></p>
+<p>✎MalwareHunterTeam:勒索软件解密工具集</p>
+<p><a target="_blank" rel="noopener" href="https://id-ransomware.malwarehunterteam.com/">https://id-ransomware.malwarehunterteam.com/</a></p>
+<p>✎nomoreransom：勒索软件解密工具集</p>
+<p><a target="_blank" rel="noopener" href="https://www.nomoreransom.org/zh/index.html">https://www.nomoreransom.org/zh/index.html</a></p>
+<p>✎Emsisoft：勒索软件解密工具集</p>
+<p><a target="_blank" rel="noopener" href="https://www.emsisoft.com/ransomware-decryption-tools/free-download">https://www.emsisoft.com/ransomware-decryption-tools/free-download</a></p>
+<h2 id="3-勒索信息综合性查询网站"><a href="#3-勒索信息综合性查询网站" class="headerlink" title="3 勒索信息综合性查询网站"></a>3 勒索信息综合性查询网站</h2><p>✎深信服EDR官网勒索查询界面</p>
+<p><a target="_blank" rel="noopener" href="https://edr.sangfor.com.cn/#/information/ransom_search">https://edr.sangfor.com.cn/#/information/ransom_search</a></p>
+<p>✎botfrei.de网站</p>
+<p><a target="_blank" rel="noopener" href="https://www.botfrei.de/de/ransomware/galerie.html">https://www.botfrei.de/de/ransomware/galerie.html</a></p>
+<h2 id="4-注意事项"><a href="#4-注意事项" class="headerlink" title="4 注意事项"></a>4 注意事项</h2><p>此处提供的解密器（链接）均由互联网搜集而来，只对工具信息进行汇总，不保证解密工具的可行性和安全性，用户应做好数据备份，以防止不必要的损失。</p>
+<p>使用解密工具您需要注意以下事项：</p>
+<ul>
+<li><p>1、通过勒索信息文件、加密后文件后缀等勒索特征判断勒索病毒家族。深信服EDR官网提供勒索病毒搜索功能，支持勒索病毒家族名或加密后缀查询，快速找到相关信息。<a target="_blank" rel="noopener" href="https://edr.sangfor.com.cn/">搜索链接</a></p>
+</li>
+<li><p>2、选择对应家族（如有版本也应选择对应版本）的解密工具；</p>
+</li>
+<li><p>3、解密前需对重要的数据进行备份（即使处于被加密状态），以防止解密失败造成损失；</p>
+</li>
+<li><p>4、解密前需确保系统中的勒索病毒已被清除，否则可能遭到重复加密；</p>
+</li>
+<li><p>5、部分解密工具可能需要特定的解密环境（如在原始受感染的主机上进行解密、需要同时提供加密文件和原文件等），具体情况参考工具中的说明；</p>
+</li>
+<li><p>6、解密工具可能只对某些家族的特定变种或版本生效。</p>
+</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/11/11/EncryptTools/">https://coldwave96.github.io/2019/11/11/EncryptTools/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Encrypt/">Encrypt</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/11/13/MS15-034/"><i class="fa fa-chevron-left">  </i><span>HTTP.SYS远程执行代码漏洞（MS15-034 | CVE-2015-1635）</span></a></div><div class="next-post pull-right"><a href="/2019/11/11/GithubTools/"><span>Github上的部分hacker工具合集</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

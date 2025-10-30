@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="SecGPT 基础知识（一）"><meta name="keywords" content="NLP"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>SecGPT 基础知识（一） | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A9%E6%9C%9F%E5%8F%91%E5%B1%95%EF%BC%9A%E7%AC%A6%E5%8F%B7%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%88Symbolic-AI%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">早期发展：符号人工智能（Symbolic AI）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E6%B5%81%E6%96%B9%E6%B3%95%EF%BC%9A%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88Machine-Learning%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">主流方法：机器学习（Machine Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E9%98%B6%E6%AE%B5%E7%BB%B4%E5%BA%A6"><span class="toc-number">3.1.</span> <span class="toc-text">发展阶段维度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E7%9B%AE%E6%A0%87%E7%BB%B4%E5%BA%A6"><span class="toc-number">3.2.</span> <span class="toc-text">任务目标维度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E5%92%8C%E8%81%9A%E7%B1%BB"><span class="toc-number">3.2.1.</span> <span class="toc-text">分类和聚类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%BD%92"><span class="toc-number">3.2.2.</span> <span class="toc-text">回归</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%96%B9%E6%B3%95%E7%BB%B4%E5%BA%A6"><span class="toc-number">3.3.</span> <span class="toc-text">训练方法维度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Supervised-Learning%EF%BC%89"><span class="toc-number">3.3.1.</span> <span class="toc-text">有监督学习（Supervised Learning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Unsupervised-Learning%EF%BC%89"><span class="toc-number">3.3.2.</span> <span class="toc-text">无监督学习（Unsupervised Learning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Semi-Supervised-Learning%EF%BC%89"><span class="toc-number">3.3.3.</span> <span class="toc-text">半监督学习（Semi-Supervised Learning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88Reinforcement-Learning%EF%BC%89"><span class="toc-number">3.3.4.</span> <span class="toc-text">强化学习（Reinforcement Learning）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%BB%B4%E5%BA%A6"><span class="toc-number">3.4.</span> <span class="toc-text">学习算法维度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86%E7%BB%B4%E5%BA%A6"><span class="toc-number">3.5.</span> <span class="toc-text">模型原理维度</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">SecGPT 基础知识（一）</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2024-10-08</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/AI/">AI</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">7.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 21 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>2023 年科技圈“最靓的仔”非 ChatGPT 莫属，它是大语言模型（Large Language Model，LLM，简称大模型）的一种，而 AI（Artificial Intelligence，人工智能）也再次成为业界热议的话题，并引发了资本领域的狂欢。但若不是专业领域出身的同学，面对机器学习、神经网络、决策式 AI、生成式 AI、大模型、GPT 等一堆概念的时候，很可能搞不清楚它们之间的层次关系，这将不利于对大模型的学习和理解。因此，有必要从宏观上先对 AI 基础知识进行一些介绍。</p>
+<span id="more"></span>
+
+<h1 id="早期发展：符号人工智能（Symbolic-AI）"><a href="#早期发展：符号人工智能（Symbolic-AI）" class="headerlink" title="早期发展：符号人工智能（Symbolic AI）"></a>早期发展：符号人工智能（Symbolic AI）</h1><p>AI 作为计算机科学的一个分支，大概出现在20世纪50年代，核心目的是让计算机能够像人类一样思考、学习、推理、决策、交流，更好地帮助人类解决复杂的问题，变得更加有用。</p>
+<p>从 50 年代到 80 年代中前期，是 AI 发展的早期阶段，也称为“符号人工智能（Symbolic AI）”。所谓“符号”，可以简单的理解为语句和规则。这个时期计算机的智能性主要依赖于领域专家和程序员将现实生活中的知识转换为规则，然后进行编程实现（比如一条规则可能就对应一组 if…else…的代码），而大量规则则就形成了一个知识库，可用于计算机的推断和决策。因此，“符号人工智能”也被称为“基于规则的人工智能”。</p>
+<p>在 AI 发展的早期阶段，符号人工智能曾经发挥过重要作用，典型代表如 IBM Watson System（医生机器人专家系统）。但随着人工智能的发展，它的局限性也逐渐被人们更深刻的认识到，核心问题在于它非常依赖系统构建者的专业领域知识，需要大量的手工编码来构建和维护复杂的知识库，难以处理那些模糊性的问题。符号人工智能的优点和局限如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="left">做的还行</th>
+<th align="left">不太行</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">在人类已知的、广泛的、通用的领域中解决问题、制定决策、满足约束，如领域专家系统、辅助编程系统等</td>
+<td align="left">过于依赖专家经验的转化，复杂的代码开发和维护，边际效应日趋降低</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">在自然语言处理、语音处理、视觉处理等领域，没有取得明显的效果</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">系统很难知道经验边界之外的事情，难以做出合理、准确的预测</td>
+</tr>
+<tr>
+<td align="left"></td>
+<td align="left">大部分算法不是分布式的，难以扩展；即使考虑了分布式，也受限于当时的软件、硬件和网络能力</td>
+</tr>
+</tbody></table>
+<p>随着各个业务领域信息技术的快速发展，这种局限性体现得越来越明显，性价比也越来越低，因此符号人工智能获得的研究资金日益减少，社会对 Al 也从狂热的追捧变为冷淡的唏嘘，AI 的发展进入了瓶颈期。不过，符号人工智能作为经典的 AI 技术，通过对人类知识进行规则化的转换，能较好地帮助研究者深入理解人类知识的表示和处理方法，仍然具有学术上的研究价值。</p>
+<p>穷则思变，一种新的方法随即被提出，取代了符号人工智能，并逐渐成为人工智能领域的主流方法，这就是“机器学习”。</p>
+<h1 id="主流方法：机器学习（Machine-Learning）"><a href="#主流方法：机器学习（Machine-Learning）" class="headerlink" title="主流方法：机器学习（Machine Learning）"></a>主流方法：机器学习（Machine Learning）</h1><p>机器学习 （Machine Learning，ML），是人工智能的一个发展分支，出现于上世纪 80 年代中后期，并逐渐成为 AI 领域的主流方法。它的核心思想是让计算机从数据中学习（训练）规律和模式，然后在实际的任务中进行计算、预測、决策、优化，是一种“数据驱动的人工智能”。数提是机器学习的核心要素之一，可以是结构化（如SQL 数据库中的二维表），也可以是非结构化或半结构化（如文本、HTML、XML、语音、图像等）。平时我们常常提到的“神经网络”“深度学习”“有监督““无监督”“卷积网络”“分类”“聚类”“大模型”等诸多概念，其实都属于机器学习这个领域。</p>
+<p>一般可以通过如下的维度来看待机器学习：</p>
+<ul>
+<li>发展阶段的维度：如统计机器学习阶段、神经网络机器学习阶段、大语言模型机器学习阶段等。</li>
+<li>任务目标的维度：如分类、聚类、回归、排名、降维、优化、密度估计等。</li>
+<li>训练方法的维度：如有监督学习、无监督学习、半监督学习、基于人类反馈的强化学习等。</li>
+<li>学习算法的维度：如线性回归、逻辑回归、决策树、K-means 聚类、支持向量机（SVM）、卷积神经网络（CNN）、循环神经网络（RNN）、朴素贝叶斯等。</li>
+<li>模型原理维度：如几何模型、逻辑模型、网络模型、概率模型等。</li>
+</ul>
+<h2 id="发展阶段维度"><a href="#发展阶段维度" class="headerlink" title="发展阶段维度"></a>发展阶段维度</h2><p>机器学习是一个不断发展的过程，每个发展阶段都有其独特的特点和里程碑。虽然发展阶段并没有完全一致的划分原则，但按照“统计机器学习”“神经网络机器学习”和“大语言模型”这三个阶段来划分一般不会引起太大的争议。</p>
+<ul>
+<li>统计机器学习 Statistical Al<ul>
+<li>它是一种基于概率和统计理论的机器学习方法，利用统计学原理，对数据进行分析和建模，用于预测未来趋势和行为。</li>
+<li>应用大量数据来训练模型，通过统计学技术来进行模式识别和预测，如朴素贝叶斯、决策树等，广泛应用于文本分类、图像识别等任务。</li>
+</ul>
+</li>
+<li>神经网络机器学习 Deep Learning<ul>
+<li>它是一种基于人工神经网络的机器学习方法，自 21 世纪初期得到快速发展，Google AlphaGo 将基于神经网络的机器学习推向了高潮。神经网络通过模拟人类的神经系统，从训练数据中抽取特征进行学习和预测，广泛应用于图像分析、语音识别、自然语言处理等各种任务场景中。</li>
+<li>通过构建深层神经网络模型，实现了对复杂的、非线性关系的建模能力，如 CNN、RNN、LSTM 等，在图像识别、语音识别和 NLP 等领域取得显著成果。</li>
+</ul>
+</li>
+<li>大语言模型 LLM&#x2F;GPT<ul>
+<li>它实际上是神经网络的一个发展分支，也是机器学习的最新阶段，自 2020 年左右开始得到快速发展，并因 ChatGPT 而间名于世。当前的主流大模型主要基于 Transformer 架构 （Transformer 是 Google 在 2017 年发表的“Attention is allyou need”论文中提出的一种神经网络架构），一股拥有超大规模的参致，基于超大规模的数据进行训练和学习，在各种类型的自然语言处理任务中（如问答系统、语言翻译、情感分析、命名实体识别等）取得令人惊叹的效果，尤其是文本生成类任务，目前已进一步扩展到音频、图像、视频等领域，被认为是实现通用人工智能（Artificial General Intelligence，AGI）的最可能技术路线。</li>
+<li>基于 Transformer 架构，基于大规模语料进行训练、微调和提示工程，强大的语义理解和生成能力，应用于文本生成、情感识别、机器翻译等各类 NLP 任务。</li>
+</ul>
+</li>
+</ul>
+<p>不过，用“阶段”这个词可能会让人误以为早期阶段的技术已经不再发展，这是一种误解。实际上它们各自仍在发展中，而且都有广泛的应用和前景。在不同领域和任务中，也有着不同的优点和劣势，需要根据具体的问题，以及拥有怎样的数据，来选择合适的方法和技术。</p>
+<h2 id="任务目标维度"><a href="#任务目标维度" class="headerlink" title="任务目标维度"></a>任务目标维度</h2><p>所谓任务目标，就是我们想要利用机器学习去解决什么类型的问题，完成什么类型的任务。问题和任务不同，适用的模型和算法往往也不同，下面以分类、聚类、回归几种任务目标为例来介绍，其他不过多展开了。</p>
+<h3 id="分类和聚类"><a href="#分类和聚类" class="headerlink" title="分类和聚类"></a>分类和聚类</h3><p>“分类”和“聚类”是两个常见的任务类型。</p>
+<ul>
+<li>分类：根掘祥本已知的特征风性，将样本在已有既定的分类规则下进行归类。适用于分类任务的代表算法如逻辑回归、决策树、朴素贝叶斯等。</li>
+<li>聚类：根据样本已知的特征属性，将样本在没有既定的分类规则下进行归类。适用于聚类任务的代表算法如 K-means 等。</li>
+</ul>
+<p>在机器学习和数据科学中，还有几个与分类&#x2F;聚类强相关的基础性概念。</p>
+<ul>
+<li>样本（Sample）：样本是从总体数据中抽取的部分个体数据，是用来训练模型、推断总体特性的一个有限的数据集合，可进一步分为“有标签样本”和“无标签样本”。在数据结构方面，结构化、非结构化、半结构化均有可能。</li>
+<li>特征（Feature）：特征用于描述或表征样本在不同维度上的信息，代表了数据的内在规律，也称为属性，是模型的输入部分。特征的选择对于模型的表现往往有着至关重要的影响。</li>
+<li>标签（Label）：标签是希望模型预测或学习的目标变量，是每个样本的已知结果或类别归属，通常用于有监督学习任务的训练和验证，是模型的输出部分。</li>
+<li>数据集（Dataset）：效据集可以理解为样本的集合，通常由一系列记录组成，每个记录包含若干特征和零个、一个或多个标签。数据集能够进一步细分为训练数据集、验证数据集、测试数据集等。</li>
+</ul>
+<p>模型的训练就是根据已知样本的特征与标签之间的关系构建出一个预测模型；而模型的推理则是使用该预测模型基于来知样本的特征进行标签预测。</p>
+<center>
+    <img src="/img/SecGPT1/FrCL3XyJcjhf-ZNd5480PglSR9mQ.png" width="850">
+</center>
+
+<p>基于上图给出的这个数据集，我们看看分类和聚类的任务有何不同。</p>
+<ul>
+<li>分类任务：请根据以上数据集，对每位同学进行挂科与否的分类。其中，分类规则是明确的：1）总成绩低于60分，归类到“挂科”类别中；2）总成绩高于60分，归类到“没挂”类别中；3）总成绩&#x3D;0.5”平时成绩+0.5”期末成绩。</li>
+</ul>
+<center>
+    <img src="/img/SecGPT1/Fuk2W7T_ukBCNjyDcSZInm7wnGM9.png" width="850">
+</center>
+
+<ul>
+<li>聚类任务：请根据以上数据集，请把各位同学分到不同的小组中。注意，现在只有成绩数据，却没有明确的分类规则的，该如何归类呢？不同的人可能会有不同的归类方法，比如下图中就可能会因为“学霸&#x2F;学渣”和“有救&#x2F;没救”的原则，把每个同学分到不同的组。</li>
+</ul>
+<center>
+    <img src="/img/SecGPT1/FhW8nJ0HoMxCQE9HnDLT2D-QrJlu.png" width="850">
+</center>
+
+<h3 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h3><p>分类和聚类，本质上其实都是对事物进行归类。用数学语言描述，就是把空间&#x2F;平面中一个个的点划分到不同的集合中，是一种处理离散型的随机变量问题。但现实生活中还有一些任务，此如预测房价、股价、温度、雨量等，这类任务是根据已有的数据和经验来预测未来的目标结果，用数学语言描述，是对因变量（结果）和自变量（原因）之间的关系进行建模，基于一个或多个自变量的变化来预测因变量的变化，在坐标轴上体现为直线、曲线、区域等图形，是一种处理连续型随机变量的问题，这类任务叫做回归。网上有一句有点拗口但比较精辟的总结：<strong>回归线是一条线或曲线，它穿过目标预测图上的所有数据点，以使数据点和回归线之间的垂直距离最小。</strong></p>
+<p>回归也有多种类型，对应不同的算法：</p>
+<ul>
+<li>线性回归：对自变量和因变量建立一种线性的关系模型。</li>
+<li>逻辑回归：对自变量和因变量建立一种S型函数或 Logistic 函数的关系模型。</li>
+<li>决策树回归：构建一棵决策树（比如二叉树）。一个样本从根节点（root）出发，一定会走到某一个叶子节点，而叶子节点的值则代表这棵决策树对这个样本的预测结果。</li>
+<li>随机森林回归：创建了一个森林，并使它拥有某种方式的随机性。“森林”是更多“树”的集成，随机森林回归可以看作更大范图、更复杂多变的决策树回归的集成。</li>
+</ul>
+<center>
+    <img src="/img/SecGPT1/FqS0AfEoZ4VTndET4wZ9A6g93GOi.png" width="850">
+</center>
+
+<p>特别说明一下，逻辑回归和决策树回归也常常应用到分类任务中。除了上述提到的这些回归算法，还有多项式回归、支持向量机回归等其他算法，不再展开。</p>
+<h2 id="训练方法维度"><a href="#训练方法维度" class="headerlink" title="训练方法维度"></a>训练方法维度</h2><p>所谓训练方法，就是我们让机器如何从浩瀚的数据中学习到有用的知识和规律，这和人类自身的学习过程有很多相似之处。不同的任务要求和数据特征，可能要采用不同的训练方法，或者多种训练方法的组合。</p>
+<h3 id="有监督学习（Supervised-Learning）"><a href="#有监督学习（Supervised-Learning）" class="headerlink" title="有监督学习（Supervised Learning）"></a>有监督学习（Supervised Learning）</h3><p>有监督学习是基于有属性标签的样本数据进行模型训练。标签的本质是表征样本教据和目标结果之间的联系，训练的过程就是要提取出样本数据的特征，根据标签建立特征值和目标结果的函数映射关系。通过这种不断地学习和训练过程，让这种映射越来越准确（即拟合的越来越好），最终实现对新数据进行预测。有监督学习的主要挑战是获取具有准确标签信息的样本数据，对训练样本的标注往往需要花费大量人工成本。</p>
+<p>有监督学习通常用在分类和回归任务中。</p>
+<ul>
+<li>分类任务场景：比如识别垃圾短信和垃圾邮件，都是先通过对一些历史短信和邮件做垃圾分类的标记，然后基于这些带有标记的数据进行模型训练。训练结束后，当获取到新的短信或是新的邮件时，就可以让模型进行分析和匹配，来识别此短信或邮件是或是不是垃圾类别。</li>
+<li>回归任务场景：比如要预测公司的净利润，可以通过历史上公司的利润值，以及跟利润相关的指标因子，比如营业收入、资产负债、管理费用等，训练出利润与因子的回归模型。训练结束后，输入新的指标因子来预测公司的利润。</li>
+</ul>
+<h3 id="无监督学习（Unsupervised-Learning）"><a href="#无监督学习（Unsupervised-Learning）" class="headerlink" title="无监督学习（Unsupervised Learning）"></a>无监督学习（Unsupervised Learning）</h3><p>无监督学习是基于无标签的样本数据进行模型训练。和有监督学习不同，由于样本数据没有预定的标签信息，模型只好自行寻找数据在不同维度上的内在规律。打个不完全恰当的比喻，有监督学习可以比作“科班出身”或“黄埔军校”，无监督学习则可以比作“野路子”或“土八路”，但“土八路”的战斗力可未必弱于“黄埔军校”。另外，正是因为不需要对训练样本数据打标签，相对有监督学习，数据的获取成本比较低，当然致数据质量也更难保证。</p>
+<p>无监督学习常用在聚类任务上。比如通过客户的消费行为（消费次数、最近消费时间、消费金额）指标，来对客户数据进行分层归类：</p>
+<ul>
+<li>第一类，重要价值客户，潜在特征是最近消费时间近、消费频次和消费金额都很高。</li>
+<li>第二类，重要保持客户，潜在特征是最近消费时间较远，但消费频次和金额都很高，说明这是个一段时间没来的忠诚客户，需要主动和他保持联系。</li>
+<li>第三类，重要发展客户，潜在特征是最近消费时间较近、消费金额高，但频次不高，忠诚度可能不高，算是有潜力的用户，应该重点发展。</li>
+<li>第四类，重要挽留客户，潜在特征是最近消费时间较远、消费频次不高，但历史消费金额高，可能是将要流失或者已经要流失的用户，应该启动挽留措施。</li>
+</ul>
+<p>以上这些可用于分类的潜在特征，不是人为提前设定好的，而是由模型算法根据历史数据自己学习到了某种规律，这是无监督学习最重要的特点。</p>
+<h3 id="半监督学习（Semi-Supervised-Learning）"><a href="#半监督学习（Semi-Supervised-Learning）" class="headerlink" title="半监督学习（Semi-Supervised Learning）"></a>半监督学习（Semi-Supervised Learning）</h3><p>半监督学习是有监督学习和无监督学习相互结合的一种训练方法，实现更优的分类，回归和聚类效果。在实际使用中，可以首先通过无监督学习对训练样本进行基于内在特征规律的聚类。以降低人工进行分类的成本。然后，基于聚类后的数据进行标注，让模型再进行有监督的训练，生成最终的预测模型。通过将两种训练方式进行结合，取得更均衡的成本和效果表现。</p>
+<p>举一个在数据安全领域的应用方式。在《中华人民共和国数据安全法》、《数据安全能力成熟度模型》（GB&#x2F;T-37988）、以及政府、金融、交通、运营商等多个行业规范中，都要求对数据基于分类分级的保护。传统的数据分类分级方式主要基于人工来对数据的类别和级别进行标注。但在实际生产环境中，数据规模是巨大的，而且还在持续高速增长中，依靠人工进行分类分级的难度非常高，效率也比较低。因此，可以考虑基于半监督学习的方法训练一个分类分级的机器学习模型出来，用模型提升分类分级工作的效事。训练方法如下：</p>
+<ul>
+<li>第一步，准备训练样本集，目前以关系型数据为主。</li>
+<li>第二步，通过无监督学习，根据数据内容对相似特征的数据进行自动聚类。</li>
+<li>第三步，接下来数据工程师可以介入了，对聚类后的数据进行批量标注，标注后的数据就能进行有监督的学习了，构建生成数据分类分级的标签推荐模型。</li>
+<li>第四步，将分类分级标签推荐模型部署在生产环境中，扫描出生产数据作为模型输入，最终输出分类分级标签的推荐信息。</li>
+</ul>
+<p>这是半监督学习的一个应用实例，这个过程本质就是通过机器学习把数据分类分级工作中的人工消耗尽可能降低，并提升分类分级标签标注的准确性。</p>
+<h3 id="强化学习（Reinforcement-Learning）"><a href="#强化学习（Reinforcement-Learning）" class="headerlink" title="强化学习（Reinforcement Learning）"></a>强化学习（Reinforcement Learning）</h3><p>强化学习，特别是基于人类反馈的强化学习 （RLHF, Reinforcement Learning from Human Feedback），是一种更复杂、更综合的训练方法，它强调让模型与外界不断进行交互和反馈，通过某种预设的奖励信号（尤其是人类对预测结果的优劣评判），来诱导训练的方向，优化模型的预测和决策效果。强化学习经常用于博弈类游戏（如AlphaGo），无人驾驶、机器翻译、聊天机器人等场景。</p>
+<p>2022年，OpenAI 发表了一篇论文 - 《Training language models to follow instructions with human feedback (结合人类反馈信息来训练语言模型使其能理解指令）》，专门阐述了 RLHF 对 GPT 模型训练的价值。在此之前，传统的语言模型通常只能生成符合语法规则的句子，但内容未必非常符合用户的意图、价值观或表达习惯，说白了就是“不像人话”。为了解决这个问题，于是便引入一种基于人类的反馈来微调语言模型的方法，以更好地遵循用户的意图、指令、偏好、价值观，生成更准确、更有逻辑和连贯性、更具可读性的输出。ChatGPT 所带来的惊人效果，更似人类的表现，使得 RLHF 引起了业界的广泛关注。</p>
+<p>以上四种训练方式的基本思路，汇总如下图所示：</p>
+<center>
+    <img src="/img/SecGPT1/FvbVFMHCor-irGHd6OJSnW-SKval.png" width="850">
+</center>
+
+<h2 id="学习算法维度"><a href="#学习算法维度" class="headerlink" title="学习算法维度"></a>学习算法维度</h2><p>计算机算法指的是一系列明确定义的和可计算的步骤，用于解决特定的问题或执行特定的任务。那么，机器学习算法就是从数据中学习和构建出一种规律和模式，来实现分类、聚类、回归等各式各样的目标任务。机器学习的算法非常丰富，常见如线性回归、逻辑回归、决策树、K-means聚类、支持向量机（SVM）、卷积神经网络（CNN）、循环神经网络（RNN）、朴素贝叶斯等。选择何种算法，需要根据具体的问题类型、数据类型、数据量级、计算资源等因素进行选择。使用不合适的算法，可能难以取得理想的效果。</p>
+<p>那么，在实际应用中如何选择不同的学习算法呢？一般可以参考几个方面，但一定不要绝对地来看：</p>
+<ul>
+<li>问题类型：比如分类问题，往往可以选择辑回归、决策树、K-means 等算法；如果是回归类问题，线性回归就是常用的算法。</li>
+<li>数据类型：比如数据是图像，可以选择 CNN；如果数据是序列致据，则可以选择 RNN 或 LSTM。</li>
+<li>数据量：一般来说，比如随机森林、线性回归这样的算法就比较适合大数据量的处理，而支持向量机、K-means 这样的算法则更适合小数据样本。</li>
+<li>计算资源：一般来说，复杂的算法需要更多的计算资源，例如使用了神经网络结构的算法；简单的算法需要的计算资源较少，例如线性回归或逻辑回归。</li>
+<li>训练时间：有些算法的训练时间很长，例如神经网络；有些算法的训练时间较短，例如线性回归。这有时候会影响我们对算法的选择。</li>
+<li>模型解释性：有时候需要一个可以解释的模型，以便可以更容易地理解模型的决策过程，在这种情况下，我们可能会选择决策树或线性回归等可以提供解释的算法。</li>
+</ul>
+<h2 id="模型原理维度"><a href="#模型原理维度" class="headerlink" title="模型原理维度"></a>模型原理维度</h2><p>这个维度指的是根据几何学、逻辑学、统计学、概率论、网络结构等不同的学术原理设计出不同的模型。</p>
+<ul>
+<li>几何模型：基于几何学原理的模型，可以用于描述和分析空间中的物体或现象之间的关系。比如线性回归模型可以用于预测两个变量之间的关系，基于几何距离的聚类算法可以用于图像分割和目标识别等。</li>
+<li>逻辑模型：基于逻辑学原理的模型，可以用于描述和分析事件之间的逻辑关系（比如“因为……所以……”就是一种典型的因果逻辑）。逻辑模型可以用于知识表示、推理和决策等领域。比如布尔逻辑模型（二分类、多分类、决策树）常常用于分类问题。</li>
+<li>概率模型：基于概率论原理的模型，可以用于描述和分析随机事件之间的概率关系。概率模型可以用于概率推理、贝叶斯统计、自然语言处理等领域。比如贝叶斯网络可以用于分类和回归问题，而马尔可夫链可以用于自然语言处理中的语言模型和机器翻译等。</li>
+<li>网络模型：基于网络结构的模型，可以用于描述和分析复杂系统中的相互作用和关系。比如社交网络分析中的图模型可以用于分析用户之间的联系和影响，知识图谱中的图模型可以用于表示实体之间的关系和语义信息等，神经网络或深度神经网络则广泛应用于自然语言处理、图形处理、语音处理等领域中。</li>
+</ul>
+<p>我们对上述划分方式有一个大致的了解即可。这里单独说说网络模型中的神经网络结构，当下已经广泛使用的 CNN、LSTM、RNN，以及大模型时代的 Transformer，都属于神经网络结构。神经网络 （Neural Networks，NN）通过对人类大脑神经元网络的模拟实现对信息的处理。神经网络由大量的节点（也称为神经元）相互连接而成，节点接收输入井被激活来输出信号，而节点与节点之间的连接则实现了信息的传递。</p>
+<p>最简单的神经网络是感知机，它是一个有着若干输入和一个输出的模型，如下图所示：</p>
+<center>
+    <img src="/img/SecGPT1/Fqj5gfg3iFz_5vQOkZZvruCw9vj0.png" width="850">
+</center>
+
+<p>首先，输入和输出之间是一种线性关系，线性函数形式为：</p>
+<center>
+    <img src="/img/SecGPT1/Fnfz9PKbw2bwTXLFEN-QNo80Gzxr.png" width="850">
+</center>
+
+<p>然后，输出结果再经过一个神经元激活函数，最终得到1或-1两个结果，激活函致形式为：</p>
+<center>
+    <img src="/img/SecGPT1/FhMupWTrp9lVfd8JswUEuCdNW5UO.png" width="850">
+</center>
+
+<p>但这个模型只能用于“非此即彼”的二元分类，无法用于复杂的非线性处理。于是在感知机模型的基础上扩展形成更复杂的神经网络，主要做了几件事：</p>
+<ol>
+<li>在输入层和输出层之间增加一个隐藏层，对输入数据进行非线性变换，模型的学习能力和知识实际上就体现在隐藏层中。</li>
+<li>输出层不止一个神经元，可以有多个输出，让模型可以更灵活应用在分类、聚类、回归、降维等多种任务。</li>
+<li>优化了激活函数，比如使用逻辑回归常用的 Sigmoid 函数替代简单但处理能力有限的Sign函数。然而，除了Sigmoid，还可以使用 Softmax、ReLU、tanh （x）函数等作为神经元激活函数。</li>
+</ol>
+<p>于是，神经网络就从简单的感知机变成下面这个更复杂的结构：</p>
+<center>
+    <img src="/img/SecGPT1/FnJZOOj2vEUGseNSZ402Igrm5262.png" width="850">
+</center>
+
+<p>为了进一步优化神经网络的能力，又出现了更复杂的深度神经网络结构（Deep Neural Networks，DNN），可以理解为拥有很多隐藏层的神经网络。DNN 中一般第一层为输入层，最后一层为输出层，中间都是隐藏层，如下图所示：</p>
+<center>
+    <img src="/img/SecGPT1/Fgck0Lj1DnE7mSKddokykwJFOQ3_.png" width="850">
+</center>
+
+<p>如果该神经网络中第 i 层的任意一个神经元节点，都与第 i+1 层的任意一个神经元节点相连接，这被称为全连接神经网络。虽然它看起来很复杂，但局部其实都是一个个的感知机，均由一个线性函数加上一个激活函数构成。一般情况下，深度神经网络的隐藏层越多，它能够学习和表示的复杂模式就越多，但所消耗的资源也越大。神经元之间的连接传递的信息就是权重 wi，神经网络可以通过训练对权重进行调节，换句话说，模型训练的核心工作就是调节权重。权重对是神经网络至关重要，模型的知识就蕴含在这些权重之中。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2024/10/08/SecGPT1/">https://coldwave96.github.io/2024/10/08/SecGPT1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NLP/">NLP</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2025/10/28/ASGF/"><i class="fa fa-chevron-left">  </i><span>智能体安全治理实战框架</span></a></div><div class="next-post pull-right"><a href="/2024/03/31/SecLLM/"><span>Framework of building SecLLM</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

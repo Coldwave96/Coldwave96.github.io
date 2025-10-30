@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Large Language Model (LLM) 漫谈"><meta name="keywords" content="NLP"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Large Language Model (LLM) 漫谈 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">发展背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-number">3.</span> <span class="toc-text">关键技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">发展历程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9E%82%E7%9B%B4%E9%A2%86%E5%9F%9F"><span class="toc-number">5.</span> <span class="toc-text">垂直领域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%B5%81%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">构建流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">6.1.</span> <span class="toc-text">基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B"><span class="toc-number">6.2.</span> <span class="toc-text">训练流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E8%AE%BE%E6%96%B9%E6%A1%88"><span class="toc-number">7.</span> <span class="toc-text">建设方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E5%A4%8D%E7%8E%B0"><span class="toc-number">7.1.</span> <span class="toc-text">二次复现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E5%BE%AE%E8%B0%83"><span class="toc-number">7.2.</span> <span class="toc-text">权重微调</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E8%BF%9B%E5%B1%95"><span class="toc-number">8.</span> <span class="toc-text">研究进展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%8E%A8%E8%BF%9B"><span class="toc-number">8.1.</span> <span class="toc-text">项目推进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-number">8.2.</span> <span class="toc-text">发展方向</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Large Language Model (LLM) 漫谈</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-06-28</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/AI/">AI</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">2.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 7 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自从 ChatGPT 上线以来，LLM (Large Language Model) 的热潮席卷了各行各业。Meta 开源的 LLaMA 模型给头部玩家进入这一领域提供了导航，Standford Alpaca 和 Microsoft LoRA 给小玩家们提供了低成本的玩法，总之只要想玩，人人可上手（PS. 老黄真的是秦始皇吃花椒 - 赢麻了，前有矿潮，后有AI，臭打游戏的能有几个钱，无足挂齿）。LLM 从刚开始的通用模型，到现在各个行业都在考虑垂直领域中的应用，网络安全领域当然也不例外。</p>
+<span id="more"></span>
+<h2 id="发展背景"><a href="#发展背景" class="headerlink" title="发展背景"></a>发展背景</h2><p>LLM 的崛起主要取决于3方面的因素：数据，算力，算法。</p>
+<p>首先是数据方面，在信息爆炸的年代，加上元宇宙， WEB3 等概念的加持，数据上云，全民共享成为了时代的主流。在线社交网络，万物互联的物联网，移动互联网都为 LLM 提供了丰富的语料数据，Github 等代码托管平台提供了丰富的高质量代码数据……</p>
+<p>然后是算力方面，归功于半导体行业的产业迭代带来的硬件支持，以及 NVIDIA 开启的 GPU 加速时代，老黄不遗余力发展的 CUDA，cuDNN 等配套软件支持。TensorFlow，Pytorch 为代表的 AI 框架降低了这一领域的门槛，同时也拉高了上限，以及 DeepSpeed 等并行计算框架带来的算力的成倍增长。</p>
+<p>最后是算法方面，深度学习算法的迭代更新速度飞快，以 Transformer 为代表的算法框架逐渐突破了原来对深度网络结构的限制。</p>
+<p>总之，现在的 LLM 崛起是量变引起质变的过程。</p>
+<h2 id="关键技术"><a href="#关键技术" class="headerlink" title="关键技术"></a>关键技术</h2><p>2017年由 Google 团队提出的 Transformer 模型，是目前所有大语言模型的基础架构。</p>
+<p>Attention is All You Need：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a></p>
+<center>
+    <img src="/img/LLM/LLM1.png" width="850">
+</center>
+
+<p>图中最右边的结构是论文中 Transformer 的内部结构图，左侧为 Encoder block，右侧为 Decoder block，Encoder 和 Decoder 都包含 6 个 block。红色圈中的部分为 Multi-Head Attention，是由多个 Self-Attention组成的，可以看到 Encoder block 包含一个 Multi-Head Attention，而 Decoder block 包含两个 Multi-Head Attention (其中有一个用到 Masked)。Multi-Head Attention 上方还包括一个 Add &amp; Norm 层，Add 表示残差连接 (Residual Connection) 用于防止网络退化，Norm 表示 Layer Normalization，用于对每一层的激活值进行归一化。</p>
+<p>图中最左边是 Self-Attention 的结构，在计算的时候需要用到矩阵Q(查询),K(键值),V(值)。在实际中，Self-Attention 接收的是输入(单词的表示向量x组成的矩阵X) 或者上一个 Encoder block 的输出。而Q,K,V正是通过 Self-Attention 的输入进行线性变换得到的。</p>
+<p>图中左二 Multi-Head Attention 是由多个 Self-Attention 组合形成。</p>
+<p>关于 Transformer 的更多细节介绍参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/338817680">这里</a>。</p>
+<center>
+    <img src="/img/LLM/LLM2.png" width="850">
+</center>
+
+<p>GPT 和 BERT都是基于 Transformer 的与训练语言模型，都是通过“预训练+微调”的模式完成下游任务的搭建。GPT是单向模型，只利用上文信息推断下文，而BERT是双向模型。GPT 基于自回归模型，可完成 NLU（Natural Language Understanding）和 NLG（Natural Language Generation）任务。原生 BERT 基于自编码模型，无法直接应用于文本生成任务。</p>
+<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><center>
+    <img src="/img/LLM/LLM3.png" width="850">
+</center>
+ 
+<p>LLM 的发展经历了多年的积累，从单纯的 NLP 任务转变成为现在的多模态模型，也引申出了 Prompt 工程的概念，涉及到 AI Ethics 的内容也逐渐被重视。随着大语言模型的逐渐开源化和社区化，未来一定是越来越好的。</p>
+<h2 id="垂直领域"><a href="#垂直领域" class="headerlink" title="垂直领域"></a>垂直领域</h2><p>LLM 带来的变革深入各个产业，于是垂直领域的 LLM 越来越成为焦点。但是这里面临的主要问题是数据源，各个垂直领域有关数据的开放程度不尽相同。以网络安全领域为例，各家的安全数据不仅不可能共享，甚至公司内部也权限森明，导致了安全领域的 LLM 必然面临着数据源不充足的问题。</p>
+<p>与此同时，LLM 对安全领域带来的冲击也是巨大的。</p>
+<p>对于攻击方来说，攻击手段更为普及，高级攻击手段的门槛降低。通过 LLM 可以快速生成各种各样的高级混淆手段，定向的钓鱼邮件，钓鱼页面也可以通过 LLM 快速定制。攻击方的攻击速度也大大提升，绕过手法可以快速迭代，漏洞利用代码也能快速开发，1 Day 可能真的就是物理意义上的“1 Day”。</p>
+<p>然而与之相对的防守方，LLM 加剧了与攻击方人员的能力、知识、技术的不对等，无法面对高级攻击常态化的趋势。防守方传统的防守手段高度依赖高水平的安全人员，然而现状却是安全人员的长期缺乏。同时防守方的自动化能力不足，迫切的需要机器对抗机器的手段。</p>
+<h2 id="构建流程"><a href="#构建流程" class="headerlink" title="构建流程"></a>构建流程</h2><h3 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h3><p>想要构建一个大语言模型，首先第一步是要预训练出一个初步的 NLP 模型，目的是通过给定的 Token， 能够预测下一个 Token。</p>
+<center>
+    <img src="/img/LLM/LLM4.png" width="850">
+</center>
+
+<p>具体方式通过计算模型预测的下一个单词与真实的下一个单词之间的误差，通过算法获取降低误差的梯度，传播梯度更新模型参数。</p>
+<center>
+    <img src="/img/LLM/LLM5.png" width="850">
+    <img src="/img/LLM/LLM6.png" width="850">
+</center>
+
+<p>第二步是微调 Fine-Tune， 收集特定领域的数据，由该领域额专家对这些数据进行精心标注，通过上一步类似的训练手段，进一步更新模型的参数权重。</p>
+<center>
+    <img src="/img/LLM/LLM7-1.png" width="850">
+    <img src="/img/LLM/LLM7-2.png" width="850">
+</center>
+
+<p>微调完成之后的模型就已经有了不错的变表现，可以部署推理了。输入一个句子，预测每个单词出现的频率，将频率最大的作为输出，循环往复，直到遇到终止符。</p>
+<center>
+    <img src="/img/LLM/LLM8.png" width="850">
+</center>
+
+<h3 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h3><p>一个完整 LLM 构建流程其实包含4步，除了前面说的预训练和微调之后，还需要通过奖励模型以及强化学习的手段进一步加强模型的能力。</p>
+<center>
+    <img src="/img/LLM/LLM9.png" width="850">
+</center>
+
+<h2 id="建设方案"><a href="#建设方案" class="headerlink" title="建设方案"></a>建设方案</h2><h3 id="二次复现"><a href="#二次复现" class="headerlink" title="二次复现"></a>二次复现</h3><p> Meta 放出的 LLaMA 模型基本做到了全开源，根据<a target="_blank" rel="noopener" href="http://arxiv.org/abs/2302.13971">论文</a>中的信息，LLaMA 的全部数据源均可获取，训练模型的超参数也基本公布，在模型结构上做的调整也详细列出，这就意味着 LLaMA 的结果完全可以复刻。</p>
+<center>
+    <img src="/img/LLM/LLM10.png" width="850">
+    <img src="/img/LLM/LLM11.png" width="850">
+    <img src="/img/LLM/LLM12.png" width="850">
+</center>
+
+<h3 id="权重微调"><a href="#权重微调" class="headerlink" title="权重微调"></a>权重微调</h3><p>对于财力和实力不够的玩家来说，微调是另一个可行的建设方案，无论是基于 LLaMA 还是 THUDM&#x2F;GLM 模型的微调都能够在垂直领域有一定的效果。但是考虑到数据、基础语料以及模型权重的 License 等问题，想要有非常好的效果也是不现实的。</p>
+<p>微调的方式目前有很多，比如 <a target="_blank" rel="noopener" href="https://github.com/tatsu-lab/stanford_alpaca">Stanford Alpaca</a>、<a target="_blank" rel="noopener" href="https://github.com/tloen/alpaca-lora">LoRA</a>、<a target="_blank" rel="noopener" href="https://github.com/THUDM/P-tuning-v2">P-Tuning v2</a> 等。</p>
+<center>
+    <img src="/img/LLM/LLM13.png" width="850">
+    <img src="/img/LLM/LLM14.png" width="850">
+</center>
+
+<h2 id="研究进展"><a href="#研究进展" class="headerlink" title="研究进展"></a>研究进展</h2><h3 id="项目推进"><a href="#项目推进" class="headerlink" title="项目推进"></a>项目推进</h3><p>目前在推进的是 LLM 在安全领域的应用，覆盖两种建设方案。在权重微调方面，基于 LLaMA 模型，结合蜜罐数据，尝试将大语言模型作为蜜罐后台，模拟服务端的返回。此外也在尝试通过安全专家标注的网络攻击数据，训练 LLM 对网络攻击的检测能力，并提供判断思路。</p>
+<p>由于目前开放的大模型都涉及到 License 问题，研究学习当然没问题，一旦从产品的角度考虑商用，就会收到权重的限制。所以需要重新进行预训练，调整模型的全部权重，其实也就是在做复现 LLaMA 的工作。</p>
+<p>LangChain + LLM 的思路也很值得尝试。通过 LangChain 将本地的大量的威胁情报和 LLM 结合，制作本地知识库也是目前推动的方向。</p>
+<h3 id="发展方向"><a href="#发展方向" class="headerlink" title="发展方向"></a>发展方向</h3><p>除了 Prompt 工程以外，培养模型的链式思维（Chain of Thoughts）也是热门方向。链式思维主要是培养模型的 Zero-Shot 能力，对于安全领域来说，这一方向的意义在于希望 LLM 能够在无样本的情况下检测 0 Day 攻击。</p>
+<center>
+    <img src="/img/LLM/LLM15.png" width="850">
+</center>
+
+<p>安全领域的 LLM 整体解决方案目前看来有两种。一种是将 LLM 作为分析中台，所有的数据通过 LLM 进行分析，通过其开放的 API 接口获取结果。另一种是将 LLM 作为调度中台以及人机交互接口，所有的安全数据由 LLM 调度分发，通过更简单快捷的小模型及其他分析引擎处理分析，分析结果整合成为一个统一的数据格式交由 LLM 与用户沟通，用更简单通俗的自然语言充当一个安全专家的形象。</p>
+<p>虽然目前 LLM 还有很多问题，但是起码让我们看到了它的潜力，希望这是黎明前的那道曙光，身前一片坦途。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2023/06/28/LLM/">https://coldwave96.github.io/2023/06/28/LLM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/NLP/">NLP</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2023/10/19/IntelligenceDefence/"><i class="fa fa-chevron-left">  </i><span>智能防线：AI 驱动的网络空间防御体系</span></a></div><div class="next-post pull-right"><a href="/2023/03/28/LLaMA/"><span>LLaMA - Open and Efficient Foundation Language Models</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

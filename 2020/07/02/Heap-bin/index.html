@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="关于堆的bin结构的理解"><meta name="keywords" content="PWN,Heap"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>关于堆的bin结构的理解 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fast-bin"><span class="toc-number">2.</span> <span class="toc-text">fast bin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#small-bin"><span class="toc-number">3.</span> <span class="toc-text">small bin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#large-bin"><span class="toc-number">4.</span> <span class="toc-text">large bin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsorted-bin"><span class="toc-number">5.</span> <span class="toc-text">unsorted bin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PS"><span class="toc-number">6.</span> <span class="toc-text">PS</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">关于堆的bin结构的理解</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-02</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">859</span><span class="post-meta__separator">|</span><span>阅读时长: 2 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>用户申请堆空间是通过malloc函数实现的，而malloc在内核中对应的是ptmalloc。ptmalloc像是内核和用户的中间商，中间商向卖家（操作系统内核）要大量的货物（大块内存空间），然后分配给买家（用户程序）。同样的，当用户释放chunk的时候，也不是直接归还给系统，而是被ptmalloc所管理。当用户在一次请求内存空间的时候，ptmalloc会在空闲的chunk中选择合适大小的分配给用户。这种机制的好处在于可以避免频繁的系统效用，降低内存分配的开销，提高效率。</p>
+<p>而ptmalloc正是通过bin结构来管理空闲堆块。它会根据空闲chunk的大小及使用状态将chunk分为4类：fast bin，small bin，large bin和unsorted bin。</p>
+<span id="more"></span>
+
+<h2 id="fast-bin"><a href="#fast-bin" class="headerlink" title="fast bin"></a>fast bin</h2><p>对于size较小的chunk，释放之后单独处理，被放入fast bin中。</p>
+<ul>
+<li><p>32位系统，fast bin中的chunk大小范围在16字节到64字节；</p>
+</li>
+<li><p>64位系统，fast bin中的chunk大小范围在32字节到128字节。</p>
+</li>
+</ul>
+<p>fast bin链表采用单向链表进行连接，并且每个bin采取了LIFO策略，最近释放的chunk会被更早地分配。所以当用户申请的chunk大小在fast bin范围内时，ptmalloc会首先判断fast bin中是否有对应大小的空闲chunk，有的话就会直接分配出去。</p>
+<p>fast bin范围内chunk的inuse标志位始终被置为1，即它们不会和其他被释放的chunk合并，也就不会触发Unlink操作。</p>
+<p>fastbin链表最末端的块fd域为0，此后每个块的fd域指向前一个块。因此通过fastbin只能泄漏heap的基地址。</p>
+<h2 id="small-bin"><a href="#small-bin" class="headerlink" title="small bin"></a>small bin</h2><p>small bin中chunk大小范围的序号index从2到63，总共62个循环双向链表。</p>
+<p>每个chunk的size大小用一个关系式表达是：<code>chunk_size = 2 * SIZE_SZ（4 or 8）* index</code></p>
+<p>从关系式可以看出每个链表中的chunk大小是一样的，这也是堆中堆表的数据结构。并且可以发现small bin中的chunk_size与fast bin有重复，这仅是大小重复，而不是chunk重复。fast bin中的chunk也有可能被放到small bin中去。</p>
+<p>此外small bin中每个bin对应的链表采用FIFO策略，所以同一个链表中先被释放的chunk会被先分配。</p>
+<p>通过smallbin可以获得：</p>
+<ul>
+<li><p>1.libc.so的基地址；</p>
+</li>
+<li><p>2.heap基地址。</p>
+</li>
+</ul>
+<h2 id="large-bin"><a href="#large-bin" class="headerlink" title="large bin"></a>large bin</h2><p>large bin也是遵循FIFO策略的循环双向链表，一共有63个bin，每个bin中的chunk大小不一致，但处于一定区间范围内。32位系统中chunk_size &gt;&#x3D; 512字节。</p>
+<h2 id="unsorted-bin"><a href="#unsorted-bin" class="headerlink" title="unsorted bin"></a>unsorted bin</h2><p>unsorted bin可以看作空闲chunk回归其所属bin之前的缓冲区，该bin只有一个遵循FIFO策略的循环双向链表，且其中的free chunk处于乱序状态。unsorted bin暂时存储free后的chunk，一段时间后会将chunk放入对应的bin中去。</p>
+<p>通过unsorted bin我们可以获取到某个堆块的地址和main_areana的地址。一旦获取到某个堆块的地址就可以通过malloc的size进行计算从而获得堆基地址。一旦获取到main_arena的地址，因为main_arena存在于libc.so中就可以计算偏移得出libc.so的基地址。</p>
+<p>因此，通过unsorted bin可以获得：</p>
+<ul>
+<li><p>1.libc.so的基地址；</p>
+</li>
+<li><p>2.heap基地址。</p>
+</li>
+</ul>
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>可以实现泄露的漏洞：</p>
+<ul>
+<li><p>堆内存未初始化</p>
+</li>
+<li><p>堆溢出</p>
+</li>
+<li><p>Use-After-Free</p>
+</li>
+<li><p>越界读</p>
+</li>
+<li><p>heap extend</p>
+</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/07/02/Heap-bin/">https://coldwave96.github.io/2020/07/02/Heap-bin/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Heap/">Heap</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/07/HeapOverflow/"><i class="fa fa-chevron-left">  </i><span>堆溢出漏洞小结</span></a></div><div class="next-post pull-right"><a href="/2020/07/01/Unlink/"><span>Unlink原理和简单利用</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

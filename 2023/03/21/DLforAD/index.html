@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Deep Learning for Anomaly Detection - A Review"><meta name="keywords" content="Anomaly Detection,Deep Learning"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>Deep Learning for Anomaly Detection - A Review | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Info"><span class="toc-number">1.</span> <span class="toc-text">Info</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intro"><span class="toc-number">2.</span> <span class="toc-text">Intro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Contributions"><span class="toc-number">3.</span> <span class="toc-text">Contributions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Paragraph"><span class="toc-number">4.</span> <span class="toc-text">Paragraph</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Comments"><span class="toc-number">5.</span> <span class="toc-text">Comments</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">6.</span> <span class="toc-text">References</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Related-Materials"><span class="toc-number">7.</span> <span class="toc-text">Related Materials</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Deep Learning for Anomaly Detection - A Review</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-03-21</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Essay/">Essay</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Essay/Notes/">Notes</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 4 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="Info"><a href="#Info" class="headerlink" title="Info"></a>Info</h2><ul>
+<li>名称：Deep Learning for Anomaly Detection: A Review</li>
+<li>作者：<ul>
+<li>GUANSONG PANG, University of Adelaide</li>
+<li>CHUNHUA SHEN, University of Adelaide</li>
+<li>LONGBING CAO, University of Technology Sydney</li>
+<li>ANTON VAN DEN HENGEL, University of Adelaide</li>
+</ul>
+</li>
+<li>原文链接：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2007.02500">arxiv</a></li>
+</ul>
+<span id="more"></span>
+
+<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><ul>
+<li>异常检测（Anomaly &#x2F; Outlier &#x2F; Novelty detection）在过去的几十年里都是热门研究话题，但是仍然存在许多复杂的问题和挑战需要更进一步的研究。</li>
+<li>这篇论文主要介绍了基于深度学习的异常检测技术，涵盖了3大类，11个小类的理论方法。</li>
+</ul>
+<h2 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h2><ol>
+<li>问题本质和挑战。作者提到了异常检测中遇到的特殊问题的复杂度以及由此造成的许多未解决的挑战。</li>
+<li>问题分类和总结。本文将现有的深度学习异常检测方法归总为3中理论框架：深度学习普遍特征提取，正常样本的表示，端到端异常分数学习。所有的方法从11个不同的建模层面进行的分类。</li>
+<li>深度解析其他的论文研究内容。</li>
+<li>未来的机遇与挑战。</li>
+<li>源代码及数据集。</li>
+</ol>
+<h2 id="Paragraph"><a href="#Paragraph" class="headerlink" title="Paragraph"></a>Paragraph</h2><ul>
+<li><p>由于异常检测问题本身的特质导致的复杂性：</p>
+<ul>
+<li>未知性</li>
+<li>异常与异常之间就有着不同的特征</li>
+<li>异常样本数量极少导致的黑白样本比例极不均衡</li>
+<li>异常类型的多种多样<ul>
+<li>点异常</li>
+<li>条件异常</li>
+<li>组异常</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>深度学习异常检测面临的挑战</p>
+<ul>
+<li>CH1：低recall rate（样本中的正例多少被预测正确， TP&#x2F;TP+FN）</li>
+<li>CH2：面对高维数据或者相互不独立数据表现一般，如何降维以及降维后如何保证原有信息完整也是挑战</li>
+<li>CH3：由于数据量的有限，如何提高数据使用的有效性。监督学习需要大量的有标签数据，非监督学习依赖于对于异常分布的正确假设，半监督学习是一种解决方向。另一种解决方向是<code>weakly-supervised anomaly detection</code></li>
+<li>CH4：许多弱监督&#x2F;半监督算法抗噪能力不好</li>
+<li>CH5：现有很多异常检测算法均针对点异常，面对上下文异常及组异常效果不好</li>
+<li>CH6：模型可解释性不强，面对某些争议难以合理解释<center>
+  <img src="/img/DLforAD/1.png" width="800">
+</center></li>
+</ul>
+</li>
+<li><p>深度学习异常检测方法分类</p>
+<center>
+  <img src="/img/DLforAD/2.png" width="850">
+</center>
+</li>
+<li><p>深度学习特征提取</p>
+<ul>
+<li>直接运用流行的深度学习模型AlexNet【1】，VGG【2】，ResNet【4】等提取低维度特征</li>
+<li>训练深度学习特征提取模型进行异常分数评估</li>
+</ul>
+</li>
+<li><p>正常样本表示</p>
+<ul>
+<li>通用正常特征学习，优化通用样本数据特征表示方法<ul>
+<li>Autoencoder（AE）</li>
+<li>GAN-based 异常检测</li>
+<li>基于预测模型的特征学习方法，用之前的数据实例预测现在的数据实例</li>
+<li>自监督学习</li>
+</ul>
+</li>
+<li>针对存在的已知异常特殊优化的异常评估模型<ul>
+<li>基于距离的评估手段</li>
+<li>针对单类型的异常分类器</li>
+<li>基于聚类的评估手段</li>
+</ul>
+</li>
+<li>端到端异常评分学习 - 不仅仅局限于已知异常，着重于基于深度神经网络直接学习评估异常分数<ul>
+<li>排名模型<ul>
+<li>设计基于逻辑回归损失函数的异常评分模型【5】</li>
+<li>先验模型：已知数据集的分布特性</li>
+</ul>
+</li>
+<li>概率模型 - 通过最大化在训练集中事件的可能性来学习异常评分</li>
+<li>端到端单种类分类器<ul>
+<li>对抗学习单种类分类器（adversarially learned one-class classification，ALOCC）【6】</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Comments"><a href="#Comments" class="headerlink" title="Comments"></a>Comments</h2><ol>
+<li>异常检测方法根据检测环境的不同有比较大的差距。理想情况下需要先了解实际环境中的异常种类、分布等信息，然后对症下药，选择合适的特征工程以及检测算法。但是大多数情况下均不满足这些条件，给检测工作带来许多难题，最终导致模型检测结果不尽如人意。</li>
+<li>深度学习可以针对性的解决部分异常检测面临的挑战，但是也需要针对具体问题灵活选择合适算法。</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#3e5880a9bd784529ad5022b751a168ba">Alex Krizhevsky, Ilya Sutskever, and Geoffrey E Hinton. 2012. Imagenet classification with deep convolutional neural networks.</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#a854d669d0e74fcf9241cdbab8d2ba3f">Karen Simonyan and Andrew Zisserman. 2015. Very deep convolutional networks for large-scale image recognition. In ICLR.</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#c42b25debe154c99ac44769a22218463">Radu Tudor Ionescu, Sorina Smeureanu, Bogdan Alexe, and Marius Popescu. 2017. Unmasking the abnormal events in video. In ICCV. 2895–2903.</a></li>
+<li><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html">Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016. Deep residual learning for image recognition. In CVPR. 770–778.</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#b46593aa01974e8aa73a0f89fba37aca">Guansong Pang, Cheng Yan, Chunhua Shen, Anton van den Hengel, and Xiao Bai. 2020. Self-trained Deep Ordinal Regression for End-to-End Video Anomaly Detection. In CVPR. 12173–12182.</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#9075f53359e1410bbd44f59325c117de">Mohammad Sabokrou, Mohammad Khalooei, Mahmood Fathy, and Ehsan Adeli. 2018. Adversarially learned one-class classifier for novelty detection. In CVPR. 3379–3388.</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.notion.so/Deep-Learning-for-Anomaly-Detection-A-Review-27ba856b85f147f1b3cb114a93848f63?pvs=4#78435f94252346e1b2e1295acb851f75">Guansong Pang, Chunhua Shen, Huidong Jin, and Anton van den Hengel. 2019. Deep Weakly-supervised Anomaly Detection. arXiv preprint:1910.13601 (2019).</a></li>
+</ol>
+<h2 id="Related-Materials"><a href="#Related-Materials" class="headerlink" title="Related Materials"></a>Related Materials</h2><ul>
+<li>算法列表<center>
+  <img src="/img/DLforAD/3.png" width="850">
+</center>
+<center>
+  <img src="/img/DLforAD/4.png" width="850">
+</center></li>
+<li><a target="_blank" rel="noopener" href="https://git.io/JTs93">数据集列表</a><center>
+  <img src="/img/DLforAD/5.png" width="850">
+</center></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2023/03/21/DLforAD/">https://coldwave96.github.io/2023/03/21/DLforAD/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Anomaly-Detection/">Anomaly Detection</a><a class="post-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2023/03/23/URLNet/"><i class="fa fa-chevron-left">  </i><span>URLNet - Learning a URL Representation with Deep Learning for Malicious URL Detection</span></a></div><div class="next-post pull-right"><a href="/2023/03/21/GLM/"><span>GLM - General Language Model Pre-training with Autoregressive Blank Infilling</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

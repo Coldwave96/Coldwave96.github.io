@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="堆溢出漏洞小结"><meta name="keywords" content="PWN,Heap"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>堆溢出漏洞小结 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF1%EF%BC%9AOff-By-One"><span class="toc-number">2.</span> <span class="toc-text">姿势1：Off By One</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF2%EF%BC%9AUnsorted-Bin-Attack"><span class="toc-number">3.</span> <span class="toc-text">姿势2：Unsorted Bin Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF3%EF%BC%9AUse-After-Free"><span class="toc-number">4.</span> <span class="toc-text">姿势3：Use After Free</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF4%EF%BC%9AChunk-Extend-and-Overlapping"><span class="toc-number">5.</span> <span class="toc-text">姿势4：Chunk Extend and Overlapping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF5%EF%BC%9AFastbin-Attack"><span class="toc-number">6.</span> <span class="toc-text">姿势5：Fastbin Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Fastbin-Double-Free"><span class="toc-number">6.1.</span> <span class="toc-text">Fastbin Double Free</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-Spirit"><span class="toc-number">6.2.</span> <span class="toc-text">House of Spirit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Alloc-to-Stack"><span class="toc-number">6.3.</span> <span class="toc-text">Alloc to Stack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Arbitrary-Alloc"><span class="toc-number">6.4.</span> <span class="toc-text">Arbitrary Alloc</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">堆溢出漏洞小结</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/">Theories</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Theories/Assembler/">Assembler</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.1k</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>总结一些堆溢出漏洞利用姿势。</p>
+<span id="more"></span>
+
+<h2 id="姿势1：Off-By-One"><a href="#姿势1：Off-By-One" class="headerlink" title="姿势1：Off By One"></a>姿势1：Off By One</h2><p>Off By One指程序向缓冲区中写入时，写入的字节数超过程序申请的字节数并且只越界一个字节。</p>
+<p>出现这种漏洞主要有两个原因：</p>
+<ul>
+<li><p>边界验证不严，例如使用循环语句向堆块中写入数据时，循环次数设置错误导致多写入了一个字节；</p>
+</li>
+<li><p>字符串操作不合适，例如strlen函数计算字符串长度时是不考虑结束符’\x00’的，而strcpy复制字符串的时候会拷贝结束符’\x00’，函数使用不当会导致向堆中多写入一个字。</p>
+</li>
+</ul>
+<h2 id="姿势2：Unsorted-Bin-Attack"><a href="#姿势2：Unsorted-Bin-Attack" class="headerlink" title="姿势2：Unsorted Bin Attack"></a>姿势2：Unsorted Bin Attack</h2><p>Unsorted Bin Attack攻击实现的前提是控制Unsorted Bin Chunk的bk指针，利用该漏洞可以实现修改任意地址值为一个较大的数值。</p>
+<p>Unsorted Bin Attack攻击可以实现修改任意地址的值，但是所修改成的值却不受我们控制，唯一可以确定的是这个值比较大。</p>
+<p>通过这个漏洞我们可以实现：</p>
+<ul>
+<li><p>修改循环次数使得程序可以执行多次循环；</p>
+</li>
+<li><p>修改heap中的global_max_fast使得更大的chunk被视为fast bin，然后实现Fastbin Attack。</p>
+</li>
+</ul>
+<h2 id="姿势3：Use-After-Free"><a href="#姿势3：Use-After-Free" class="headerlink" title="姿势3：Use After Free"></a>姿势3：Use After Free</h2><p>Use After Free字面意思是当一个内存块被释放之后被再次使用，实际情况有：</p>
+<ul>
+<li><p>内存块被释放后，其对应的指针被设置为 NULL ， 然后再次使用，自然程序会崩溃。</p>
+</li>
+<li><p>内存块被释放后，其对应的指针没有被设置为 NULL ，然后在它下一次被使用之前，没有代码对这块内存块进行修改，那么程序很有可能可以正常运转。</p>
+</li>
+<li><p>内存块被释放后，其对应的指针没有被设置为NULL，但是在它下一次使用之前，有代码对这块内存进行了修改，那么当程序再次使用这块内存时，就很有可能会出现奇怪的问题。</p>
+</li>
+</ul>
+<p>Use After Free漏洞一般指后两种情况，被释放后没有被设置为NULL的内存指针一般被称为dangling pointer。</p>
+<h2 id="姿势4：Chunk-Extend-and-Overlapping"><a href="#姿势4：Chunk-Extend-and-Overlapping" class="headerlink" title="姿势4：Chunk Extend and Overlapping"></a>姿势4：Chunk Extend and Overlapping</h2><p>通过Chunk Extend实现Chunk Overlapping。实现Chunk Extend需要程序中存在基于堆的漏洞，利用之后可以实现控制chunk header中的数据。</p>
+<h2 id="姿势5：Fastbin-Attack"><a href="#姿势5：Fastbin-Attack" class="headerlink" title="姿势5：Fastbin Attack"></a>姿势5：Fastbin Attack</h2><p>Fastbin Attack是指基于fastbin机制的一类漏洞利用方法，这类漏洞的利用前提是：</p>
+<ul>
+<li><p>存在堆溢出、Use After Free等能控制chunk内容的漏洞；</p>
+</li>
+<li><p>漏洞发生于fastbin类型的chunk中。</p>
+</li>
+</ul>
+<p>细分可以分为：</p>
+<ul>
+<li><p>Fastbin Double Free</p>
+</li>
+<li><p>House of Spirit</p>
+</li>
+<li><p>Alloc to Stack</p>
+</li>
+<li><p>Arbitrary Alloc</p>
+</li>
+</ul>
+<p>前两种主要漏洞侧重于利用free函数释放真的chunk或伪造的chunk，然后再次申请chunk进行攻击，后两种侧重于故意修改fd指针，直接利用malloc申请指定位置chunk进行攻击。</p>
+<h3 id="Fastbin-Double-Free"><a href="#Fastbin-Double-Free" class="headerlink" title="Fastbin Double Free"></a>Fastbin Double Free</h3><p>Fastbin Double Free指fastbin中的chunk多次释放。根据fastbin的LIFO策略，多次分配的都是同一个堆块。这样相当于多个指针指向同一个堆块，结合该堆块的数据可以实现类型混淆的效果。</p>
+<p>Fastbin Double Free漏洞利用原理：</p>
+<ul>
+<li><p>fastbin的堆块被释放后next_chunk的pre_inuse位不会清空；</p>
+</li>
+<li><p>fastbin在free时仅验证main_arena直接指向的堆块，也即链表头部的堆块，而没有验证堆表后面的堆块。</p>
+</li>
+</ul>
+<p>当释放chunk1后，再释放chunk2，这时main_arena指向chunk2，所以可以再次释放chunk1。此时chunk1的fd仍旧指向chunk2且不会被清空，如果我们可以控制chunk1的数据，便可以写入fd指针实现指定任意地址分配fastbin堆块，这样就相当于实现了在任意地址写入任意值的效果。</p>
+<h3 id="House-of-Spirit"><a href="#House-of-Spirit" class="headerlink" title="House of Spirit"></a>House of Spirit</h3><p>House of Spirit是在目标位置处伪造fastbin chunk并将其释放，从而实现在指定地址处分配chunk。但是需要能够控制指定地址的内容，并在指定地址布局好fake chunk的结构且fake chunk需要满足堆的检验机制。</p>
+<h3 id="Alloc-to-Stack"><a href="#Alloc-to-Stack" class="headerlink" title="Alloc to Stack"></a>Alloc to Stack</h3><p>Alloc to Stack技术是劫持fastbin链表中chunk的fd指针，将该指针指向想要分配的栈上，从而实现控制栈中的关键数据，档案栈上需要存在有满足条件的size值。</p>
+<h3 id="Arbitrary-Alloc"><a href="#Arbitrary-Alloc" class="headerlink" title="Arbitrary Alloc"></a>Arbitrary Alloc</h3><p>Arbitrary Alloc技术和Alloc to Stack技术其实一样，只不过Arbitrary Alloc不再局限于栈中，只要任意的目标地址存在满足条件的size域即可。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2020/07/07/HeapOverflow/">https://coldwave96.github.io/2020/07/07/HeapOverflow/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/PWN/">PWN</a><a class="post-meta__tags" href="/tags/Heap/">Heap</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/09/Hacknote/"><i class="fa fa-chevron-left">  </i><span>pwnable.tw - hacknote の Write-Up</span></a></div><div class="next-post pull-right"><a href="/2020/07/02/Heap-bin/"><span>关于堆的bin结构的理解</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="古典密码对照"><meta name="keywords" content="Encrypt"><meta name="author" content="ColdSnap"><meta name="copyright" content="ColdSnap"><title>古典密码对照 | ColdSnap の Blog</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.8.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.8.2"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle = window.adsbygoogle || []).push({
+  google_ad_client: 'ca-pub-4826942730187324',
+  enable_page_level_ads: 'true'
+});
+</script><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  hexoVersion: '6.3.0'
+} </script><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="ColdSnap の Blog" type="application/atom+xml">
+</head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#QWE"><span class="toc-number">1.</span> <span class="toc-text">QWE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#atbash%EF%BC%88%E5%8F%8D%E5%AD%97%E6%AF%8D%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">atbash（反字母）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PC%E9%94%AE%E7%9B%98"><span class="toc-number">3.</span> <span class="toc-text">PC键盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-5%E7%9F%A9%E9%98%B5"><span class="toc-number">4.</span> <span class="toc-text">5*5矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%A9%E6%96%AF"><span class="toc-number">5.</span> <span class="toc-text">摩斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MNB"><span class="toc-number">6.</span> <span class="toc-text">MNB</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E8%BF%9B%E5%88%B6"><span class="toc-number">7.</span> <span class="toc-text">三进制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%AE%E7%9B%98V%E5%AD%97"><span class="toc-number">8.</span> <span class="toc-text">键盘V字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E5%88%86%E5%AF%86%E7%A0%81"><span class="toc-number">9.</span> <span class="toc-text">三分密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADFGVX"><span class="toc-number">10.</span> <span class="toc-text">ADFGVX</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%A7%8B%E5%AF%B9%E5%BA%94"><span class="toc-number">10.1.</span> <span class="toc-text">原始对应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%89%E9%A1%BA%E5%BA%8F"><span class="toc-number">10.2.</span> <span class="toc-text">按顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E7%A7%BB%E4%BD%8D"><span class="toc-number">11.</span> <span class="toc-text">键盘移位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%B3%E7%A7%BB"><span class="toc-number">11.1.</span> <span class="toc-text">右移</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A6%E7%A7%BB"><span class="toc-number">12.</span> <span class="toc-text">左移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="toc-number">13.</span> <span class="toc-text">特殊符号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dvorak%E9%94%AE%E7%9B%98"><span class="toc-number">14.</span> <span class="toc-text">dvorak键盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%B9%E5%A8%9C%E5%A7%86%E5%AF%86%E7%A0%81%EF%BC%88%E5%8D%B3%E5%AF%86%E7%A0%81%E7%AE%A1%EF%BC%89"><span class="toc-number">15.</span> <span class="toc-text">费娜姆密码（即密码管）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%B9%E6%A0%B9%E5%AF%86%E7%A0%81"><span class="toc-number">16.</span> <span class="toc-text">培根密码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B0%E6%B9%BE%E6%8B%BC%E9%9F%B3"><span class="toc-number">17.</span> <span class="toc-text">台湾拼音</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%97%E7%BA%A6%E9%9F%B3%E6%A0%87"><span class="toc-number">18.</span> <span class="toc-text">北约音标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E7%94%B5%E9%98%BB%E5%80%BC"><span class="toc-number">19.</span> <span class="toc-text">标准电阻值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E6%96%87%E7%94%B5%E7%A0%81%EF%BC%88%E6%B1%89%E5%AD%97%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">20.</span> <span class="toc-text">中文电码（汉字代码）</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">ColdSnap</div><div class="author-info__description text-center">Welcome to ColdSnap の Blog</div><div class="follow-button"><a target="_blank" rel="noopener" href="https://github.com/Coldwave96">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">91</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">41</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">35</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://bodhidharmalu.github.io">Tigerlu</a><a class="author-info-links__name text-center" target="_blank" rel="noopener" href="http://ghealer.top">Ghealer</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/img/background.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">ColdSnap の Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/Library">Library</a><a class="site-page" href="/Tools">Tools</a><a class="site-page" href="/about">About</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">古典密码对照</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/">Tools</a><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/Tools/Cryptography/">Cryptography</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.4k</span><span class="post-meta__separator">|</span><span>阅读时长: 7 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>最近在刷CTF密码学以及MISC的时候遇到一些古典的加密方式，下面是总结的一些古典加密方法对照表。</p>
+<span id="more"></span>
+
+<h2 id="QWE"><a href="#QWE" class="headerlink" title="QWE"></a>QWE</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center>
+
+<h2 id="atbash（反字母）"><a href="#atbash（反字母）" class="headerlink" title="atbash（反字母）"></a>atbash（反字母）</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>z y x w v u t s r q p o n m l k j i h g f e d c b a</center>
+
+<h2 id="PC键盘"><a href="#PC键盘" class="headerlink" title="PC键盘"></a>PC键盘</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>12 53 33 32 31 42 52 62 81 72 82 92 73 63 91 01 11 41 22 51 71 43 21 23 61 13</center>
+
+<h2 id="5-5矩阵"><a href="#5-5矩阵" class="headerlink" title="5*5矩阵"></a>5*5矩阵</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>11 12 13 14 15 21 22 23 24 24 25 31 32 33 34 35 41 42 43 44 45 51 52 53 54 55</center>
+注：此类存在变式，不是唯一对照规则。
+
+<h2 id="摩斯"><a href="#摩斯" class="headerlink" title="摩斯"></a>摩斯</h2><center>A *- B -*** C -*-* D -** E * F **-* G --* H **** I ** J *--- K -*- L *-** M -- N -* O --- P *--* Q --*- R *-* S *** T - U **- V ***- W *-- X -**- Y -*-- Z --** 0 ----- 1 *---- 2 **--- 3 ***-- 4 ****- 5 ***** 6 -**** 7 --*** 8 ---** 9 ----*</center>
+
+<h2 id="MNB"><a href="#MNB" class="headerlink" title="MNB"></a>MNB</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>m n b v c x z l k j h g f d s a p o i u y t r e w q</center>
+注：属QWE同类的对应。扩展：qaz--abc等竖向对应。
+
+<h2 id="三进制"><a href="#三进制" class="headerlink" title="三进制"></a>三进制</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>001 002 010 011 012 020 021 022 100 101 102 110 111 112 120 121 122 200 201 202 210 211 212 220 221 222</center>
+
+<h2 id="键盘V字"><a href="#键盘V字" class="headerlink" title="键盘V字"></a>键盘V字</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>13 58 36 35 34 46 57 68 89 79 80 9- 70 69 90 0- 12 45 24 56 78 47 23 25 67 14</center>
+
+<h2 id="三分密码"><a href="#三分密码" class="headerlink" title="三分密码"></a>三分密码</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>111 121 131 112 122 132 113 123 133 211 221 231 212 222 232 213 223 233 311 321 331 312 322 332 313 323</center>
+三分密码理解为把字母排成：（仿九宫格）
+
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">1</th>
+<th align="center">2</th>
+<th align="center">3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">abc</td>
+<td align="center">def</td>
+<td align="center">ghi</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">jkl</td>
+<td align="center">mon</td>
+<td align="center">opq</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">stu</td>
+<td align="center">vwx</td>
+<td align="center">yz</td>
+</tr>
+</tbody></table>
+<p>第一位行数，第三位列数，中间该格的第几个字母。</p>
+<h2 id="ADFGVX"><a href="#ADFGVX" class="headerlink" title="ADFGVX"></a>ADFGVX</h2><h3 id="原始对应"><a href="#原始对应" class="headerlink" title="原始对应"></a>原始对应</h3><center>a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9</center>
+
+<center>DV FF FG AG XD XV GV DX VG GA FD AV GX AX DG AD XX VV VD DD GD VF GG VA XF FX XG DA VX AF DF FV GF FA AA XA</center>
+
+<h3 id="按顺序"><a href="#按顺序" class="headerlink" title="按顺序"></a>按顺序</h3><center>a b c d e f g h i j k l m n o p q r s t u v w x y z 0 1 2 3 4 5 6 7 8 9</center>
+
+<center>AA AD AF AG AV AX DA DD DF DG DV DX FA FD FF FG FV FX GA GD GF GG GV GX VA VD VF VG VV VX XA XD XF XG XV XX</center>
+
+<p>为了帮助理解，下面放出一个字典表实例：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">D</th>
+<th align="center">F</th>
+<th align="center">G</th>
+<th align="center">X</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">b</td>
+<td align="center">t</td>
+<td align="center">a</td>
+<td align="center">l</td>
+<td align="center">p</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">d</td>
+<td align="center">h</td>
+<td align="center">o</td>
+<td align="center">z</td>
+<td align="center">k</td>
+</tr>
+<tr>
+<td align="center">F</td>
+<td align="center">q</td>
+<td align="center">f</td>
+<td align="center">v</td>
+<td align="center">s</td>
+<td align="center">n</td>
+</tr>
+<tr>
+<td align="center">G</td>
+<td align="center">g</td>
+<td align="center">j</td>
+<td align="center">c</td>
+<td align="center">u</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">m</td>
+<td align="center">r</td>
+<td align="center">e</td>
+<td align="center">w</td>
+<td align="center">y</td>
+</tr>
+</tbody></table>
+<h2 id="键盘移位"><a href="#键盘移位" class="headerlink" title="键盘移位"></a>键盘移位</h2><h3 id="右移"><a href="#右移" class="headerlink" title="右移"></a>右移</h3><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center>
+
+<center>w e r t y u i o p a s d f g h j k l z x c v b n m q</center>
+
+<h2 id="左移"><a href="#左移" class="headerlink" title="左移"></a>左移</h2><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center>
+
+<center>m q w e r t y u i o p a s d f g h j k l z x c v b n</center>
+
+<h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><center>q w e r t y u i o p a s d f g h j k l z x c v b n m</center>
+
+<center>§ № ☆ ★ ○ ● ◎ ◇ ◆ □ ■ △ ▲ ※ → ← ↑ ↓ 〓 ＃ ＆ ＠ ＼ ＾ ＿ ￣</center>
+
+<h2 id="dvorak键盘"><a href="#dvorak键盘" class="headerlink" title="dvorak键盘"></a>dvorak键盘</h2><center>a b c d e f g h i j k l m n o p q r s t u v w x y z</center>
+
+<center>p y f g c r l a o e u i d h t n s q j k x s m w v z</center>
+
+<h2 id="费娜姆密码（即密码管）"><a href="#费娜姆密码（即密码管）" class="headerlink" title="费娜姆密码（即密码管）"></a>费娜姆密码（即密码管）</h2><center>A 1000001 B 1000010 C 1000011 D 1000100 E 1000101 F 1000110 G 1000111 H 1001000 I 1001001 J 1001010 K 1001011 L 1001100 M 1001101 N 1001110 O 1001111 P 1010000 Q 1010001 R 1010010 S 1010011 T 1010100 U 1010101 V 1010110 W 1010111 X 1011000 Y 1011001 Z 1011010</center>
+
+<h2 id="培根密码"><a href="#培根密码" class="headerlink" title="培根密码"></a>培根密码</h2><center>A aaaaa B aaaab C aaaba D aaabb E aabaa F aabab G aabba H aabbb I abaaa J abaab K ababa L ababb M abbaa N abbab O abbba P abbbb Q baaaa R baaab S baaba T baabb U babaa V babab W babba X babbb Y bbaaa Z bbaab</center>
+
+<p>注1：培根密码有两种对应，这是较为常用的一种。<br>注2：替代成a&#x3D;1,b&#x3D;0或a&#x3D;0,b&#x3D;1，作为1和0的培根也是可以的。</p>
+<h2 id="台湾拼音"><a href="#台湾拼音" class="headerlink" title="台湾拼音"></a>台湾拼音</h2><center>ㄅ->b ㄉ->d ㄓ->zh ㄚ->a ㄞ->ai ㄦ->er ㄆ->p ㄊ->t ㄍ->g ㄐ->j ㄔ->ch ㄗ->z 一->i ㄛ->o ㄟ->ei ㄣ->en ㄇ->m ㄋ->n ㄎ->k ㄑ->q ㄕ->sh ㄘ->c ㄨ->u ㄜ->e ㄠ->ao ㄤ->ang ㄈ->f ㄌ->l ㄏ->h ㄒ->x ㄖ->r ㄙ->s ㄩ->..(就是拼音输入法v) u ㄝ->e(和ㄜ->e不同的是,ㄜ用在ye,te,de声母后面,而ㄝ,只能跟在yue,tie之类韵母后面) ㄡ->ou ㄥ->eng ㄢ->an</center>
+
+<h2 id="北约音标"><a href="#北约音标" class="headerlink" title="北约音标"></a>北约音标</h2><center>A Alpha B Bravo C Charlie D Delta E Echo F Foxtrot G Golf H Hotel I India J Juliet K Kilo L Lima M Mike N November O Oscar P Papa Q Quebec R Romeo S Sierra T Tango U Uniform V Victor W Whiskey X X-ray Y Yankee Z Zulu 0 Zero 1 Wun 2 Two 3 Three（或Tree） 4 Four 5 Five 6 Six 7 Seven 8 Eight 9 Niner</center>
+
+<h2 id="标准电阻值"><a href="#标准电阻值" class="headerlink" title="标准电阻值"></a>标准电阻值</h2><center>黑 棕 红 橙 黄 绿 蓝 紫 灰 白</center>
+
+<center>0 1 2 3 4 5 6 7 8 9</center>
+
+<h2 id="中文电码（汉字代码）"><a href="#中文电码（汉字代码）" class="headerlink" title="中文电码（汉字代码）"></a>中文电码（汉字代码）</h2><p>这种方式可以叫做编码方式，具体对应规则网上有很多，需要时可自行百度。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">ColdSnap</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://coldwave96.github.io/2019/11/06/Codemap/">https://coldwave96.github.io/2019/11/06/Codemap/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://coldwave96.github.io">ColdSnap の Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Encrypt/">Encrypt</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/11/07/WebshellDetection/"><i class="fa fa-chevron-left">  </i><span>机器学习实现Webshell检测</span></a></div><div class="next-post pull-right"><a href="/2019/11/06/scan/"><span>WVS与Arachni对比实验</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="vcomment"></div><script src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == 'true';
+var verify = 'false' == 'true';
+var record_ip = '' == 'true';
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  recordIP:record_ip,
+  appId:'R82KAmOmkqMWNJs72Fx4ub1O-gzGzoHsz',
+  appKey:'Sq4B8VcTqxJ2qCeJLJa3KbKz',
+  placeholder:'Please leave something ^.^',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang: 'zh-cn'
+})</script></div></div><footer class="footer-bg" style="background-image: url(/img/background.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2025 By ColdSnap</div><div class="framework-info"><span>驱动 - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="icp"><a><span>Welcome to my world ^.^</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.8.2"></script><script src="/js/fancybox.js?version=1.8.2"></script><script src="/js/sidebar.js?version=1.8.2"></script><script src="/js/copy.js?version=1.8.2"></script><script src="/js/fireworks.js?version=1.8.2"></script><script src="/js/transition.js?version=1.8.2"></script><script src="/js/scroll.js?version=1.8.2"></script><script src="/js/head.js?version=1.8.2"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
