@@ -1,59 +1,65 @@
 name: Hexo
 
-# 触发条件：在 push 到 hexo 分支后触发
+# 触发条件：push 到 hexo 分支后触发
 on:
   push:
-    branches: 
+    branches:
       - hexo
 
 env:
   TZ: Asia/Shanghai
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write
 
 jobs:
   blog-cicd:
     name: Hexo blog build & deploy
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 系统作为编译部署的环境
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout codes
-      uses: actions/checkout@v3
+      - name: Checkout codes
+        uses: actions/checkout@v6
 
-    - name: Setup node
-      # 设置 node.js 环境
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16.x'
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
 
-    - name: Cache node modules
-      # 设置包缓存目录，避免每次下载
-      uses: actions/cache@v3
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Hexo dependencies
+        run: |
+          npm install -g hexo-cli
 
-    - name: Install hexo dependencies
-      # 下载 hexo-cli 脚手架及相关安装包
-      run: |
-        npm install -g hexo-cli
-        npm install hexo-blog-encrypt
-        npm install
-    - name: Generate files
-      # 编译 markdown 文件
-      run: |
-        hexo clean
-        hexo generate
-    - name: Deploy hexo blog
-      env: 
-        # Github 仓库
-        GITHUB_REPO: github.com/Coldwave96/Coldwave96.github.io
-      # 将编译后的博客文件推送到指定仓库
-      run: |
-        cd ./public && git init && git add .
-        git config user.name "coldwave96"
-        git config user.email "676803965@qq.com"
-        echo "blog.110910.xyz" > CNAME
-        echo "# Hexo" > README.md
-        echo "Personal Blog" >> README.md
-        git add .
-        git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https://${{ secrets.ACCESS_TOKEN }}@$GITHUB_REPO" master:master        
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+          npm install hexo-blog-encrypt
+
+      - name: Generate files
+        run: |
+          hexo clean
+          hexo generate
+
+      - name: Deploy Hexo blog
+        run: |
+          cd ./public
+
+          git init -b master
+          git config user.name "coldwave96"
+          git config user.email "676803965@qq.com"
+
+          echo "blog.110910.xyz" > CNAME
+          echo "# Hexo" > README.md
+          echo "Personal Blog" >> README.md
+          touch .nojekyll
+
+          git add .
+          git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
+
+          git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Coldwave96/Coldwave96.github.io.git"
+          git push --force --quiet origin master
