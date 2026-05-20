@@ -39,6 +39,10 @@ jobs:
           fi
 
           npm install hexo-blog-encrypt
+          npm un hexo-renderer-marked --save
+          npm un hexo-renderer-kramed --save
+          npm un hexo-math --save
+          npm i @upupming/hexo-renderer-markdown-it-plus --save
 
       - name: Generate files
         run: |
